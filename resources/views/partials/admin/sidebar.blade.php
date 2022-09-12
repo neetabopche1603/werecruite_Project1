@@ -95,9 +95,28 @@
                             <li><a href="./map-jqvmap.html">Jqv Map</a></li>
                         </ul>
                     </li> -->
-                    <li><a href="widget-basic.html" class="ai-icon" aria-expanded="false">
+                    <li><a href="{{route('admin.company')}}" class="ai-icon" aria-expanded="false">
 							<i class="flaticon-381-settings-2"></i>
-							<span class="nav-text">Widget</span>
+							<span class="nav-text">Company</span>
+						</a>
+					</li>
+
+                    <li><a href="{{route('admin.jobRole')}}" class="ai-icon" aria-expanded="false">
+							<i class="flaticon-381-settings-2"></i>
+							<span class="nav-text">Job Role</span>
+						</a>
+					</li>
+
+                    <li><a href="{{route('admin.skill')}}" class="ai-icon" aria-expanded="false">
+							<i class="flaticon-381-settings-2"></i>
+							<span class="nav-text">Skill</span>
+						</a>
+					</li>
+
+                    
+                    <li><a href="{{route('admin.jobPosts')}}" class="ai-icon" aria-expanded="false">
+							<i class="flaticon-381-settings-2"></i>
+							<span class="nav-text">Job Post</span>
 						</a>
 					</li>
                     <!-- <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">

@@ -2,7 +2,6 @@
 @section('talentPartnerTitle','Jobs Description')
 @section('talentPartner-content')
 
-
 <div class="content-body">
             <!-- row -->
 			<div class="container-fluid">
@@ -75,8 +74,11 @@
 														<a class="dropdown-item" href="#">Z To A List</a>
 													</div>
 												</div> -->
-												<div class="btn-apply">
-													<button type="submit" class="btn btn-primary">Apply</button>
+												<div class="btn-apply button">
+													<a href="{{ route('talent.appliedJob', ['job_id'=> $jobs->id]) }}">
+														<button type="button" class="btn btn-primary" >Apply</button>
+													</a>
+
 												</div>
 												<!-- <div class="star-review">
 													<i class="fa fa-star text-orange"></i>
@@ -95,7 +97,7 @@
 										</div>
 									</div>
 									<div class="card-footer border-0 pt-0 text-center">
-										<a href="#" class="btn-link">Apply</a>
+										<a href="{{ route('talent.appliedJob', ['job_id'=> $jobs->id]) }}" class="btn-link">Apply</a>
 									</div>
 								</div>
 								

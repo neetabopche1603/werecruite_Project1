@@ -1,6 +1,6 @@
-@extends('partials.clientPartner.app')
-@section('clientPartnerTitle','Show all Job')
-@section('clientPartner-content')
+@extends('partials.admin.app')
+@section('adminTitle','Job Post')
+@section('admin-content')
 @push('style')
   <!-- Data Table CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
@@ -49,13 +49,14 @@
                         <div class="card">
                             <div class="card-header">
                                 <h4 class="card-title">Show All Job's</h4>
-                                <a href="{{route('client.jobAddView')}}" class="btn btn-primary  btn-outline-light float-lg-right" style="background-color: #450b5a; color: #fff;"><i class="fa fa-plus" aria-hidden="true"></i> Add</a>
+                                <a href="{{route('admin.addJobPostView')}}" class="btn btn-primary  btn-outline-light float-lg-right" style="background-color: #450b5a; color: #fff;"><i class="fa fa-plus" aria-hidden="true"></i> Add</a>
                             </div>
                             <div class="card-body">
-                                <table id="jobs" class="table table-striped table-bordered" style="width:100%">
+                                <table id="jobPost" class="table table-striped table-bordered" style="width:100%">
                                     <thead>
                                         <tr>
                                             <th>S.No.</th>
+                                            <th>Company Name</th>
                                             <th>Job Title</th>
                                             <th>Skill</th>
                                             <th>Description</th>
@@ -71,15 +72,16 @@
                                         @forelse ($jobs as $job)
                                         <tr>
                                             <td>{{$i++}}</td>
+                                            <td>{{$job->company_name}}</td>
                                             <td>{{$job->job_title}}</td>
                                             <td>{{$job->skill}}</td>
                                             <td>{{$job->job_role}}</td>
                                             <td>{{wordwrap($job->description, 20)}}
                                             </td>
                                             <td>
-                                                <a href="{{url('client/edit_job')}}/{{$job->id}}" class="btn btn-warning btn-sm btn-outline-light" style="background-color: #df5301; color: #fff;"><i class="fa fa-pencil-square" aria-hidden="true"></i></a>
+                                                <a href="{{url('admin/edit_jobsPost')}}/{{$job->id}}" class="btn btn-warning btn-sm btn-outline-light" style="background-color: #df5301; color: #fff;"><i class="fa fa-pencil-square" aria-hidden="true"></i></a>
 
-                                                <a href="{{url('client/delete_job')}}/{{$job->id}}" onclick="return confirm('Are you sure delete this job')" class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                                <a href="{{url('admin/delete_jobsPost')}}/{{$job->id}}" onclick="return confirm('Are you sure delete this job')" class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i></a>
 
                                             </td>
                                         </tr>
@@ -107,7 +109,7 @@
 
 <script>
   $(document).ready(function () {
-    $('#jobs').DataTable();
+    $('#jobPost').DataTable();
 });
 </script>
     

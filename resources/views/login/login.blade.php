@@ -58,8 +58,6 @@
                                             <label class="mb-1"><strong><span class="text-danger">*</span> Password</strong></label>
                                             <input type="password" name="password" id="password" class="form-control" />
                                             <!-- <input type="password" name="password" id="password" /> -->
-                                            <i class="bi bi-eye-slash" id="togglePassword"></i>
-
                                             <span class="text-danger">
                                                 @error('password')
                                                 {{$message}}

@@ -1,8 +1,13 @@
 <?php
 
+use App\Http\Controllers\Admin\CompanyController;
 use App\Http\Controllers\Admin\HomeController;
+use App\Http\Controllers\Admin\JobPostController;
+use App\Http\Controllers\Admin\JobRoleController;
 use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\SkillController;
+use App\Http\Controllers\AppliedJobController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\ForgetPasswordController;
 use App\Http\Controllers\Client\ClientProfileController;
@@ -79,18 +84,49 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::post('logo', [SettingController::class, 'logoUpdate'])->name('admin.logoUpdate');
     // Favicon Route
     Route::post('favicon', [SettingController::class, 'faviconUpdate'])->name('admin.faviconUpdate');
+    // Job Post Route
+    Route::get('show_jobs',[JobPostController::class,'jobPosts'])->name('admin.jobPosts');
+    Route::get('add_jobsPost',[JobPostController::class,'addJobPostView'])->name('admin.addJobPostView');
+    Route::post('add_jobsPost',[JobPostController::class,'jobPostStore'])->name('admin.jobPostStore');
+    Route::get('edit_jobsPost/{id}',[JobPostController::class,'editJobPostView'])->name('admin.editJobPostView');
+    Route::post('edit_jobsPost',[JobPostController::class,'jobPostUpdate'])->name('admin.jobPostUpdate');
+    Route::get('delete_jobsPost/{id}',[JobPostController::class,'jobPostDelete'])->name('admin.jobPostDelete');
+
+    // Company Route
+    Route::get('show_company',[CompanyController::class,'company'])->name('admin.company');
+    Route::get('add_company',[CompanyController::class,'CompanyAddView'])->name('admin.CompanyAddView');
+    Route::post('add_company',[CompanyController::class,'companyStore'])->name('admin.companyStore');
+    Route::get('edit_company/{id}',[CompanyController::class,'CompanyEdit'])->name('admin.CompanyEdit');
+    Route::post('edit_company',[CompanyController::class,'companyUpdate'])->name('admin.companyUpdate');
+    Route::get('delete_company/{id}',[CompanyController::class,'companyDelete'])->name('admin.companyDelete');
+
+    // JobRole Route
+    Route::get('show_jobRole',[JobRoleController::class,'jobRole'])->name('admin.jobRole');
+    Route::get('add_jobRole',[JobRoleController::class,'jobRoleAddForm'])->name('admin.jobRoleAddForm');
+    Route::post('add_jobRole',[JobRoleController::class,'jobRoleAddStore'])->name('admin.jobRoleAddStore');
+    Route::get('edit_jobRole/{id}',[JobRoleController::class,'jobRoleEdit'])->name('admin.jobRoleEdit');
+    Route::post('edit_jobRole',[JobRoleController::class,'jobRoleUpdate'])->name('admin.jobRoleUpdate');
+    Route::get('delete_jobRole/{id}',[JobRoleController::class,'jobRoleDelete'])->name('admin.jobRoleDelete');
+
+    // SKILL ROUTE
+    Route::get('show_skill',[SkillController::class,'skill'])->name('admin.skill');
+    Route::get('add_skill',[SkillController::class,'skillAddForm'])->name('admin.skillAddForm');
+    Route::post('add_skill',[SkillController::class,'skillStore'])->name('admin.skillStore');
+    Route::get('edit_skill/{id}',[SkillController::class,'skillEditForm'])->name('admin.skillEditForm');
+    Route::post('edit_skill',[SkillController::class,'skillUpdate'])->name('admin.skillUpdate');
+    Route::get('delete_skill/{id}',[SkillController::class,'skillDelete'])->name('admin.skillDelete');
+
+
 });
 
 
 // ===========Talent-Partner Route===========
-Route::group(['prefix' => 'talent', 'middleware' => 'talentPartner'], function () {
+Route::group(['prefix' => 'user', 'middleware' => 'talentPartner'], function () {
     Route::get('home', function () {
         return view('talentPartner.home');
     })->name('talentPartner.home');
 
     Route::get('home', [TalentHomeController::class, 'talentHome'])->name('talentPartner.home');
-
-
     // Talent Profile Route
     Route::get('profile', [TalentProfileController::class, 'profileView'])->name('talent.profileView');
     Route::post('profile', [TalentProfileController::class, 'ProfileUpdate'])->name('talent.ProfileUpdate');
@@ -99,6 +135,11 @@ Route::group(['prefix' => 'talent', 'middleware' => 'talentPartner'], function (
     //Jobs Route
     Route::get('jobsView', [JobsController::class, 'jobsView'])->name('talent.jobsView');
     Route::get('job_desc/{id}', [JobsController::class, 'job_desc'])->name('talent.job_desc');
+    // Applied Job Route
+    Route::get('applied_Job/{job_id}', [AppliedJobController::class, 'appliedJob'])->name('talent.appliedJob');
+    
+
+    
 });
 
 

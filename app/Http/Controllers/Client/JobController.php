@@ -11,7 +11,7 @@ class JobController extends Controller
     // Jobs Function (Show Job)
     public function index()
     {
-        $jobs = Job::get();
+        $jobs = Job::where('user_id',auth()->user()->id)->get();
         return view('clientPartner.job.index',compact('jobs'));
     }
 
@@ -33,6 +33,7 @@ class JobController extends Controller
 
         $jobStore = new Job();
         $jobStore->job_title = $request->job_title;
+        $jobStore->user_id = auth()->user()->id;
         $jobStore->skill = $request->skill;
         $jobStore->job_role = $request->job_role;
         $jobStore->description = $request->description;

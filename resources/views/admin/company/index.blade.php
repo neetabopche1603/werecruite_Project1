@@ -1,6 +1,6 @@
-@extends('partials.clientPartner.app')
-@section('clientPartnerTitle','Show all Job')
-@section('clientPartner-content')
+@extends('partials.admin.app')
+@section('adminTitle','Companys')
+@section('admin-content')
 @push('style')
   <!-- Data Table CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
@@ -49,44 +49,33 @@
                         <div class="card">
                             <div class="card-header">
                                 <h4 class="card-title">Show All Job's</h4>
-                                <a href="{{route('client.jobAddView')}}" class="btn btn-primary  btn-outline-light float-lg-right" style="background-color: #450b5a; color: #fff;"><i class="fa fa-plus" aria-hidden="true"></i> Add</a>
+                                <a href="{{route('admin.CompanyAddView')}}" class="btn btn-primary  btn-outline-light float-lg-right" style="background-color: #450b5a; color: #fff;"><i class="fa fa-plus" aria-hidden="true"></i> Add</a>
                             </div>
                             <div class="card-body">
-                                <table id="jobs" class="table table-striped table-bordered" style="width:100%">
+                                <table id="company" class="table table-striped table-bordered" style="width:100%">
                                     <thead>
                                         <tr>
                                             <th>S.No.</th>
-                                            <th>Job Title</th>
-                                            <th>Skill</th>
-                                            <th>Description</th>
-                                            <th>Role</th>
-                                            <th>Action</th>
+                                            <th>Company Name</th>
+                                         
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @php
                                             $i=1;
                                         @endphp
-
-                                        @forelse ($jobs as $job)
+                                            @foreach ($companyData as $row)
                                         <tr>
                                             <td>{{$i++}}</td>
-                                            <td>{{$job->job_title}}</td>
-                                            <td>{{$job->skill}}</td>
-                                            <td>{{$job->job_role}}</td>
-                                            <td>{{wordwrap($job->description, 20)}}
-                                            </td>
+                                            <td>{{$row->company_name}}</td>
                                             <td>
-                                                <a href="{{url('client/edit_job')}}/{{$job->id}}" class="btn btn-warning btn-sm btn-outline-light" style="background-color: #df5301; color: #fff;"><i class="fa fa-pencil-square" aria-hidden="true"></i></a>
+                                                <a href="{{url('admin/edit_company')}}/{{$row->id}}" class="btn btn-warning btn-sm btn-outline-light" style="background-color: #df5301; color: #fff;"><i class="fa fa-pencil-square" aria-hidden="true"></i></a>
 
-                                                <a href="{{url('client/delete_job')}}/{{$job->id}}" onclick="return confirm('Are you sure delete this job')" class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                                <a href="{{url('admin/delete_company')}}/{{$row->id}}" onclick="return confirm('Are you sure delete this job')" class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i></a>
 
                                             </td>
                                         </tr>
-                                        @empty
-                                        
-                                        @endforelse
-                                       
+                                        @endforeach
                                     </tbody>
                                 </table>
                               
@@ -107,7 +96,7 @@
 
 <script>
   $(document).ready(function () {
-    $('#jobs').DataTable();
+    $('#company').DataTable();
 });
 </script>
     
