@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Sign in User !</title>
+    <title>Sign in Client !</title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{asset('admin/images/favicon.png')}}">
     <link href="{{asset('admin/css/style.css')}}" rel="stylesheet">
@@ -43,7 +43,7 @@
                                     @endif
                                     <!-- Notifications End-->
                                     <h4 class="text-center mb-4">Sign in</h4>
-                                    <form action="{{route('login.post')}}" method="post">
+                                    <form action="{{route('client.loginpost')}}" method="post">
                                         @csrf
                                         <div class="form-group">
                                             <label class="mb-1"><strong><span class="text-danger">*</span> Email</strong></label>
@@ -80,7 +80,7 @@
                                         </div>
                                     </form>
                                     <div class="new-account mt-3">
-                                        <p class="text-center">Don't have an account? <a class="text-primary" href="{{route('register')}}">Sign up</a></p>
+                                        <p class="text-center">Don't have an account? <a class="text-primary" href="{{route('client.register')}}">Sign up</a></p>
                                     </div>
                                 </div> 
                             </div>

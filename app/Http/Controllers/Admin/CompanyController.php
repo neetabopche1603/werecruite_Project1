@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Company;
+use App\Models\SuperAdmin;
 use Illuminate\Http\Request;
 
 class CompanyController extends Controller
@@ -30,6 +31,7 @@ class CompanyController extends Controller
 
         $jobStore = new Company();
         $jobStore->company_name = $request->company_name;
+        $jobStore->user_id = 0;
         $jobStore->save();
 
         return redirect()->route('admin.company')->with('success', 'Company Create Successfully.....!');

@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Sign Up User!</title>
+    <title>Sign Up Client!</title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{asset('admin/images/favicon.png')}}">
     <link href="{{asset('admin/css/style.css')}}" rel="stylesheet">
@@ -45,7 +45,7 @@
                             <div class="col-xl-12">
                                 <div class="auth-form">
                                     <h4 class="text-center mb-4">Create new account</h4>
-                                    <form action="{{route('registerStore')}}" method="post" enctype="multipart/form-data">
+                                    <form action="{{route('client.registerStore')}}" method="post" enctype="multipart/form-data">
                                         @csrf
 
                                         <div class="row">
@@ -193,7 +193,7 @@
 
                                     </form>
                                     <div class="new-account mt-3">
-                                        <p class="text-center">Already have an account? <a class="text-primary" href="{{route('login')}}">Sign in</a></p>
+                                        <p class="text-center">Already have an account? <a class="text-primary" href="{{route('client.login')}}">Sign in</a></p>
                                     </div>
                                 </div>
                             </div>

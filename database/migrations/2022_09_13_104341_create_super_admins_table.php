@@ -18,11 +18,12 @@ return new class extends Migration
             $table->string('name');
             $table->string('email');
             $table->string('dob');
-            $table->string('gender');
             $table->string('mobile_no');
+            // $table->string('highest_education')->nullable();
+            $table->string('gender');
             $table->string('image');
-            $table->string('password');
             $table->string('address');
+            $table->string('password');
             $table->timestamps();
         });
     }

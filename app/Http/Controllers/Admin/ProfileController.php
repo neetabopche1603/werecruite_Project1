@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\SuperAdmin;
 use App\Rules\AdminOldPassword;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,17 +13,17 @@ use Illuminate\Support\Facades\Hash;
 class ProfileController extends Controller
 {
     public function adminProfile(){
-        $adminProfile = Auth::user();
+        $adminProfile = SuperAdmin::where('email','=',session()->get('user_name'))->first();
         return view('admin.adminProfile.profile',compact('adminProfile'));
     }
 
     public function updateProfiles(Request $request)
     {
-        $updateProfiles = User::find($request->id);
+        $updateProfiles = SuperAdmin::find($request->id);
         $updateProfiles->name = $request->name;
         $updateProfiles->email = $request->email;
         $updateProfiles->dob = $request->dob;
-        $updateProfiles->highest_education = $request->highest_education;
+        // $updateProfiles->highest_education = $request->highest_education;
         $updateProfiles->mobile_no = $request->mobile_number;
         $updateProfiles->dob = $request->dob;
         $updateProfiles->address = $request->address;

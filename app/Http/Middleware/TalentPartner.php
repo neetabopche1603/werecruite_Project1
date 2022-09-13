@@ -17,10 +17,10 @@ class TalentPartner
     public function handle(Request $request, Closure $next)
     {
        
-        if(auth()->user() && auth()->user()->is_admin === 2){
+        if(auth()->user() && auth()->user()->role === 0){
             return $next($request);
         }
-        return redirect()->route('login')->with('error',"You don't have Store access.");
+        return redirect()->route('admin.login')->with('error',"You don't have access.");
 
     }
 }

@@ -12,7 +12,7 @@
                 <div class="row page-titles mx-0 mb-lg-2">
                     <div class="col-sm-6 p-md-0">
                         <div class="welcome-text">
-                            <h4>Hi, welcome back {{auth()->user()->name}}!</h4>
+                            <h4>Hi, welcome back Administrator!</h4>
                             <p class="mb-0">Show All Job Skill</p>
                         </div>
                     </div>

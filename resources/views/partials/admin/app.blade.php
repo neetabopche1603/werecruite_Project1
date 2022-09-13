@@ -1,3 +1,9 @@
+@if (!session()->get('user_name'))
+<script>
+    window.location = "{{route('admin.login')}}";
+</script>
+@endif
+
 <?php
 
 use App\Models\Setting;

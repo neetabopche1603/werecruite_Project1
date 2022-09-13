@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Company;
 use App\Models\Job;
+use App\Models\JobRole;
+use App\Models\Skill;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -13,7 +15,15 @@ class JobPostController extends Controller
     // Show All Jobs
     public function jobPosts()
     {
-        $jobs = Job::join('companies','jobs.user_id','=','companies.user_id')->select('jobs.*','companies.*')->get();
+    //     $orderList = DB::table('users')
+    // ->join('orders', 'users.id', '=', 'orders.user_id')
+    // ->join('order_items', 'orders.id', '=', 'order_items.orders_id')
+    // ->where('users.id', '=', 5)
+    // ->get();
+
+        $jobs = Job::join('companies','jobs.user_id','=','companies.id')->select('jobs.*','companies.*')->get();
+
+        // $jobs = Job::get();
 
         return view('admin.jobPost.index', compact('jobs'));
     }
@@ -21,7 +31,9 @@ class JobPostController extends Controller
     public function addJobPostView()
     {
         $company = Company::get();
-        return view('admin.jobPost.add', compact('company'));
+        $skills = Skill::get();
+        $jobRole = JobRole::get();
+        return view('admin.jobPost.add', compact('company','skills','jobRole'));
     }
 
     // Job Store Form Function
@@ -35,11 +47,11 @@ class JobPostController extends Controller
             'description' => 'required',
 
         ]);
-
+    //    dd($request->skill);
         $jobStore = new Job();
         $jobStore->user_id = $request->company_id;
         $jobStore->job_title = $request->job_title;
-        $jobStore->skill = $request->skill;
+        $jobStore->skill = json_encode($request->skill);  // json_decode
         $jobStore->job_role = $request->job_role;
         $jobStore->description = $request->description;
 

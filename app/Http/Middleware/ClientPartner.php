@@ -16,9 +16,9 @@ class ClientPartner
      */
     public function handle(Request $request, Closure $next)
     {
-        if(auth()->user() && auth()->user()->is_admin === 3){
+        if(auth()->user() && auth()->user()->role === 1){
             return $next($request);
         }
-        return redirect()->route('login')->with('error',"You don't have Store access.");
+        return redirect()->route('client.login')->with('error',"You don't have access.");
     }
 }

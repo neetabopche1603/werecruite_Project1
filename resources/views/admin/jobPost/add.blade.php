@@ -1,12 +1,15 @@
 @extends('partials.admin.app')
 @section('adminTitle','Job Post')
 @section('admin-content')
+@push('style')
+
+@endpush
 <div class="content-body">
     <div class="container-fluid">
         <div class="row page-titles mx-0">
             <div class="col-sm-6 p-md-0">
                 <div class="welcome-text">
-                    <h4>Hi, welcome back {{auth()->user()->name}}!</h4>
+                    <h4>Hi, welcome back Administrator!</h4>
                     <!-- <p class="mb-0">Your business dashboard template</p> -->
                 </div>
             </div>
@@ -34,15 +37,15 @@
                                     <div class="row">
                                         <div class="col-lg-7 mb-2">
                                             <div class="form-group">
-                                               
-                                                 <label for="">Company</label>
-                                                 <select class="form-control" name="company_id" id="">
-                                                 <option value="AL">--Choose Company--</option>
-                                                    @foreach ($company as $coms ) 
+
+                                                <label for="">Company</label>
+                                                <select class="form-control" name="company_id" id="">
+                                                    <option value="AL">--Choose Company--</option>
+                                                    @foreach ($company as $coms )
                                                     <option value="{{$coms->id}}">{{$coms->company_name}}</option>
                                                     @endforeach
-                                                 </select>
-                                              
+                                                </select>
+
                                             </div>
                                         </div>
 
@@ -60,7 +63,14 @@
                                         <div class="col-lg-7 mb-2">
                                             <div class="form-group">
                                                 <label class="text-label"><strong style="color: red;">*</strong><b>Skill:</b></label>
-                                                <input type="text" name="skill" class="form-control" placeholder="Skill">
+                                                <select multiple class="form-control" name="skill[]" id="sel2">
+                                                    @foreach ($skills as $skill )
+                                                    <option value="{{$skill->skill}}">{{$skill->skill}}</option>
+                                                    @endforeach
+                                                </select>
+
+
+                                                <!-- <input type="text" name="skill" class="form-control" placeholder="Skill"> -->
                                                 <span class="text-danger">
                                                     @error('skill')
                                                     {{$message}}
@@ -72,7 +82,13 @@
                                         <div class="col-lg-7 mb-2">
                                             <div class="form-group">
                                                 <label class="text-label"><strong style="color: red;">*</strong><b>Role:</b></label>
-                                                <input type="text" name="job_role" class="form-control" placeholder="Role">
+                                                <select class="form-control" name="job_role" id="">
+                                                    <option value="AL">--Choose Job Role--</option>
+                                                    @foreach ($jobRole as $jRole )
+                                                    <option value="{{$jRole->job_role}}">{{$jRole->job_role}}</option>
+                                                    @endforeach
+                                                </select>
+                                                <!-- <input type="text" name="job_role" class="form-control" placeholder="Role"> -->
                                                 <span class="text-danger">
                                                     @error('job_role')
                                                     {{$message}}
@@ -107,6 +123,7 @@
 </div>
 
 @endsection
+
 @push('script')
 
 

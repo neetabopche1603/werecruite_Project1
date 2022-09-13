@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 class HomeController extends Controller
 {
     public function adminHome(){
-        $setting = Setting::get();
-        return view('admin.home',compact('setting'));
+        return view('admin.home');
     }
 }

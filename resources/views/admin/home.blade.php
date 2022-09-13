@@ -598,9 +598,5 @@
 
 @endsection
 @push('script')
-<script>
-	history.pushState(null, null, window.location.href);
-	history.back();
-	window.onpopstate = () => history.forward();
-</script>
+
 @endpush

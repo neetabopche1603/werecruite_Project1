@@ -1,6 +1,6 @@
 @extends('partials.talentPartner.app')
-@section('clientPartnerTitle','Profile Page Talent')
-@section('clientPartner-content')
+@section('talentPartnerTitle','Profile Page Talent')
+@section('talentPartner-content')
 
 <div class="content-body">
     <div class="container-fluid">

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('image');
-            $table->tinyInteger('is_admin')->comment("1= Admin,2=Talent-Partner,3=Client-Partner");
+            $table->tinyInteger('role')->comment("0=Talent-Partner,1=Client-Partner");
             $table->string('gender')->comment("1=MALE,0=FEMALE");
             $table->string('mobile_no');
             $table->longText('address');

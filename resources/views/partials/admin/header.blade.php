@@ -1,4 +1,9 @@
- <!--**********************************
+<?php
+
+use App\Models\SuperAdmin;
+
+$admin = SuperAdmin::all();
+?> <!--**********************************
             Nav header start
         ***********************************-->
         <div class="nav-header">
@@ -133,19 +138,10 @@
                             <li class="nav-item dropdown header-profile">
                                 <a class="nav-link" href="#" role="button" data-toggle="dropdown">
 									<div class="header-info">
-									<span>{{auth()->user()->name}}</span>
- 								<small>
- 									@if (auth()->user()->is_admin == 1)
- 									<small>Admin</small>
- 									@elseif(auth()->user()->is_admin == 2)
- 									<small>Talent-Partner</small>
-
- 									@elseif(auth()->user()->is_admin == 3)
- 									<small>Client-Partner</small>
- 									@endif
- 								</small>
+									<span>{{$admin[0]['name']}}</span>
+ 								<small>Administrator</small>
 									</div>
-									<img src="{{asset('image')}}/{{auth()->user()->image}}"  width="20" alt=""/>
+								<img src="" alt="">
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right">
                                     <a href="{{route('admin.profile')}}" class="dropdown-item ai-icon">
@@ -157,7 +153,7 @@
 										<i class="flaticon-381-settings-2"></i>
                                         <span class="ml-2">Setting</span>
                                     </a>
-                                    <a href="{{route('logout')}}"  onclick="return confirm('Are you sure logout this site')" class="dropdown-item ai-icon">
+                                    <a href="{{route('superadmin.logout')}}"  onclick="return confirm('Are you sure logout this site')" class="dropdown-item ai-icon">
                                         <svg id="icon-logout" xmlns="http://www.w3.org/2000/svg" class="text-danger" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
                                         <span class="ml-2">Logout </span>
                                     </a>

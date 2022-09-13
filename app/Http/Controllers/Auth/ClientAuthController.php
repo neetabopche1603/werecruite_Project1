@@ -7,18 +7,17 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
-class AuthController extends Controller
+class ClientAuthController extends Controller
 {
-
-    //===================USER REGISTER FUNCTION===============
+    //=================== REGISTER FUNCTION===============
     public function registerView()
     {
-        return view('login.register');
+        return view('login.clientLogin.register');
     }
 
     public function registerStore(Request $request)
     {
-       $request->validate([
+        $validatedData = $request->validate([
             'name' => 'required',
             'dob' => 'required',
             'gender' => 'required',
@@ -50,14 +49,15 @@ class AuthController extends Controller
             $registerStore->image =  $uploadImage;
         }
 
-        $registerStore->role = 0;
+        $registerStore->role = 1;
         $register = $registerStore->save();
+
         if ($register) {
             if (auth()->attempt(array('email' => $request->email, 'password' => $request->password))) {
-                if (auth()->user()->role === 0) {
-                    return redirect()->route('talentPartner.home');
+                if (auth()->user()->role === 1) {
+                    return redirect()->route('clientPartner.home');
                 } else {
-                    return redirect()->route('login')
+                    return redirect()->route('client.login')
                         ->with('error', 'You don`t have access..');
                 }
             }
@@ -65,11 +65,13 @@ class AuthController extends Controller
         return redirect()->back()->with('error', 'Register Faild.....');
     }
 
-    //=================USER LOGIN FUNCTION=============
+
+
+    //================= LOGIN FUNCTION=============
 
     public function loginView()
     {
-        return view('login.login');
+        return view('login.clientLogin.login');
     }
 
     public function login(Request $request)
@@ -86,14 +88,14 @@ class AuthController extends Controller
             // if (auth()->user()->is_admin == 1) {
             //     return redirect()->route('admin.home');
             // }
-            if (auth()->user()->role === 0) {
-                return redirect()->route('talentPartner.home');
+            if (auth()->user()->role === 1) {
+                return redirect()->route('clientPartner.home');
             } else {
-                return redirect()->route('login')
+                return redirect()->route('client.login')
                     ->with('error', 'You don`t have access..');
             }
         } else {
-            return redirect()->route('login')
+            return redirect()->route('client.login')
                 ->with('error', 'Email-Address And Password Are Wrong.');
         }
     }

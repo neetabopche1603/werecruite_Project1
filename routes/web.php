@@ -8,7 +8,9 @@ use App\Http\Controllers\Admin\ProfileController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\SkillController;
 use App\Http\Controllers\AppliedJobController;
+use App\Http\Controllers\Auth\AdminAuthController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Auth\ClientAuthController;
 use App\Http\Controllers\Auth\ForgetPasswordController;
 use App\Http\Controllers\Client\ClientProfileController;
 use App\Http\Controllers\Client\HomeController as ClientHomeController;
@@ -39,21 +41,44 @@ Route::get('email', function () {
 
 Route::get('eye', function () {
     return view('eye');
-});
+})->name('eye');
 
-// ==============SINGN UP ! ROUTE==========
+// ==============SUPER ADMIN SINGN IN ! ROUTE==========
+Route::get('superadmin',[AdminAuthController::class,'adminLogin'])->name('admin.login');
+Route::post('superadmin',[AdminAuthController::class,'adminStore'])->name('admin.adminStore');
+// =================Logout SUPER Admin Route============
+Route::get('admin_logout', function () {
+    session()->forget('user_name');
+    return redirect()->route('admin.login');
+})->name('superadmin.logout');
+
+// ==============(CLIENT) SINGN UP ! ROUTE==========
+Route::get('client/sign-up', [ClientAuthController::class, 'registerView'])->name('client.register');
+Route::post('client/sign-up', [ClientAuthController::class, 'registerStore'])->name('client.registerStore');
+
+// =============(CLIENT) SIGN IN ! ROUTE===========
+Route::get('client/', [ClientAuthController::class, 'loginView'])->name('client.login');
+Route::post('client/', [ClientAuthController::class, 'login'])->name('client.loginpost');
+// ========= USER Logout Route===========
+Route::get('client_logout', function () {
+    Auth::logout();
+    return redirect()->route('client.login');
+})->name('client.logout');
+
+
+// ==============USER(TELENT) SINGN UP ! ROUTE==========
 Route::get('sign-up', [AuthController::class, 'registerView'])->name('register');
 Route::post('sign-up', [AuthController::class, 'registerStore'])->name('registerStore');
 
-// =============SIGN IN ! ROUTE===========
+// =============USER(TELENT) SIGN IN ! ROUTE===========
 Route::get('sign-in', [AuthController::class, 'loginView'])->name('login');
 Route::post('sign-in', [AuthController::class, 'login'])->name('login.post');
 
-// =========Logout Route===========
+// ========= USER Logout Route===========
 Route::get('/logout', function () {
     Auth::logout();
     return redirect()->route('login');
-})->name('logout');
+})->name('user.logout');
 
 // =========FORGET PASSWORS Route===========
 Route::get('forget-password', [ForgetPasswordController::class, 'forget_password'])->name('forget_password');
@@ -65,13 +90,11 @@ Route::post('reset-link', [ForgetPasswordController::class, 'reset_link_post'])-
 
 
 // ===========Admin Route===========
-Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
-    Route::get('home', function () {
-        return view('admin.home');
-    })->name('admin.home');
-
+Route::group(['prefix' => 'admin',], function () {
     Route::get('home', [HomeController::class, 'adminHome'])->name('admin.home');
-
+    // Route::get('admin/home', function () {
+    //     return view('admin.home');
+    // })->name('admin.home');
     //Profile Update Route
     Route::get('profile', [ProfileController::class, 'adminProfile'])->name('admin.profile');
     Route::post('profile', [ProfileController::class, 'updateProfiles'])->name('admin.updateProfiles');
@@ -116,6 +139,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     Route::post('edit_skill',[SkillController::class,'skillUpdate'])->name('admin.skillUpdate');
     Route::get('delete_skill/{id}',[SkillController::class,'skillDelete'])->name('admin.skillDelete');
 
+    // Route::get('admin-logout', [AdminAuthController::class, 'logout'])->name('superadmin.logout');
 
 });
 
