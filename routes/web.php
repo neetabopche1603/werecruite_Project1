@@ -140,6 +140,11 @@ Route::group(['prefix' => 'admin',], function () {
     Route::get('delete_skill/{id}',[SkillController::class,'skillDelete'])->name('admin.skillDelete');
 
     // Route::get('admin-logout', [AdminAuthController::class, 'logout'])->name('superadmin.logout');
+    Route::get('show_screening_jobs',[JobPostController::class,'allJobs'])->name('admin.getAllJob');
+    Route::get('get-all-users/{jobid}',[JobPostController::class,'screeningJobUsers'])->name('admin.screeningJobUsers');
+    Route::post('change_screening_status',[JobPostController::class,'jobStatusScreening'])->name('admin.screening');
+    Route::post('change_interview_status',[JobPostController::class,'jobStatusInterview'])->name('admin.interview');
+    Route::post('change_selected_status',[JobPostController::class,'jobStatusSelected'])->name('admin.selected');
 
 });
 
@@ -189,4 +194,10 @@ Route::group(['prefix' => 'client', 'middleware' => 'clientPartner'], function (
     Route::get('edit_job/{id}', [JobController::class, 'jobEditView'])->name('client.jobEditView');
     Route::post('edit_job', [JobController::class, 'jobUpdate'])->name('client.jobUpdate');
     Route::get('delete_job/{id}', [JobController::class, 'jobDelete'])->name('client.jobDelete');
+
+    // Applied Job Routes
+    Route::get('show_applied_jobs',[JobController::class,'allJobs'])->name('client.getAllJob');
+    Route::get('get-all-users/{jobid}',[JobController::class,'appliedJobUsers'])->name('client.appliedJobUsers');
+    Route::post('change_applied_job_status',[JobController::class,'jobStatus'])->name('client.jobStatus');
+    
 });

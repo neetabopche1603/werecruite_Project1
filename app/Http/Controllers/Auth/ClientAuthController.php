@@ -19,9 +19,9 @@ class ClientAuthController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'required',
-            'dob' => 'required',
-            'gender' => 'required',
-            'highest_education' => 'required',
+            // 'dob' => 'required',
+            // 'gender' => 'required',
+            // 'highest_education' => 'required',
             'mobile_number' => 'required|unique:users,mobile_no|max:10',
             'email' => 'required|unique:users,email|max:255',
             'password' => 'min:8',
@@ -33,9 +33,9 @@ class ClientAuthController extends Controller
 
         $registerStore = new User();
         $registerStore->name = strtoupper($request->name);
-        $registerStore->dob = $request->dob;
-        $registerStore->gender = $request->gender;
-        $registerStore->highest_education = $request->highest_education;
+        // $registerStore->dob = $request->dob;
+        // $registerStore->gender = $request->gender;
+        // $registerStore->highest_education = $request->highest_education;
         $registerStore->mobile_no = $request->mobile_number;
         $registerStore->email = $request->email;
         $registerStore->password = Hash::make($request->password);

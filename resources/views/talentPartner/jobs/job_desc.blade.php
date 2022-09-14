@@ -5,6 +5,7 @@
 <div class="content-body">
             <!-- row -->
 			<div class="container-fluid">
+				
                 <div class="form-head d-flex mb-3 mb-lg-5 align-items-start">
 					<a href="javascript:void(0);" class="btn btn-dark"><i class="flaticon-381-clock mr-2"></i> Edit Profile</a>
 					<a href="javascript:void(0);" class="btn btn-success ml-auto px-5">+ Add Netw Appointment</a>
@@ -61,7 +62,10 @@
 											</div> -->
 											<div class="media-body">
 												<h2 class="mb-2">{{$jobs->job_title}}</h2>
-												<p class="mb-md-2 mb-sm-4 mb-2">{{$jobs->skill}}</p>
+												 @php
+                                    $skills = implode(",",$jobs->skills);
+                                @endphp
+												<p class="mb-md-2 mb-sm-4 mb-2">{{$skills}}</p>
 												<!-- <span><i class="flaticon-381-clock"></i> Join Date 21 August 2020, 12:45 AM</span> -->
 											</div>
 											<div class="text-md-right mt-4 mt-md-0">

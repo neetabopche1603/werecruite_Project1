@@ -40,9 +40,8 @@
                                                 <select class="form-control" name="company_id" id="">
 
                                                     @foreach ($companys as $data)
-                                                    <option value="{{$data->id}}" {{$data->id == $jobPostEdit->company_id ? 'selected' : ''}}>{{$data->company_name}}</option>
+                                                    <option value="{{$data->id}}" {{$data->id == $jobPostEdit->id ? 'selected' : ''}}>{{$data->name}}</option>
                                                     @endforeach
-
                                                 </select>
 
                                             </div>
@@ -58,14 +57,26 @@
                                         <div class="col-lg-7 mb-2">
                                             <div class="form-group">
                                                 <label class="text-label"><strong style="color: red;">*</strong><b>Skill:</b></label>
-                                                <input type="text" name="skill" value="{{$jobPostEdit->skill}}" class="form-control" placeholder="Skill">
+                                                <select multiple class="form-control" name="skill[]" id="sel2">
+                                                    @foreach ($skills as $skill )
+                                                    <option value="{{$skill->id}}" {{$skill->id == $jobPostEdit->id ? 'selected' : ''}}>{{$skill->skill}}</option>
+                                                    @endforeach
+                                                </select>
+
+                                                <!-- <input type="text" name="skill" value="{{$jobPostEdit->skill}}" class="form-control" placeholder="Skill"> -->
                                             </div>
                                         </div>
 
                                         <div class="col-lg-7 mb-2">
                                             <div class="form-group">
                                                 <label class="text-label"><strong style="color: red;">*</strong><b>Role:</b></label>
-                                                <input type="text" name="job_role" value="{{$jobPostEdit->job_role}}" class="form-control" placeholder="Role">
+                                                <select class="form-control" name="job_role" id="">
+                                                    @foreach ($jobRole as $jRole )
+                                                    <option value="{{$jRole->id}}" {{$jRole->id == $jobPostEdit->id ? 'selected' : ''}}>{{$jRole->job_role}}</option>
+                                                    @endforeach
+                                                </select>
+
+                                                <!-- <input type="text" name="job_role" value="{{$jobPostEdit->job_role}}" class="form-control" placeholder="Role"> -->
 
                                             </div>
                                         </div>

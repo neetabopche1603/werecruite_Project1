@@ -51,8 +51,8 @@
                                 <a class="nav-link bell bell-link" href="#">
                                     <i class="flaticon-381-pad"></i>
                                 </a>
-							</li> -->
-                            <!-- <li class="nav-item dropdown notification_dropdown">
+							</li>  -->
+                            <li class="nav-item dropdown notification_dropdown">
                                 <a class="nav-link  ai-icon" href="#" role="button" data-toggle="dropdown">
                                     <i class="flaticon-381-ring"></i>
                                     <div class="pulse-css"></div>
@@ -130,7 +130,7 @@
 									</div>
                                     <a class="all-notification" href="#">See all notifications <i class="ti-arrow-right"></i></a>
                                 </div>
-                            </li> -->
+                            </li>
                             <li class="nav-item dropdown header-profile">
                                 <a class="nav-link" href="#" role="button" data-toggle="dropdown">
 									<div class="header-info">

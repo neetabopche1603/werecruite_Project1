@@ -56,7 +56,7 @@ $admin = SuperAdmin::all();
                                     <i class="flaticon-381-pad"></i>
                                 </a>
 							</li> -->
-                            <!-- <li class="nav-item dropdown notification_dropdown">
+                            <li class="nav-item dropdown notification_dropdown">
                                 <a class="nav-link  ai-icon" href="#" role="button" data-toggle="dropdown">
                                     <i class="flaticon-381-ring"></i>
                                     <div class="pulse-css"></div>
@@ -134,14 +134,14 @@ $admin = SuperAdmin::all();
 									</div>
                                     <a class="all-notification" href="#">See all notifications <i class="ti-arrow-right"></i></a>
                                 </div>
-                            </li> -->
+                            </li>
                             <li class="nav-item dropdown header-profile">
                                 <a class="nav-link" href="#" role="button" data-toggle="dropdown">
 									<div class="header-info">
 									<span>{{$admin[0]['name']}}</span>
  								<small>Administrator</small>
 									</div>
-								<img src="" alt="">
+									<img src="{{asset('image')}}/{{$admin[0]['image']}}"  width="20" alt=""/>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right">
                                     <a href="{{route('admin.profile')}}" class="dropdown-item ai-icon">

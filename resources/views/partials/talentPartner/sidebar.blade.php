@@ -97,7 +97,7 @@
                     </li> -->
                     <li><a href="{{route('talent.jobsView')}}" class="ai-icon" aria-expanded="false">
 							<i class="flaticon-381-settings-2"></i>
-							<span class="nav-text">Jobs</span>
+							<span class="nav-text">Show Jobs</span>
 						</a>
 					</li>
                     <!-- <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">

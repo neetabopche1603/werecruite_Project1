@@ -51,8 +51,8 @@
                                         <div class="row">
                                             <div class="col-md-10">
                                                 <div class="form-group">
-                                                    <label class="mb-1"><strong><span class="text-danger">*</span> User Name</strong></label>
-                                                    <input type="text" name="name" class="form-control" placeholder="Enter Full Name">
+                                                    <label class="mb-1"><strong><span class="text-danger">*</span>Company Name</strong></label>
+                                                    <input type="text" name="name" class="form-control" value="{{old('name')}}" placeholder="Enter Company Name">
                                                     <span class="text-danger">
                                                         @error('name')
                                                         {{$message}}
@@ -62,7 +62,7 @@
 
                                             </div>
 
-                                            <div class="col-md-6">
+                                            <!-- <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="mb-1"><strong><span class="text-danger">*</span> Date Of Birth</strong></label>
                                                     <input type="date" name="dob" class="form-control" placeholder="Date of birth">
@@ -73,9 +73,8 @@
                                                         @enderror
                                                     </span>
                                                 </div>
-                                            </div>
-                                            <div class="col-md-6">
-
+                                            </div> -->
+                                            <!-- <div class="col-md-6">
                                                 <div class="form-group">
                                                     <div class="radio">
                                                         <label class="mb-1"><strong><span class="text-danger">*</span> Gender</strong> </label> <br>
@@ -94,11 +93,11 @@
                                                         @enderror
                                                     </span>
                                                 </div>
-                                            </div>
-                                            <div class="col-md-6">
+                                            </div> -->
+                                            <div class="col-md-7">
                                                 <div class="form-group">
                                                     <label class="mb-1"><strong><span class="text-danger">*</span> Mobile Number</strong></label>
-                                                    <input type="text" name="mobile_number" class="form-control" placeholder="+91-XXXXXXXXXXX">
+                                                    <input type="text" name="mobile_number" value="{{old('mobile_number')}}" class="form-control" placeholder="+91-XXXXXXXXXXX">
                                                     <span class="text-danger">
                                                         @error('mobile_number')
                                                         {{$message}}
@@ -107,7 +106,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-10">
+                                            <!-- <div class="col-md-10">
                                                 <div class="form-group">
                                                     <label class="mb-1"><strong><span class="text-danger">*</span> Highest Education</strong></label>
                                                     <input type="text" name="highest_education" class="form-control" placeholder="Highest education">
@@ -117,12 +116,12 @@
                                                         @enderror
                                                     </span>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                           
                                             <div class="col-md-10">
                                                 <div class="form-group">
                                                     <label class="mb-1"><strong><span class="text-danger">*</span> Email</strong></label>
-                                                    <input type="email" name="email" class="form-control" placeholder="hello@example.com">
+                                                    <input type="email" name="email" value="{{old('email')}}" class="form-control" placeholder="hello@example.com">
                                                     <span class="text-danger">
                                                         @error('email')
                                                         {{$message}}
@@ -160,8 +159,8 @@
 
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label class="mb-1"><strong><span class="text-danger">*</span> Profile Image</strong></label>
-                                                    <input type="file" name="image" class="form-control" placeholder="">
+                                                    <label class="mb-1"><strong><span class="text-danger">*</span> Image</strong></label>
+                                                    <input type="file" name="image" value="{{old('image')}}" class="form-control" placeholder="">
                                                     <span class="text-danger">
                                                         @error('image')
                                                         {{$message}}
@@ -175,7 +174,7 @@
                                                 <div class="form-group">
                                                     <label class="mb-1"><strong><span class="text-danger">*</span> Address</strong></label>
                                                     <!-- <input type="text" name="address" class="form-control"> -->
-                                                    <textarea class="form-control" name="address" placeholder="Type your Address..."></textarea>
+                                                    <textarea class="form-control" name="address" placeholder="Type your Address...">{{old('address')}}</textarea>
 
                                                     <span class="text-danger">
                                                         @error('address')

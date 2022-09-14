@@ -43,14 +43,26 @@
                                         <div class="col-lg-7 mb-2">
                                             <div class="form-group">
                                                 <label class="text-label"><strong style="color: red;">*</strong><b>Skill :</b></label>
-                                                <input type="text" name="skill" value="{{$jobEditViews->skill}}" class="form-control" placeholder="Skill" required>
+                                                <select multiple class="form-control" name="skill[]" id="sel2">
+                                                    @foreach ($skills as $skil )
+                                                    <option value="{{$skil->id}}" {{$skil->id == $jobEditViews->id ? 'selected' : ''}}>{{$skil->skill}}</option>
+                                                    @endforeach
+                                                </select>
+                                                <!-- <input type="text" name="skill" value="{{$jobEditViews->skill}}" class="form-control" placeholder="Skill" required> -->
                                             </div>
                                         </div>
 
                                         <div class="col-lg-7 mb-2">
                                             <div class="form-group">
                                                 <label class="text-label"><strong style="color: red;">*</strong><b>Role:</b></label>
-                                                <input type="text" name="job_role" value="{{$jobEditViews->job_role}}" class="form-control" placeholder="Role" required>
+                                                <select class="form-control" name="job_role" id="">
+                                                    <option value="AL">--Choose Job Role--</option>
+                                                    @foreach ($jobRole as $jRole )
+                                                    <option value="{{$jRole->id}}" {{$jRole->id == $jobEditViews->id ? 'selected' : ''}}>{{$jRole->job_role}}</option>
+                                                    @endforeach
+                                                </select>
+
+                                                <!-- <input type="text" name="job_role" value="{{$jobEditViews->job_role}}" class="form-control" placeholder="Role" required> -->
                                             </div>
                                         </div>
 

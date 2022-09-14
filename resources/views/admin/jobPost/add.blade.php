@@ -41,8 +41,9 @@
                                                 <label for="">Company</label>
                                                 <select class="form-control" name="company_id" id="">
                                                     <option value="AL">--Choose Company--</option>
+                                                    <option value="0">Admin</option>
                                                     @foreach ($company as $coms )
-                                                    <option value="{{$coms->id}}">{{$coms->company_name}}</option>
+                                                    <option value="{{$coms->id}}">{{$coms->name}}</option>
                                                     @endforeach
                                                 </select>
 
@@ -84,8 +85,9 @@
                                                 <label class="text-label"><strong style="color: red;">*</strong><b>Role:</b></label>
                                                 <select class="form-control" name="job_role" id="">
                                                     <option value="AL">--Choose Job Role--</option>
+                                                   
                                                     @foreach ($jobRole as $jRole )
-                                                    <option value="{{$jRole->job_role}}">{{$jRole->job_role}}</option>
+                                                    <option value="{{$jRole->id}}">{{$jRole->job_role}}</option>
                                                     @endforeach
                                                 </select>
                                                 <!-- <input type="text" name="job_role" class="form-control" placeholder="Role"> -->

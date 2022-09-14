@@ -96,7 +96,7 @@ use App\Models\AppliedJob;
                                     </div>
 
                                     @empty
-                                    <h4 class="text-center text-primary">Job Not Found</h4>
+                                    <h4 class="text-center text-primary m-5">Job Not Found</h4>
                                     @endforelse
                                 </div>
                             </div>

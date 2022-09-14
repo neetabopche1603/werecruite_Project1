@@ -1,5 +1,5 @@
 @extends('partials.admin.app')
-@section('adminTitle','Job Post')
+@section('adminTitle','All Jobs')
 @section('admin-content')
 @push('style')
 <!-- Data Table CSS -->
@@ -12,14 +12,14 @@
         <div class="row page-titles mx-0">
             <div class="col-sm-6 p-md-0">
                 <div class="welcome-text">
-                    <h4>Hi, welcome back Administrator!</h4>
-                    <p class="mb-0">Show All Job</p>
+                    <h4>Hi, Welcome Admin!</h4>
+                    <p class="mb-0">All Jobs</p>
                 </div>
             </div>
             <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Show Job's</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Show Applied Job's</a></li>
                 </ol>
             </div>
         </div>
@@ -47,45 +47,41 @@
         <div class="row">
             <div class="col-xl-12 col-xxl-12">
                 <div class="card">
+                    {{--<pre>
+                    {{print($allJobs)}}
+                    </pre>--}}
                     <div class="card-header">
                         <h4 class="card-title">Show All Job's</h4>
-                        <a href="{{route('admin.addJobPostView')}}" class="btn btn-primary  btn-outline-light float-lg-right" style="background-color: #450b5a; color: #fff;"><i class="fa fa-plus" aria-hidden="true"></i>Job Post</a>
+                       
                     </div>
                     <div class="card-body">
-                        <table id="jobPost" class="table table-striped table-bordered" style="width:100%">
+                        <table id="jobs" class="table table-striped table-bordered" style="width:100%">
                             <thead>
                                 <tr>
                                     <th>S.No.</th>
-                                    <th>Company Name</th>
                                     <th>Job Title</th>
-                                    <th>Skill</th>
-                                    <th>Role</th>
-                                    <th>Description</th>
-                                    <th>Action</th>
+                                    <th>Company Name</th>
+                                    <th>Show All Users</th>
                                 </tr>
                             </thead>
                             <tbody>
-
-                                @foreach($jobs as $key=>$job)
                                 @php
-                                    $skills = implode(",",$job->skills);
+                                $i=1;
                                 @endphp
+
+                                @foreach ($allJobs as $job)
                                 <tr>
-                                    <td>{{ $key+1 }}</td>
-                                    <td>{{$job->name}}</td>
+                                    <td>{{$i++}}</td>
                                     <td>{{$job->job_title}}</td>
-                                    <td>{{$skills}}</td>
-                                    <td>{{$job->job_role}}</td>
-                                    <td>{{wordwrap($job->description, 20)}}
-                                    </td>
-                                    <td>
-                                        <a href="{{url('admin/edit_jobsPost')}}/{{$job->id}}" class="btn btn-warning btn-sm btn-outline-light" style="background-color: #df5301; color: #fff;"><i class="fa fa-pencil-square" aria-hidden="true"></i></a>
+                                    <td>{{$job->name}}</td>
+                                    <td><a href="{{route('admin.screeningJobUsers',['jobid'=>$job->job_id])}}" class="btn btn-primary">Show All Applied Users</a></td>
+                                    {{-- <td>
+                                        <a href="{{url('client/edit_job')}}/{{$job->id}}" class="btn btn-warning btn-sm btn-outline-light" style="background-color: #df5301; color: #fff;"><i class="fa fa-pencil-square" aria-hidden="true"></i></a>
 
-                                        <a href="{{url('admin/delete_jobsPost')}}/{{$job->id}}" onclick="return confirm('Are you sure delete this job')" class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                    <a href="{{url('client/delete_job')}}/{{$job->id}}" onclick="return confirm('Are you sure delete this job')" class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i></a>
 
-                                    </td>
+                                    </td>--}}
                                 </tr>
-
                                 @endforeach
 
                             </tbody>
@@ -108,7 +104,7 @@
 
 <script>
     $(document).ready(function() {
-        $('#jobPost').DataTable();
+        $('#jobs').DataTable();
     });
 </script>
 
