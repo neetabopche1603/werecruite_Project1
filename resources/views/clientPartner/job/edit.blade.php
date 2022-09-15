@@ -7,7 +7,7 @@
         <div class="row page-titles mx-0">
             <div class="col-sm-6 p-md-0">
                 <div class="welcome-text">
-                    <h4>Hi, welcome back {{auth()->user()->name}}!</h4>
+                    <h4>Hi, welcome {{auth()->user()->name}}!</h4>
                     <!-- <p class="mb-0">Your business dashboard template</p> -->
                 </div>
             </div>
@@ -40,12 +40,15 @@
                                                 <input type="text" name="job_title" value="{{$jobEditViews->job_title}}" class="form-control" placeholder="Job Title" required>
                                             </div>
                                         </div>
+                                        <?php
+                                        $skillArr = json_decode($jobEditViews->skill);
+                                        ?>
                                         <div class="col-lg-7 mb-2">
                                             <div class="form-group">
                                                 <label class="text-label"><strong style="color: red;">*</strong><b>Skill :</b></label>
                                                 <select multiple class="form-control" name="skill[]" id="sel2">
                                                     @foreach ($skills as $skil )
-                                                    <option value="{{$skil->id}}" {{$skil->id == $jobEditViews->id ? 'selected' : ''}}>{{$skil->skill}}</option>
+                                                    <option value="{{$skil->id}}" {{$skil->id == in_array($skil->id,$skillArr) ? 'selected' : ''}}>{{$skil->skill}}</option>
                                                     @endforeach
                                                 </select>
                                                 <!-- <input type="text" name="skill" value="{{$jobEditViews->skill}}" class="form-control" placeholder="Skill" required> -->

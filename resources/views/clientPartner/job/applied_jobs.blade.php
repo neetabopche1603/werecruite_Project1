@@ -12,7 +12,7 @@
         <div class="row page-titles mx-0">
             <div class="col-sm-6 p-md-0">
                 <div class="welcome-text">
-                    <h4>Hi, welcome back {{auth()->user()->name}}!</h4>
+                    <h4>Hi, welcome  {{auth()->user()->name}}!</h4>
                     <p class="mb-0">All Jobs</p>
                 </div>
             </div>
@@ -51,7 +51,7 @@
                     {{print($allJobs)}}
                     </pre>--}}
                     <div class="card-header">
-                        <h4 class="card-title">Show All Job's</h4>
+                        <h4 class="card-title">Show Applied Jobs</h4>
                        
                     </div>
                     <div class="card-body">
@@ -72,7 +72,7 @@
                                 <tr>
                                     <td>{{$i++}}</td>
                                     <td>{{$job->job_title}}</td>
-                                    <td><a href="{{route('client.appliedJobUsers',['jobid'=>$job->id])}}" class="btn btn-primary">Show All Applied Users</a></td>
+                                    <td><a href="{{route('client.appliedJobUsers',['jobid'=>$job->id])}}" class="btn btn-btn-outline-light" style="background-color: #df5301; color: #fff;">Show All Applied Users</a></td>
                                     {{-- <td>
                                         <a href="{{url('client/edit_job')}}/{{$job->id}}" class="btn btn-warning btn-sm btn-outline-light" style="background-color: #df5301; color: #fff;"><i class="fa fa-pencil-square" aria-hidden="true"></i></a>
 

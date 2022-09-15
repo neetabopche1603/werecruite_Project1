@@ -2,6 +2,7 @@
 
 namespace App\Rules;
 
+use App\Models\SuperAdmin;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Facades\Hash;
 
@@ -26,7 +27,8 @@ class AdminOldPassword implements Rule
      */
     public function passes($attribute, $value)
     {
-        return Hash::check($value, auth()->user()->password);
+        $old_pass = SuperAdmin::where('email',session()->get('user_name'))->first();
+        return Hash::check($value, $old_pass->password);
 
     }
 

@@ -73,7 +73,7 @@
         <div class="row page-titles mx-0">
             <div class="col-sm-6 p-md-0">
                 <div class="welcome-text">
-                    <h4>Hi, welcome back {{auth()->user()->name}}!</h4>
+                    <h4>Hi, welcome  {{auth()->user()->name}}!</h4>
                     <p class="mb-0">Applied Jobs</p>
                 </div>
             </div>
@@ -112,7 +112,7 @@
                     {{print($appliedJobs)}}
                     </pre>--}}
                     <div class="card-header">
-                        <h4 class="card-title">Show All Job's</h4>
+                        <h4 class="card-title">Show All User Applied Jobs</h4>
                        
                     </div>
                     <div class="card-body">

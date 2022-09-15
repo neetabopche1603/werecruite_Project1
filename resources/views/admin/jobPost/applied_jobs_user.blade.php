@@ -73,7 +73,7 @@
         <div class="row page-titles mx-0">
             <div class="col-sm-6 p-md-0">
                 <div class="welcome-text">
-                    <h4>Hi, Welcome Admin!</h4>
+                    <h4>Hi, Welcome Administrator!</h4>
                     <p class="mb-0">Applied Jobs</p>
                 </div>
             </div>

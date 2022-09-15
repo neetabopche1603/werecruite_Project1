@@ -7,7 +7,7 @@
         <div class="row page-titles mx-0">
             <div class="col-sm-6 p-md-0">
                 <div class="welcome-text">
-                    <h4>Hi, welcome back!</h4>
+                    <h4>Hi, welcome {{ $adminProfile->name }}</h4>
                     <!-- <p class="mb-0">Your business dashboard template</p> -->
                 </div>
             </div>
@@ -87,6 +87,13 @@
                                         <input type="email" name="email" value="{{$adminProfile->email}}" class="form-control input-default " placeholder="Enter Email">
                                     </div>
                                 </div>
+
+                                <!-- <div class="col-12">
+                                    <div class="form-group">
+                                        <label for=""><span class="text-danger">*</span><b>Password:</b></label>
+                                        <input type="password" name="password" class="form-control input-default " placeholder="********">
+                                    </div>
+                                </div> -->
                                 
                                 {{-- <div class="col-12">
                                          <div class="form-group">
@@ -106,7 +113,7 @@
                         <div class="form-group">
                             <label for=""><span class="text-danger">*</span><b>Image:</b></label>
                             <input type="file" name="image" class="form-control input-default " placeholder="">
-                            <img src="{{asset('image')}}/{{$adminProfile->image}}" alt="image" width="100px" height="100px">
+                            <!-- <img src="{{asset('image')}}/{{$adminProfile->image}}" alt="image" width="100px" height="100px"> -->
                         </div>
                     </div>
 
@@ -128,7 +135,7 @@
 <!--Change Password  -->
 <div class="col-xl-5 col-lg-5">
     <div class="card">
-        <!-- Notification Start -->
+     -- Notification Start --
         @if(Session::get('password'))
         <div class="alert alert-warning alert-dismissible fade show" role="alert">
             <strong>{{session::get('password')}}</strong>
@@ -138,9 +145,9 @@
         </div>
         @endif
 
-        <!-- Notification Start -->
+       -- Notification Start 
 
-        <div class="card-header">
+         <div class="card-header">
             <h4 class="card-title">Change Password</h4>
         </div>
         <div class="card-body">
@@ -181,7 +188,7 @@
                     <input type="submit" class="btn btn-primary" value="Save">
                 </form>
             </div>
-        </div>
+        </div> 
     </div>
 </div>
 

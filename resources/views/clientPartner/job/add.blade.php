@@ -7,7 +7,7 @@
         <div class="row page-titles mx-0">
             <div class="col-sm-6 p-md-0">
                 <div class="welcome-text">
-                    <h4>Hi, welcome back {{auth()->user()->name}}!</h4>
+                    <h4>Hi, welcome  {{auth()->user()->name}}!</h4>
                     <!-- <p class="mb-0">Your business dashboard template</p> -->
                 </div>
             </div>
@@ -49,7 +49,7 @@
                                                 <label class="text-label"><strong style="color: red;">*</strong><b>Skill:</b></label>
                                                 <select multiple class="form-control" name="skill[]" id="sel2">
                                                     @foreach ($skills as $skill )
-                                                    <option value="{{$skill->skill}}">{{$skill->skill}}</option>
+                                                    <option value="{{$skill->id}}">{{$skill->skill}}</option>
                                                     @endforeach
                                                 </select>
 
@@ -68,7 +68,7 @@
                                                 <select class="form-control" name="job_role" id="">
                                                     <option value="AL">--Choose Job Role--</option>
                                                     @foreach ($jobRole as $jRole )
-                                                    <option value="{{$jRole->job_role}}">{{$jRole->job_role}}</option>
+                                                    <option value="{{$jRole->id}}">{{$jRole->job_role}}</option>
                                                     @endforeach
                                                 </select>
                                                 <!-- <input type="text" name="job_role" class="form-control" placeholder="Role"> -->

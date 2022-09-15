@@ -95,12 +95,7 @@
                             <li><a href="./map-jqvmap.html">Jqv Map</a></li>
                         </ul>
                     </li> -->
-                    <!-- <li><a href="{{route('admin.company')}}" class="ai-icon" aria-expanded="false">
-							<i class="flaticon-381-settings-2"></i>
-							<span class="nav-text">Company</span>
-						</a>
-					</li> -->
-
+                  
                     <li><a href="{{route('admin.jobRole')}}" class="ai-icon" aria-expanded="false">
 							<i class="flaticon-381-settings-2"></i>
 							<span class="nav-text">Job Role</span>

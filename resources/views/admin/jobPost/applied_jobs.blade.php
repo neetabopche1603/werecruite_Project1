@@ -12,7 +12,7 @@
         <div class="row page-titles mx-0">
             <div class="col-sm-6 p-md-0">
                 <div class="welcome-text">
-                    <h4>Hi, Welcome Admin!</h4>
+                    <h4>Hi, Welcome Administrator!</h4>
                     <p class="mb-0">All Jobs</p>
                 </div>
             </div>
@@ -74,7 +74,7 @@
                                     <td>{{$i++}}</td>
                                     <td>{{$job->job_title}}</td>
                                     <td>{{$job->name}}</td>
-                                    <td><a href="{{route('admin.screeningJobUsers',['jobid'=>$job->job_id])}}" class="btn btn-primary">Show All Applied Users</a></td>
+                                    <td><a href="{{route('admin.screeningJobUsers',['jobid'=>$job->job_id])}}" class="btn btn-outline-light" style="background-color: #df5301; color: #fff;">Show all screening users</a></td>
                                     {{-- <td>
                                         <a href="{{url('client/edit_job')}}/{{$job->id}}" class="btn btn-warning btn-sm btn-outline-light" style="background-color: #df5301; color: #fff;"><i class="fa fa-pencil-square" aria-hidden="true"></i></a>
 

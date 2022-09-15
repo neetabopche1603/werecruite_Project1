@@ -1,6 +1,7 @@
 @extends('partials.admin.app')
 @section('adminTitle','Job Post')
 @section('admin-content')
+<link rel="stylesheet" href="{{asset('admin/vendor/select2/css/select2.min.css')}}">
 @push('style')
 
 @endpush
@@ -9,7 +10,7 @@
         <div class="row page-titles mx-0">
             <div class="col-sm-6 p-md-0">
                 <div class="welcome-text">
-                    <h4>Hi, welcome back Administrator!</h4>
+                    <h4>Hi, welcome Administrator!</h4>
                     <!-- <p class="mb-0">Your business dashboard template</p> -->
                 </div>
             </div>
@@ -64,9 +65,9 @@
                                         <div class="col-lg-7 mb-2">
                                             <div class="form-group">
                                                 <label class="text-label"><strong style="color: red;">*</strong><b>Skill:</b></label>
-                                                <select multiple class="form-control" name="skill[]" id="sel2">
+                                                <select  multiple="multiple" class="form-control" name="skill[]" id="sel2">
                                                     @foreach ($skills as $skill )
-                                                    <option value="{{$skill->skill}}">{{$skill->skill}}</option>
+                                                    <option value="{{$skill->id}}">{{$skill->skill}}</option>
                                                     @endforeach
                                                 </select>
 
@@ -110,8 +111,6 @@
                                                 </span>
                                             </div>
                                         </div>
-
-
                                     </div>
                                 </section>
                             </div>
@@ -127,6 +126,7 @@
 @endsection
 
 @push('script')
-
-
+<script src="{{asset('admin/vendor/chart.js/Chart.bundle.min.js')}}"></script>
+    <script src="{{asset('admin/vendor/select2/js/select2.full.min.js')}}"></script>
+    <script src="{{asset('admin/js/plugins-init/select2-init.js')}}"></script>
 @endpush

@@ -1,5 +1,5 @@
 <div class="footer">
-            <div class="copyright">
-                <p>Copyright © Designed &amp; Developed by <a href="http://dexignzone.com/" target="_blank">DexignZone</a> 2020</p>
+<div class="copyright">
+                <p>Copyright © Designed &amp; Developed by <a href="#" target="_blank">EMS</a> 2022</p>
             </div>
         </div>

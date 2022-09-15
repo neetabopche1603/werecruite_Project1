@@ -22,16 +22,23 @@ $settings = Setting::get();
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('settings/'.$settings[0]['favicon'] )}}">
     <link href="{{asset('admin/vendor/jqvmap/css/jqvmap.min.css')}}" rel="stylesheet">
-	<link rel="stylesheet" href="{{asset('admin/vendor/chartist/css/chartist.min.css')}}">
+    <link rel="stylesheet" href="{{asset('admin/vendor/chartist/css/chartist.min.css')}}">
     <link href="{{asset('admin/vendor/bootstrap-select/dist/css/bootstrap-select.min.css')}}" rel="stylesheet">
     <link href="{{asset('admin/css/style.css')}}" rel="stylesheet">
-	<link href="https://cdn.lineicons.com/2.0/LineIcons.css" rel="stylesheet">
+    <link href="https://cdn.lineicons.com/2.0/LineIcons.css" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
+    <style>
+    .custom-select
+    {
+        padding-right: 20px !important;
+    }
+    </style>
 
 </head>
 
 @stack('style')
+
 <body>
 
     <!--*******************
@@ -53,12 +60,12 @@ $settings = Setting::get();
     ***********************************-->
     <div id="main-wrapper">
 
-    @include('partials.admin.header')
-    @include('partials.admin.sidebar')
-    @yield('admin-content')
-    @include('partials.admin.footer')
+        @include('partials.admin.header')
+        @include('partials.admin.sidebar')
+        @yield('admin-content')
+        @include('partials.admin.footer')
 
-</div>
+    </div>
     <!--**********************************
         Main wrapper end
     ***********************************-->
@@ -68,18 +75,24 @@ $settings = Setting::get();
     ***********************************-->
     <!-- Required vendors -->
     <script src="{{asset('admin/vendor/global/global.min.js')}}"></script>
-	<script src="{{asset('admin/vendor/bootstrap-select/dist/js/bootstrap-select.min.js')}}"></script>
+    <script src="{{asset('admin/vendor/bootstrap-select/dist/js/bootstrap-select.min.js')}}"></script>
     <script src="{{asset('admin/js/custom.min.js')}}"></script>
-	<script src="{{asset('admin/js/deznav-init.js')}}"></script>
-	<!-- Apex Chart -->
-	<script src="{{asset('admin/vendor/apexchart/apexchart.js')}}"></script>
-	
-	
-	<!-- Dashboard 1 -->
-	<script src="{{asset('admin/js/dashboard/dashboard-1.js')}}"></script>
-    
-	@stack('script')
+    <script src="{{asset('admin/js/deznav-init.js')}}"></script>
+    <!-- Apex Chart -->
+    <script src="{{asset('admin/vendor/apexchart/apexchart.js')}}"></script>
+    <!-- Dashboard 1 -->
+    <script src="{{asset('admin/js/dashboard/dashboard-1.js')}}"></script>
 
-	
+    <!-- Required vendors -->
+    <script>
+        $(function() {
+            setTimeout(function() { $(".alert").fadeOut(1500); }, 3000)
+        });
+    </script>
+
+    @stack('script')
+
+
 </body>
+
 </html>

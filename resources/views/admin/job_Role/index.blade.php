@@ -6,13 +6,16 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css">
    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+    
+</style>
 @endpush
 <div class="content-body">
             <div class="container-fluid">
                 <div class="row page-titles mx-0">
                     <div class="col-sm-6 p-md-0">
                         <div class="welcome-text">
-                            <h4>Hi, welcome back Administrator!</h4>
+                            <h4>Hi, welcome {{$super_admin[0]['name']}}</h4>
                             <p class="mb-0">Show All Job Role</p>
                         </div>
                     </div>
@@ -70,9 +73,9 @@
                                             <td>{{$i++}}</td>
                                             <td>{{$jobRole->job_role}}</td>
                                             <td>
-                                                <a href="{{url('admin/edit_jobRole')}}/{{$jobRole->id}}" class="btn btn-warning btn-sm btn-outline-light" style="background-color: #df5301; color: #fff;"><i class="fa fa-pencil-square" aria-hidden="true"></i></a>
+                                                <a href="{{url('admin/edit-job-role')}}/{{$jobRole->id}}" class="btn btn-warning btn-sm btn-outline-light" style="background-color: #df5301; color: #fff;"><i class="fa fa-pencil-square" aria-hidden="true"></i></a>
 
-                                                <a href="{{url('admin/delete_jobRole')}}/{{$jobRole->id}}" onclick="return confirm('Are you sure delete this job')" class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                                <a href="{{url('admin/delete-job-role')}}/{{$jobRole->id}}" onclick="return confirm('Are you sure delete this job')" class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i></a>
 
                                             </td>
                                         </tr>

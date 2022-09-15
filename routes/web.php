@@ -1,12 +1,7 @@
 <?php
 
-use App\Http\Controllers\Admin\CompanyController;
 use App\Http\Controllers\Admin\HomeController;
-use App\Http\Controllers\Admin\JobPostController;
-use App\Http\Controllers\Admin\JobRoleController;
 use App\Http\Controllers\Admin\ProfileController;
-use App\Http\Controllers\Admin\SettingController;
-use App\Http\Controllers\Admin\SkillController;
 use App\Http\Controllers\AppliedJobController;
 use App\Http\Controllers\Auth\AdminAuthController;
 use App\Http\Controllers\Auth\AuthController;
@@ -14,9 +9,7 @@ use App\Http\Controllers\Auth\ClientAuthController;
 use App\Http\Controllers\Auth\ForgetPasswordController;
 use App\Http\Controllers\Client\ClientProfileController;
 use App\Http\Controllers\Client\HomeController as ClientHomeController;
-use App\Http\Controllers\Client\JobController;
 use App\Http\Controllers\Talent\HomeController as TalentHomeController;
-use App\Http\Controllers\Talent\JobsController;
 use App\Http\Controllers\Talent\TalentProfileController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -44,8 +37,8 @@ Route::get('eye', function () {
 })->name('eye');
 
 // ==============SUPER ADMIN SINGN IN ! ROUTE==========
-Route::get('superadmin',[AdminAuthController::class,'adminLogin'])->name('admin.login');
-Route::post('superadmin',[AdminAuthController::class,'adminStore'])->name('admin.adminStore');
+Route::get('superadmin', [AdminAuthController::class, 'adminLogin'])->name('admin.login');
+Route::post('superadmin', [AdminAuthController::class, 'adminStore'])->name('admin.adminStore');
 // =================Logout SUPER Admin Route============
 Route::get('admin_logout', function () {
     session()->forget('user_name');
@@ -59,7 +52,7 @@ Route::post('client/sign-up', [ClientAuthController::class, 'registerStore'])->n
 // =============(CLIENT) SIGN IN ! ROUTE===========
 Route::get('client/', [ClientAuthController::class, 'loginView'])->name('client.login');
 Route::post('client/', [ClientAuthController::class, 'login'])->name('client.loginpost');
-// ========= USER Logout Route===========
+// ========= CLIENT Logout Route===========
 Route::get('client_logout', function () {
     Auth::logout();
     return redirect()->route('client.login');
@@ -80,11 +73,11 @@ Route::get('/logout', function () {
     return redirect()->route('login');
 })->name('user.logout');
 
-// =========FORGET PASSWORS Route===========
+// =========FORGET PASSWORS Route (client & user)===========
 Route::get('forget-password', [ForgetPasswordController::class, 'forget_password'])->name('forget_password');
 Route::post('forget-password', [ForgetPasswordController::class, 'forgetpass_post'])->name('forget.password.post');
 
-// =========RESET PASSWORS Route===========
+// =========RESET PASSWORS Route(client & user)===========
 Route::get('reset-link/{token}', [ForgetPasswordController::class, 'reset_link'])->name('reset_link');
 Route::post('reset-link', [ForgetPasswordController::class, 'reset_link_post'])->name('reset.link.post');
 
@@ -95,80 +88,50 @@ Route::group(['prefix' => 'admin',], function () {
     // Route::get('admin/home', function () {
     //     return view('admin.home');
     // })->name('admin.home');
-    //Profile Update Route
+
+
+    //===================Profile Update Route===================
     Route::get('profile', [ProfileController::class, 'adminProfile'])->name('admin.profile');
     Route::post('profile', [ProfileController::class, 'updateProfiles'])->name('admin.updateProfiles');
-    //Change password
+    //===================Change password===================
+    
     Route::post('change-password', [ProfileController::class, 'adminChangePassword'])->name('admin.adminChangePassword');
 
-    // Setting Route
-    Route::get('setting', [SettingController::class, 'settingView'])->name('admin.settingView');
-    //Logo Route
-    Route::post('logo', [SettingController::class, 'logoUpdate'])->name('admin.logoUpdate');
-    // Favicon Route
-    Route::post('favicon', [SettingController::class, 'faviconUpdate'])->name('admin.faviconUpdate');
-    // Job Post Route
-    Route::get('show_jobs',[JobPostController::class,'jobPosts'])->name('admin.jobPosts');
-    Route::get('add_jobsPost',[JobPostController::class,'addJobPostView'])->name('admin.addJobPostView');
-    Route::post('add_jobsPost',[JobPostController::class,'jobPostStore'])->name('admin.jobPostStore');
-    Route::get('edit_jobsPost/{id}',[JobPostController::class,'editJobPostView'])->name('admin.editJobPostView');
-    Route::post('edit_jobsPost',[JobPostController::class,'jobPostUpdate'])->name('admin.jobPostUpdate');
-    Route::get('delete_jobsPost/{id}',[JobPostController::class,'jobPostDelete'])->name('admin.jobPostDelete');
+    // ===================Setting Route===================
+    Route::get('setting', [ProfileController::class, 'settingView'])->name('admin.settingView');
+    //===================Logo Route===================
+    Route::post('logo', [ProfileController::class, 'logoUpdate'])->name('admin.logoUpdate');
+    // ===================Favicon Route===================
+    Route::post('favicon', [ProfileController::class, 'faviconUpdate'])->name('admin.faviconUpdate');
+    // ===================Job Post Route===================
+    Route::get('show-jobs', [HomeController::class, 'jobPosts'])->name('admin.jobPosts');
+    Route::get('add-jobsPost', [HomeController::class, 'addJobPostView'])->name('admin.addJobPostView');
+    Route::post('add-jobsPost', [HomeController::class, 'jobPostStore'])->name('admin.jobPostStore');
+    Route::get('edit-jobsPost/{id}', [HomeController::class, 'editJobPostView'])->name('admin.editJobPostView');
+    Route::post('edit-jobsPost', [HomeController::class, 'jobPostUpdate'])->name('admin.jobPostUpdate');
+    Route::get('delete-jobsPost/{id}', [HomeController::class, 'jobPostDelete'])->name('admin.jobPostDelete');
 
-    // Company Route
-    Route::get('show_company',[CompanyController::class,'company'])->name('admin.company');
-    Route::get('add_company',[CompanyController::class,'CompanyAddView'])->name('admin.CompanyAddView');
-    Route::post('add_company',[CompanyController::class,'companyStore'])->name('admin.companyStore');
-    Route::get('edit_company/{id}',[CompanyController::class,'CompanyEdit'])->name('admin.CompanyEdit');
-    Route::post('edit_company',[CompanyController::class,'companyUpdate'])->name('admin.companyUpdate');
-    Route::get('delete_company/{id}',[CompanyController::class,'companyDelete'])->name('admin.companyDelete');
+    //=================== JobRole Route ===================
+    Route::get('show-job-role', [HomeController::class, 'jobRole'])->name('admin.jobRole');
+    Route::get('add-job-role', [HomeController::class, 'jobRoleAddForm'])->name('admin.jobRoleAddForm');
+    Route::post('add-job-role', [HomeController::class, 'jobRoleAddStore'])->name('admin.jobRoleAddStore');
+    Route::get('edit-job-role/{id}', [HomeController::class, 'jobRoleEdit'])->name('admin.jobRoleEdit');
+    Route::post('edit-job-role', [HomeController::class, 'jobRoleUpdate'])->name('admin.jobRoleUpdate');
+    Route::get('delete-job-role/{id}', [HomeController::class, 'jobRoleDelete'])->name('admin.jobRoleDelete');
 
-    // JobRole Route
-    Route::get('show_jobRole',[JobRoleController::class,'jobRole'])->name('admin.jobRole');
-    Route::get('add_jobRole',[JobRoleController::class,'jobRoleAddForm'])->name('admin.jobRoleAddForm');
-    Route::post('add_jobRole',[JobRoleController::class,'jobRoleAddStore'])->name('admin.jobRoleAddStore');
-    Route::get('edit_jobRole/{id}',[JobRoleController::class,'jobRoleEdit'])->name('admin.jobRoleEdit');
-    Route::post('edit_jobRole',[JobRoleController::class,'jobRoleUpdate'])->name('admin.jobRoleUpdate');
-    Route::get('delete_jobRole/{id}',[JobRoleController::class,'jobRoleDelete'])->name('admin.jobRoleDelete');
-
-    // SKILL ROUTE
-    Route::get('show_skill',[SkillController::class,'skill'])->name('admin.skill');
-    Route::get('add_skill',[SkillController::class,'skillAddForm'])->name('admin.skillAddForm');
-    Route::post('add_skill',[SkillController::class,'skillStore'])->name('admin.skillStore');
-    Route::get('edit_skill/{id}',[SkillController::class,'skillEditForm'])->name('admin.skillEditForm');
-    Route::post('edit_skill',[SkillController::class,'skillUpdate'])->name('admin.skillUpdate');
-    Route::get('delete_skill/{id}',[SkillController::class,'skillDelete'])->name('admin.skillDelete');
-
-    // Route::get('admin-logout', [AdminAuthController::class, 'logout'])->name('superadmin.logout');
-    Route::get('show_screening_jobs',[JobPostController::class,'allJobs'])->name('admin.getAllJob');
-    Route::get('get-all-users/{jobid}',[JobPostController::class,'screeningJobUsers'])->name('admin.screeningJobUsers');
-    Route::post('change_screening_status',[JobPostController::class,'jobStatusScreening'])->name('admin.screening');
-    Route::post('change_interview_status',[JobPostController::class,'jobStatusInterview'])->name('admin.interview');
-    Route::post('change_selected_status',[JobPostController::class,'jobStatusSelected'])->name('admin.selected');
-
-});
-
-
-// ===========Talent-Partner Route===========
-Route::group(['prefix' => 'user', 'middleware' => 'talentPartner'], function () {
-    Route::get('home', function () {
-        return view('talentPartner.home');
-    })->name('talentPartner.home');
-
-    Route::get('home', [TalentHomeController::class, 'talentHome'])->name('talentPartner.home');
-    // Talent Profile Route
-    Route::get('profile', [TalentProfileController::class, 'profileView'])->name('talent.profileView');
-    Route::post('profile', [TalentProfileController::class, 'ProfileUpdate'])->name('talent.ProfileUpdate');
-    //Change password
-    Route::post('change-password', [TalentProfileController::class, 'passwordChange'])->name('client.passwordChange');
-    //Jobs Route
-    Route::get('jobsView', [JobsController::class, 'jobsView'])->name('talent.jobsView');
-    Route::get('job_desc/{id}', [JobsController::class, 'job_desc'])->name('talent.job_desc');
-    // Applied Job Route
-    Route::get('applied_Job/{job_id}', [AppliedJobController::class, 'appliedJob'])->name('talent.appliedJob');
-    
-
-    
+    //=================== SKILL ROUTE ===================
+    Route::get('show-skill', [HomeController::class, 'skill'])->name('admin.skill');
+    Route::get('add-skill', [HomeController::class, 'skillAddForm'])->name('admin.skillAddForm');
+    Route::post('add-skill', [HomeController::class, 'skillStore'])->name('admin.skillStore');
+    Route::get('edit-skill/{id}', [HomeController::class, 'skillEditForm'])->name('admin.skillEditForm');
+    Route::post('edit-skill', [HomeController::class, 'skillUpdate'])->name('admin.skillUpdate');
+    Route::get('delete-skill/{id}', [HomeController::class, 'skillDelete'])->name('admin.skillDelete');
+    // ===========Admin status Change screening Route ===========
+    Route::get('show-screening-jobs', [HomeController::class, 'allJobs'])->name('admin.getAllJob');
+    Route::get('get-all-users/{jobid}', [HomeController::class, 'screeningJobUsers'])->name('admin.screeningJobUsers');
+    Route::post('change-screening-status', [HomeController::class, 'jobStatusScreening'])->name('admin.screening');
+    Route::post('change-interview-status', [HomeController::class, 'jobStatusInterview'])->name('admin.interview');
+    Route::post('change-selected-status', [HomeController::class, 'jobStatusSelected'])->name('admin.selected');
 });
 
 
@@ -180,24 +143,41 @@ Route::group(['prefix' => 'client', 'middleware' => 'clientPartner'], function (
 
     Route::get('home', [ClientHomeController::class, 'clientHome'])->name('clientPartner.home');
 
-
-    // Client Profile Route
+    // ===================Client Profile Route===================
     Route::get('profile', [ClientProfileController::class, 'profileViewPage'])->name('client.profileView');
     Route::post('profile', [ClientProfileController::class, 'updateProfile'])->name('client.updateProfile');
-    //Change password
+    //===================Change password===================
     Route::post('change-password', [ClientProfileController::class, 'changePassword'])->name('client.changePassword');
 
-    //Job Routes
-    Route::get('show_job', [JobController::class, 'index'])->name('client.showJob');
-    Route::get('add_job', [JobController::class, 'jobAddView'])->name('client.jobAddView');
-    Route::post('add_job', [JobController::class, 'jobAddStore'])->name('client.jobAddStore');
-    Route::get('edit_job/{id}', [JobController::class, 'jobEditView'])->name('client.jobEditView');
-    Route::post('edit_job', [JobController::class, 'jobUpdate'])->name('client.jobUpdate');
-    Route::get('delete_job/{id}', [JobController::class, 'jobDelete'])->name('client.jobDelete');
+    //===================Job Routes===================
+    Route::get('show-job', [ClientHomeController::class, 'index'])->name('client.showJob');
+    Route::get('add-job', [ClientHomeController::class, 'jobAddView'])->name('client.jobAddView');
+    Route::post('add-job', [ClientHomeController::class, 'jobAddStore'])->name('client.jobAddStore');
+    Route::get('edit-job/{id}', [ClientHomeController::class, 'jobEditView'])->name('client.jobEditView');
+    Route::post('edit-job', [ClientHomeController::class, 'jobUpdate'])->name('client.jobUpdate');
+    Route::get('delete-job/{id}', [ClientHomeController::class, 'jobDelete'])->name('client.jobDelete');
 
-    // Applied Job Routes
-    Route::get('show_applied_jobs',[JobController::class,'allJobs'])->name('client.getAllJob');
-    Route::get('get-all-users/{jobid}',[JobController::class,'appliedJobUsers'])->name('client.appliedJobUsers');
-    Route::post('change_applied_job_status',[JobController::class,'jobStatus'])->name('client.jobStatus');
-    
+    // ===================Applied Job Routes===================
+    Route::get('show-applied-jobs', [ClientHomeController::class, 'allJobs'])->name('client.getAllJob');
+    Route::get('get-all-users/{jobid}', [ClientHomeController::class, 'appliedJobUsers'])->name('client.appliedJobUsers');
+    Route::post('change-applied-job-status', [ClientHomeController::class, 'jobStatus'])->name('client.jobStatus');
+});
+
+
+// ===========Talent-Partner(USER) Route===========
+Route::group(['prefix' => 'user', 'middleware' => 'talentPartner'], function () {
+    Route::get('home', function () {
+        return view('talentPartner.home');
+    })->name('talentPartner.home');
+    Route::get('home', [TalentHomeController::class, 'talentHome'])->name('talentPartner.home');
+    //=================== Talent Profile Route  ===================
+    Route::get('profile', [TalentProfileController::class, 'profileView'])->name('talent.profileView');
+    Route::post('profile', [TalentProfileController::class, 'ProfileUpdate'])->name('talent.ProfileUpdate');
+    //===================Change password===================
+    Route::post('change-password', [TalentProfileController::class, 'passwordChange'])->name('client.passwordChange');
+    //===================User ViewJobs Route===================
+    Route::get('jobsView', [TalentHomeController::class, 'jobsView'])->name('talent.jobsView');
+    Route::get('job_desc/{id}', [TalentHomeController::class, 'job_desc'])->name('talent.job_desc');
+    // ===================Applied Job Route===================
+    Route::get('applied_Job/{job_id}', [AppliedJobController::class, 'appliedJob'])->name('talent.appliedJob');
 });

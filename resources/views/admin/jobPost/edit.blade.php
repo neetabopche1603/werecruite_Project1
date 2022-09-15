@@ -6,7 +6,7 @@
         <div class="row page-titles mx-0">
             <div class="col-sm-6 p-md-0">
                 <div class="welcome-text">
-                    <h4>Hi, welcome back Administrator!</h4>
+                    <h4>Hi, welcome Administrator!</h4>
                     <!-- <p class="mb-0">Your business dashboard template</p> -->
                 </div>
             </div>
@@ -54,12 +54,16 @@
 
                                             </div>
                                         </div>
+
+                                        <?php
+                                        $skillArr = json_decode($jobPostEdit->skill);
+                                        ?>
                                         <div class="col-lg-7 mb-2">
                                             <div class="form-group">
                                                 <label class="text-label"><strong style="color: red;">*</strong><b>Skill:</b></label>
                                                 <select multiple class="form-control" name="skill[]" id="sel2">
                                                     @foreach ($skills as $skill )
-                                                    <option value="{{$skill->id}}" {{$skill->id == $jobPostEdit->id ? 'selected' : ''}}>{{$skill->skill}}</option>
+                                                    <option value="{{$skill->id}}" {{$skill->id == in_array($skill->id,$skillArr) ? 'selected' : ''}}>{{$skill->skill}}</option>
                                                     @endforeach
                                                 </select>
 

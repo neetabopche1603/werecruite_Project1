@@ -12,7 +12,7 @@
                 <div class="row page-titles mx-0 mb-lg-2">
                     <div class="col-sm-6 p-md-0">
                         <div class="welcome-text">
-                            <h4>Hi, welcome back Administrator!</h4>
+                            <h4>Hi, welcome Administrator!</h4>
                             <p class="mb-0">Show All Job Skill</p>
                         </div>
                     </div>
@@ -70,9 +70,9 @@
                                             <td>{{$i++}}</td>
                                             <td>{{$skill->skill}}</td>
                                             <td>
-                                                <a href="{{url('admin/edit_skill')}}/{{$skill->id}}" class="btn btn-warning btn-sm btn-outline-light" style="background-color: #df5301; color: #fff;"><i class="fa fa-pencil-square" aria-hidden="true"></i></a>
+                                                <a href="{{url('admin/edit-skill')}}/{{$skill->id}}" class="btn btn-warning btn-sm btn-outline-light" style="background-color: #df5301; color: #fff;"><i class="fa fa-pencil-square" aria-hidden="true"></i></a>
 
-                                                <a href="{{url('admin/delete_skill')}}/{{$skill->id}}" onclick="return confirm('Are you sure delete this job')" class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                                <a href="{{url('admin/delete-skill')}}/{{$skill->id}}" onclick="return confirm('Are you sure delete this job')" class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i></a>
 
                                             </td>
                                         </tr>

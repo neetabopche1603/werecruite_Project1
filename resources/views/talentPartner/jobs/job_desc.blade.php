@@ -3,16 +3,16 @@
 @section('talentPartner-content')
 
 <div class="content-body">
-            <!-- row -->
-			<div class="container-fluid">
-				
-                <div class="form-head d-flex mb-3 mb-lg-5 align-items-start">
+	<!-- row -->
+	<div class="container-fluid">
+
+		<!-- <div class="form-head d-flex mb-3 mb-lg-5 align-items-start">
 					<a href="javascript:void(0);" class="btn btn-dark"><i class="flaticon-381-clock mr-2"></i> Edit Profile</a>
 					<a href="javascript:void(0);" class="btn btn-success ml-auto px-5">+ Add Netw Appointment</a>
-				</div>
-				
-                <div class="row">
-					<!-- <div class="col-xl-4">
+				</div> -->
+
+		<div class="row">
+			<!-- <div class="col-xl-4">
 						<div class="row">
 							<div class="col-lg-6 col-xl-12">
 								<div class="card bg-danger">
@@ -50,26 +50,26 @@
 							</div>
 						</div>
 					</div> -->
-					<div class="col-xl-8">
-						<div class="row">
-							<div class="col-md-12">
-								<div class="card">
-									<div class="card-body">
-										<div class="d-flex doctor-info-details mb-5">
-											<!-- <div class="media align-self-start">
+			<div class="col-xl-8">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="card">
+							<div class="card-body">
+								<div class="d-flex doctor-info-details mb-5">
+									<!-- <div class="media align-self-start">
 												<img alt="image" class="rounded" width="130" src="images/avatar/2.jpg">
 												<i class="flaticon-381-heart"></i>
 											</div> -->
-											<div class="media-body">
-												<h2 class="mb-2">{{$jobs->job_title}}</h2>
-												 @php
-                                    $skills = implode(",",$jobs->skills);
-                                @endphp
-												<p class="mb-md-2 mb-sm-4 mb-2">{{$skills}}</p>
-												<!-- <span><i class="flaticon-381-clock"></i> Join Date 21 August 2020, 12:45 AM</span> -->
-											</div>
-											<div class="text-md-right mt-4 mt-md-0">
-												<!-- <div class="dropdown mb-3">
+									<div class="media-body">
+										<h3 class="mb-2">{{$jobs->job_title}}</h3>
+										@php
+										$skills = implode(",",$jobs->skills);
+										@endphp
+										<p class="mb-md-2 mb-sm-4 mb-2"><span class="text-info text-center">Skills -</span>{{$skills}}</p>
+										<!-- <span><i class="flaticon-381-clock"></i> Join Date 21 August 2020, 12:45 AM</span> -->
+									</div>
+									<div class="text-md-right mt-4 mt-md-0">
+										<!-- <div class="dropdown mb-3">
 													<div class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown">
 														<i class="flaticon-381-user-7 mr-2"></i> Dentist
 													</div>
@@ -78,13 +78,19 @@
 														<a class="dropdown-item" href="#">Z To A List</a>
 													</div>
 												</div> -->
-												<div class="btn-apply button">
-													<a href="{{ route('talent.appliedJob', ['job_id'=> $jobs->id]) }}">
-														<button type="button" class="btn btn-primary" >Apply</button>
-													</a>
-
-												</div>
-												<!-- <div class="star-review">
+										
+										<div class="btn d-flex justify-content-center align-content-center">
+											@if($applied_job != null)
+											<a href="#">
+												<button type="button" class="btn btn-success">Applied</button>
+											</a>
+											@else
+											<a href="{{ route('talent.appliedJob', ['job_id'=> $jobs->id]) }}">
+												<button type="button" class="btn btn-primary">Apply Job</button>
+											</a>
+											@endif
+										</div>
+										<!-- <div class="star-review">
 													<i class="fa fa-star text-orange"></i>
 													<i class="fa fa-star text-orange"></i>
 													<i class="fa fa-star text-orange"></i>
@@ -92,21 +98,34 @@
 													<i class="fa fa-star text-gray"></i>
 													<span class="ml-3">238 reviews</span>
 												</div> -->
-											</div>
-										</div>
-										
-										<div class="doctor-info-content">
-											<h3 class="text-black mb-3">{{$jobs->job_role}}</h3>
-											<p class="mb-3">{{$jobs->description}}</p>
-										</div>
-									</div>
-									<div class="card-footer border-0 pt-0 text-center">
-										<a href="{{ route('talent.appliedJob', ['job_id'=> $jobs->id]) }}" class="btn-link">Apply</a>
 									</div>
 								</div>
-								
+
+								<div class="doctor-info-content">
+									<h4 class="text-black mb-3">{{$jobs->job_role}}</h4>
+									<h5>Job description</h5>
+									<p class="mb-3">{{$jobs->description}}</p>
+								</div>
 							</div>
-							<!-- <div class="col-md-12">
+							<div class="card-footer border-0 pt-0 text-center">
+
+							
+							<div class="btn d-flex justify-content-center align-content-center">
+											@if($applied_job != null)
+											<a href="#">
+												<button type="button" class="btn btn-success">Applied</button>
+											</a>
+											@else
+											<a href="{{ route('talent.appliedJob', ['job_id'=> $jobs->id]) }}">
+												<button type="button" class="btn btn-primary">Apply Job</button>
+											</a>
+											@endif
+										</div>
+							</div>
+						</div>
+
+					</div>
+					<!-- <div class="col-md-12">
 								<div class="card">
 									<div class="card-header border-0 pb-0">
 										<h4 class="card-title">Assigned Patient</h4>
@@ -131,7 +150,7 @@
 									</div>
 								</div>
 							</div> -->
-							<!-- <div class="col-md-12">
+					<!-- <div class="col-md-12">
 								<div class="card">
 									<div class="card-header border-0 pb-0">
 										<h4 class="card-title">Recent Review</h4>
@@ -201,14 +220,14 @@
 								</div>
 								
 							</div> -->
-						</div>
-					</div>
 				</div>
-            </div>
-        </div>
+			</div>
+		</div>
+	</div>
+</div>
 
 
-								
+
 @endsection
 
 @push('script')
