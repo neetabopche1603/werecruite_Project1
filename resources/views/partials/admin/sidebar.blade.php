@@ -97,26 +97,26 @@
                     </li> -->
                   
                     <li><a href="{{route('admin.jobRole')}}" class="ai-icon" aria-expanded="false">
-							<i class="flaticon-381-settings-2"></i>
+                    <i class="flaticon-381-controls-3"></i>
 							<span class="nav-text">Job Role</span>
 						</a>
 					</li>
 
                     <li><a href="{{route('admin.skill')}}" class="ai-icon" aria-expanded="false">
-							<i class="flaticon-381-settings-2"></i>
+                    <i class="flaticon-381-notepad"></i>
 							<span class="nav-text">Skill</span>
 						</a>
 					</li>
 
                     
                     <li><a href="{{route('admin.jobPosts')}}" class="ai-icon" aria-expanded="false">
-							<i class="flaticon-381-settings-2"></i>
+                    <i class="flaticon-381-network"></i>
 							<span class="nav-text">Job Post</span>
 						</a>
 					</li>
 
                     <li><a href="{{route('admin.getAllJob')}}" class="ai-icon" aria-expanded="false">
-							<i class="flaticon-381-settings-2"></i>
+                    <i class="flaticon-381-television"></i>
 							<span class="nav-text">Screening User</span>
 						</a>
 					</li>
@@ -162,13 +162,13 @@
                     </li> -->
                 </ul>
             
-				<div class="plus-box">
+				<!-- <div class="plus-box">
 					<p>Create new appointment</p>
 				</div>
 				<div class="copyright">
 					<p><strong>We Recruite</strong> © 2022 All Rights Reserved</p>
 					<p>Made with <i class="fa fa-heart"></i> by EMS</p>
-				</div>
+				</div> -->
 			</div>
         </div>
         <!--**********************************

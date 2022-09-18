@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Talent;
 
 use App\Http\Controllers\Controller;
+use App\Models\Notification;
 use App\Models\Job;
 use App\Models\Setting;
 use App\Models\Skill;
@@ -16,19 +17,23 @@ class HomeController extends Controller
         return view('talentPartner.home',compact('setting'));
     }
 
+    public function seen(Request $request)
+    {
+        Notification::where('id',$request->id)->update(['is_seen' => 1]);
+        return response()->json([
+            "status"=>"success"
+        ]);
+    }
+
             // =====================VIEW JOBS=========================
     public function jobsView(){
-        // $jobs = Job::leftJoin('applied_jobs','jobs.id','=','applied_jobs.job_id')->select('jobs.*','applied_jobs.user_id as user_id')->get();
-       
-        // $jobs = Job::join('job_roles','jobs.job_role','=','job_roles.id')->select('jobs.*','job_roles.*')->get();
-
         $jobs = Job::get();
         return view('talentPartner.jobs.jobs',compact('jobs'));
     }
 
     public function job_desc($id){
         // $jobs = Job::find($id);
-        $jobs = Job::join('job_roles','jobs.job_role','=','job_roles.id')->select('jobs.*','job_roles.*')->where('jobs.id',$id)->first();
+        $jobs = Job::join('job_roles','jobs.job_role','=','job_roles.id')->select('jobs.*','job_roles.job_role')->where('jobs.id',$id)->first();
            
             $arr = array();
             $final = array();

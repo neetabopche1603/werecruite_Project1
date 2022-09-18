@@ -9,8 +9,10 @@ use App\Models\JobRole;
 use App\Models\Setting;
 use App\Models\Skill;
 use App\Models\SuperAdmin;
+use App\Models\Notification;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -73,7 +75,8 @@ class HomeController extends Controller
     
     public function skill(){
         $skills = Skill::get();
-        return view('admin.skill.index',compact('skills'));
+        $super_admin = SuperAdmin::get();
+        return view('admin.skill.index',compact('skills','super_admin'));
     }
 
     public function skillAddForm(){
@@ -114,11 +117,10 @@ class HomeController extends Controller
     // Show All Jobs
     public function jobPosts()
     {
-        // $jobs = Job::join('companies','jobs.user_id','=','companies.id')->select('jobs.*','companies.*')->get();
+        $super_admin = SuperAdmin::get();
+        $jobs = job::join('job_roles','jobs.job_role','=','job_roles.id')->select('jobs.*','job_roles.job_role',)->get(); 
 
-        $jobs = job::join('users','jobs.user_id','=','users.id')->where('role',1)->join('job_roles','jobs.job_role','=','job_roles.id')->select('users.name','jobs.*','job_roles.job_role',)->get(); 
-
-        // $jobs = Job::get();
+        
         foreach($jobs as $val)
         {
             $arr = array();
@@ -138,16 +140,17 @@ class HomeController extends Controller
             $val->skills = $final;
         }
 
-        return view('admin.jobPost.index', compact('jobs'));
+        return view('admin.jobPost.index', compact('jobs','super_admin'));
     }
 
     public function addJobPostView()
     {
         // $company = Company::get();
+        $super_admin = SuperAdmin::get();
         $company = User::where('role',1)->get();
         $skills = Skill::get();
         $jobRole = JobRole::get();
-        return view('admin.jobPost.add', compact('company','skills','jobRole'));
+        return view('admin.jobPost.add', compact('company','skills','jobRole','super_admin'));
     }
 
     // Job Store Form Function
@@ -170,6 +173,12 @@ class HomeController extends Controller
         $jobStore->description = $request->description;
         $jobStore->save();
 
+        $notification = new Notification();
+        $notification->title = $jobStore->job_title;
+        $notification->job_id = $jobStore->id;
+        $notification->type = "User";
+        $notification->save();
+
         return redirect()->route('admin.jobPosts')->with('success', 'Job Post Create Successfully.....!');
     }
 
@@ -180,7 +189,8 @@ class HomeController extends Controller
         $skills = Skill::get();
         $companys = User::where('role',1)->get();
         $jobRole = JobRole::get();
-        return view('admin.jobPost.edit',compact('jobPostEdit','companys','jobRole','skills'));
+        $super_admin = SuperAdmin::get();
+        return view('admin.jobPost.edit',compact('jobPostEdit','companys','jobRole','skills','super_admin'));
     }
 
 
@@ -207,15 +217,19 @@ class HomeController extends Controller
     // =================================Applied Job User Function============================
     public function allJobs()
     {
+        
         $allJobs = job::join('users','users.id','=','jobs.user_id')->join('applied_jobs','applied_jobs.job_id','=','jobs.id')->where('applied_jobs.status',1)->select('jobs.id as job_id','jobs.job_title','users.*')->get();
-        return view('admin.jobPost.applied_jobs', compact('allJobs'));
+        $super_admin = SuperAdmin::get();
+        return view('admin.jobPost.applied_jobs', compact('allJobs','super_admin'));
 
     }
 // ======================Admin Screening User Show Function=============================
     public function screeningJobUsers($jobid)
     {
+      
         $appliedJobs = AppliedJob::join('users', 'users.id', '=', 'applied_jobs.user_id')->join('jobs', 'jobs.id', '=', 'applied_jobs.job_id')->where('applied_jobs.job_id', $jobid)->select('applied_jobs.id as applied_job_id', 'applied_jobs.screening_schedule','applied_jobs.interview_schedule','applied_jobs.selected', 'users.id as user_id', 'users.name', 'users.email', 'users.mobile_no', 'jobs.job_title')->get();
-        return view('admin.jobPost.applied_jobs_user', compact('appliedJobs'));
+        $super_admin = SuperAdmin::get();
+        return view('admin.jobPost.applied_jobs_user', compact('appliedJobs','super_admin'));
     }
 // ======================Admin Screening Status User Show Function=============================
     public function jobStatusScreening(Request $request)
@@ -228,11 +242,38 @@ class HomeController extends Controller
         if ($request->checked == 1) {
             $appliedJob->screening_schedule = 1;
             $appliedJob->update();
-            return response()->json('Screening Scheduled');
+
+            $job = Job::find($appliedJob->job_id);
+            $user = User::find($appliedJob->user_id);
+            $datas = [
+                [
+                    'title'=>$job->job_title." Screening Scheduled.",
+                    'user_id'=>$appliedJob->user_id,
+                    'job_id'=>$appliedJob->job_id,
+                    'type'=>"User",
+                    'created_at' => date('Y-m-d H:i:s'),
+                    'updated_at' => date('Y-m-d H:i:s'),
+                ],
+                [
+                    'title'=>$job->job_title.' <b>'.$user->name."</b> Screening Scheduled.",
+                    'user_id'=>$job->user_id,
+                    'job_id'=>$appliedJob->job_id,
+                    'type'=>"Client",
+                    'created_at' => date('Y-m-d H:i:s'),
+                    'updated_at' => date('Y-m-d H:i:s'),
+                ]
+
+            ];
+
+            foreach($datas as $data){
+                DB::table('notifications')->insert($data);
+            }
+        
+            return response()->json(['result'=>'Screening Scheduled','status'=>'success']);
         } else {
             $appliedJob->screening_schedule = 0;
             $appliedJob->update();
-            return response()->json('Screening Not Scheduled');
+            return response()->json(['result'=>'Screening Not Scheduled','status'=>'success']);
         }
     }
 
@@ -246,11 +287,38 @@ class HomeController extends Controller
         if ($request->checked == 1) {
             $appliedJob->interview_schedule = 1;
             $appliedJob->update();
-            return response()->json('Interview Scheduled');
+
+            $job = Job::find($appliedJob->job_id);
+            $user = User::find($appliedJob->user_id);
+            $datas = [
+                [
+                    'title'=>$job->job_title." Interview Scheduled.",
+                    'user_id'=>$appliedJob->user_id,
+                    'job_id'=>$appliedJob->job_id,
+                    'type'=>"User",
+                    'created_at' => date('Y-m-d H:i:s'),
+                    'updated_at' => date('Y-m-d H:i:s'),
+                ],
+                [
+                    'title'=>$job->job_title.' <b>'.$user->name."</b> Interview Scheduled.",
+                    'user_id'=>$job->user_id,
+                    'job_id'=>$appliedJob->job_id,
+                    'type'=>"Client",
+                    'created_at' => date('Y-m-d H:i:s'),
+                    'updated_at' => date('Y-m-d H:i:s'),
+                ]
+
+            ];
+
+            foreach($datas as $data){
+                DB::table('notifications')->insert($data);
+            }
+
+            return response()->json(['result'=>'Interview Scheduled','status'=>'success']);
         } else {
             $appliedJob->interview_schedule = 0;
             $appliedJob->update();
-            return response()->json('Interview Not Scheduled');
+            return response()->json(['result'=>'Interview Not Scheduled','status'=>'success']);
         }
     }
 
@@ -264,17 +332,39 @@ class HomeController extends Controller
         if ($request->checked == 1) {
             $appliedJob->selected = 1;
             $appliedJob->update();
-            return response()->json('Selected');
+
+            $job = Job::find($appliedJob->job_id);
+            $user = User::find($appliedJob->user_id);
+            $datas = [
+                [
+                    'title'=>$job->job_title." Selected.",
+                    'user_id'=>$appliedJob->user_id,
+                    'job_id'=>$appliedJob->job_id,
+                    'type'=>"User",
+                    'created_at' => date('Y-m-d H:i:s'),
+                    'updated_at' => date('Y-m-d H:i:s'),
+                ],
+                [
+                    'title'=>$job->job_title.' <b>'.$user->name."</b> Selected.",
+                    'user_id'=>$job->user_id,
+                    'job_id'=>$appliedJob->job_id,
+                    'type'=>"Client",
+                    'created_at' => date('Y-m-d H:i:s'),
+                    'updated_at' => date('Y-m-d H:i:s'),
+                ]
+
+            ];
+
+            foreach($datas as $data){
+                DB::table('notifications')->insert($data);
+            }
+            return response()->json(['result'=>'Selected','status'=>'success']);
         } else {
             $appliedJob->selected = 0;
             $appliedJob->update();
-            return response()->json('Not Selected');
+            return response()->json(['result'=>'Not Selected','status'=>'success']);
         }
     }
-
-
-
-
 
 
 }

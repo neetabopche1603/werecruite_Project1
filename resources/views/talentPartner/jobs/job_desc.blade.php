@@ -68,7 +68,7 @@
 										<p class="mb-md-2 mb-sm-4 mb-2"><span class="text-info text-center">Skills -</span>{{$skills}}</p>
 										<!-- <span><i class="flaticon-381-clock"></i> Join Date 21 August 2020, 12:45 AM</span> -->
 									</div>
-									<div class="text-md-right mt-4 mt-md-0">
+									<div class="text-md-right mt-0 mt-md-0">
 										<!-- <div class="dropdown mb-3">
 													<div class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown">
 														<i class="flaticon-381-user-7 mr-2"></i> Dentist
@@ -78,12 +78,32 @@
 														<a class="dropdown-item" href="#">Z To A List</a>
 													</div>
 												</div> -->
-										
+
 										<div class="btn d-flex justify-content-center align-content-center">
-											@if($applied_job != null)
+											@if($applied_job->status == 0 && $applied_job->screening_schedule == 0 && $applied_job->interview_schedule == 0 && $applied_job->selected == 0)
 											<a href="#">
 												<button type="button" class="btn btn-success">Applied</button>
 											</a>
+											@elseif ($applied_job->status == 1 && $applied_job->screening_schedule == 0 && $applied_job->interview_schedule == 0 && $applied_job->selected == 0)
+											<a href="#">
+												<button type="button" class="btn btn-success">Screening</button>
+											</a>
+											
+											@elseif ($applied_job->status == 1 && $applied_job->screening_schedule == 1 && $applied_job->interview_schedule == 0 && $applied_job->selected == 0)
+											<a href="#">
+												<button type="button" class="btn btn-success">Screening Scheduled</button>
+											</a>
+											
+											@elseif ($applied_job->status == 1 && $applied_job->screening_schedule == 1 && $applied_job->interview_schedule == 1 && $applied_job->selected == 0)
+											<a href="#">
+												<button type="button" class="btn btn-success">Interview Scheduled</button>
+											</a>
+											
+											@elseif ($applied_job->status == 1 && $applied_job->screening_schedule == 1 && $applied_job->interview_schedule == 1 && $applied_job->selected == 1)
+											<a href="#">
+												<button type="button" class="btn btn-success">Selected</button>
+											</a>
+											
 											@else
 											<a href="{{ route('talent.appliedJob', ['job_id'=> $jobs->id]) }}">
 												<button type="button" class="btn btn-primary">Apply Job</button>
@@ -101,7 +121,7 @@
 									</div>
 								</div>
 
-								<div class="doctor-info-content">
+								<div class="doctor-info-content mb-lg-4" style="margin-bottom: 50px;">
 									<h4 class="text-black mb-3">{{$jobs->job_role}}</h4>
 									<h5>Job description</h5>
 									<p class="mb-3">{{$jobs->description}}</p>
@@ -109,18 +129,18 @@
 							</div>
 							<div class="card-footer border-0 pt-0 text-center">
 
-							
-							<div class="btn d-flex justify-content-center align-content-center">
-											@if($applied_job != null)
-											<a href="#">
-												<button type="button" class="btn btn-success">Applied</button>
-											</a>
-											@else
-											<a href="{{ route('talent.appliedJob', ['job_id'=> $jobs->id]) }}">
-												<button type="button" class="btn btn-primary">Apply Job</button>
-											</a>
-											@endif
-										</div>
+
+								{{--<div class="btn d-flex justify-content-center align-content-center">
+									@if($applied_job != null)
+									<a href="#">
+										<button type="button" class="btn btn-success">Applied</button>
+									</a>
+									@else
+									<a href="{{ route('talent.appliedJob', ['job_id'=> $jobs->id]) }}">
+										<button type="button" class="btn btn-primary">Apply Job</button>
+									</a>
+									@endif
+								</div>--}}
 							</div>
 						</div>
 

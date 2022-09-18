@@ -118,7 +118,7 @@
                                                     </span>
                                                 </div>
                                             </div>
-                                          
+
                                             <div class="col-md-10">
                                                 <div class="form-group">
                                                     <label class="mb-1"><strong><span class="text-danger">*</span> Email</strong></label>
@@ -133,7 +133,14 @@
                                             <div class="col-md-7">
                                                 <div class="form-group">
                                                     <label class="mb-1"><strong><span class="text-danger">*</span> Password</strong></label>
-                                                    <input type="password" name="password" class="form-control" placeholder="Password">
+                                                    <div class="input-group" id="show_hide_password">
+                                                        <input class="form-control" name="password" type="password" placeholder="********">
+                                                        <div class="input-group-addon" style="background-color: #450b5a;
+                                                        padding: 8px;
+                                                        border-radius: 0px 10px 10px 0px;">
+                                                            <a href="" style="color: white;"><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
+                                                        </div>
+                                                    </div>
                                                     <span class="text-danger">
                                                         @error('password')
                                                         {{$message}}
@@ -142,8 +149,26 @@
                                                 </div>
                                             </div>
 
-                                              
-                                                <div class="col-md-7">
+                                            <div class="col-md-7">
+                                            <div class="form-group">
+                                                <label class="mb-1"><strong><span class="text-danger">*</span> Confirm Password</strong></label>
+                                                <div class="input-group" id="show_hide_password_confirmation">
+                                                    <input class="form-control" name="password_confirmation" type="password" placeholder="********">
+                                                    <div class="input-group-addon" style="background-color: #450b5a;
+                                                        padding: 8px;
+                                                        border-radius: 0px 10px 10px 0px;">
+                                                        <a href="" style="color: white;"><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
+                                                    </div>
+                                                </div>
+                                                <span class="text-danger">
+                                                    @error('password_confirmation')
+                                                    {{$message}}
+                                                    @enderror
+                                                </span>
+                                            </div>
+                                            </div>
+
+                                            <!-- <div class="col-md-7">
                                                 <div class="form-group">
                                                     <label class="mb-1"><strong><span class="text-danger">*</span> Confirm Password</strong></label>
                                                     <input type="password" name="password_confirmation" class="form-control" placeholder="Confirm Password"> <span class="text-danger">
@@ -154,10 +179,7 @@
                                                         @enderror
                                                     </span>
                                                 </div>
-                                            </div>
-                                        
-                                               
-
+                                            </div> -->
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="mb-1"><strong><span class="text-danger">*</span> Profile Image</strong></label>
@@ -213,6 +235,41 @@
     <script src="{{asset('admin/js/custom.min.js')}}"></script>
     <script src="{{asset('admin/js/deznav-init.js')}}"></script>
 
+    <!-- Password Show Hide Script -->
+    <script>
+        $(document).ready(function() {
+            $("#show_hide_password a").on('click', function(event) {
+                event.preventDefault();
+                if ($('#show_hide_password input').attr("type") == "text") {
+                    $('#show_hide_password input').attr('type', 'password');
+                    $('#show_hide_password i').addClass("fa-eye-slash");
+                    $('#show_hide_password i').removeClass("fa-eye");
+                } else if ($('#show_hide_password input').attr("type") == "password") {
+                    $('#show_hide_password input').attr('type', 'text');
+                    $('#show_hide_password i').removeClass("fa-eye-slash");
+                    $('#show_hide_password i').addClass("fa-eye");
+                }
+            });
+        });
+    </script>
+
+<!-- Show hide password confirmation Script-->
+<script>
+        $(document).ready(function() {
+            $("#show_hide_password_confirmation a").on('click', function(event) {
+                event.preventDefault();
+                if ($('#show_hide_password_confirmation input').attr("type") == "text") {
+                    $('#show_hide_password_confirmation input').attr('type', 'password');
+                    $('#show_hide_password_confirmation i').addClass("fa-eye-slash");
+                    $('#show_hide_password_confirmation i').removeClass("fa-eye");
+                } else if ($('#show_hide_password_confirmation input').attr("type") == "password") {
+                    $('#show_hide_password_confirmation input').attr('type', 'text');
+                    $('#show_hide_password_confirmation i').removeClass("fa-eye-slash");
+                    $('#show_hide_password_confirmation i').addClass("fa-eye");
+                }
+            });
+        });
+    </script>
 
 </body>
 

@@ -25,8 +25,13 @@ $settings = Setting::get();
     <link rel="stylesheet" href="{{asset('admin/vendor/chartist/css/chartist.min.css')}}">
     <link href="{{asset('admin/vendor/bootstrap-select/dist/css/bootstrap-select.min.css')}}" rel="stylesheet">
     <link href="{{asset('admin/css/style.css')}}" rel="stylesheet">
+    <!-- <link href="{{asset('admin/vendor/sweetalert2/dist/sweetalert2.min.css')}}" rel="stylesheet"> -->
     <link href="https://cdn.lineicons.com/2.0/LineIcons.css" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<!-- Datatable -->
+<link href="{{asset('admin/vendor/datatables/css/jquery.dataTables.min.css')}}" rel="stylesheet">
+
 
     <style>
     .custom-select
@@ -83,7 +88,13 @@ $settings = Setting::get();
     <!-- Dashboard 1 -->
     <script src="{{asset('admin/js/dashboard/dashboard-1.js')}}"></script>
 
-    <!-- Required vendors -->
+     <!-- Datatable -->
+    <script src="{{asset('admin/vendor/datatables/js/jquery.dataTables.min.js')}}"></script>
+    <script src="{{asset('admin/js/plugins-init/datatables.init.js')}}"></script>
+
+    <!-- <script src="{{asset('admin/vendor/sweetalert2/dist/sweetalert2.min.js')}}"></script>
+    <script src="{{asset('admin/js/plugins-init/sweetalert.init.js')}}"></script> -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         $(function() {
             setTimeout(function() { $(".alert").fadeOut(1500); }, 3000)

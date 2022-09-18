@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth\ClientAuthController;
 use App\Http\Controllers\Auth\ForgetPasswordController;
 use App\Http\Controllers\Client\ClientProfileController;
 use App\Http\Controllers\Client\HomeController as ClientHomeController;
+use App\Http\Controllers\Notification;
 use App\Http\Controllers\Talent\HomeController as TalentHomeController;
 use App\Http\Controllers\Talent\TalentProfileController;
 use Illuminate\Support\Facades\Auth;
@@ -161,6 +162,10 @@ Route::group(['prefix' => 'client', 'middleware' => 'clientPartner'], function (
     Route::get('show-applied-jobs', [ClientHomeController::class, 'allJobs'])->name('client.getAllJob');
     Route::get('get-all-users/{jobid}', [ClientHomeController::class, 'appliedJobUsers'])->name('client.appliedJobUsers');
     Route::post('change-applied-job-status', [ClientHomeController::class, 'jobStatus'])->name('client.jobStatus');
+
+    // ===================Notification===================
+    Route::get('notification-seen/{id}',[ClientHomeController::class,'seen'])->name('client.notificationSeen');
+
 });
 
 
@@ -180,4 +185,6 @@ Route::group(['prefix' => 'user', 'middleware' => 'talentPartner'], function () 
     Route::get('job_desc/{id}', [TalentHomeController::class, 'job_desc'])->name('talent.job_desc');
     // ===================Applied Job Route===================
     Route::get('applied_Job/{job_id}', [AppliedJobController::class, 'appliedJob'])->name('talent.appliedJob');
+    // ==================Notification==================== 
+    Route::post('notification-seen',[TalentHomeController::class,'seen'])->name('talent.notificationSeen');
 });

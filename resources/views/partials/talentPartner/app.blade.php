@@ -11,6 +11,7 @@ $setting = Setting::get();
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="csrf-token" id="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('talentPartnerTitle')</title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('settings/'.$setting[0]['favicon'] )}}">
@@ -22,9 +23,8 @@ $setting = Setting::get();
 	<link href="https://cdn.lineicons.com/2.0/LineIcons.css" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
-  
-
-
+  <!-- Datatable -->
+<link href="{{asset('admin/vendor/datatables/css/jquery.dataTables.min.css')}}" rel="stylesheet">
 
 </head>
 
@@ -71,12 +71,18 @@ $setting = Setting::get();
 	<!-- Apex Chart -->
 	<script src="{{asset('admin/vendor/apexchart/apexchart.js')}}"></script>
 	
-	
+      <!-- Datatable -->
+      <script src="{{asset('admin/vendor/datatables/js/jquery.dataTables.min.js')}}"></script>
+    <script src="{{asset('admin/js/plugins-init/datatables.init.js')}}"></script>
+    <script>
+        $(function() {
+            setTimeout(function() { $(".alert").fadeOut(1500); }, 3000)
+        });
+    </script>
 	<!-- Dashboard 1 -->
 	<script src="{{asset('admin/js/dashboard/dashboard-1.js')}}"></script>
     
 	@stack('script')
 
-	
 </body>
 </html>

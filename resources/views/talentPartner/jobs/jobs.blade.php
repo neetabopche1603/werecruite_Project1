@@ -9,6 +9,20 @@ use App\Models\AppliedJob;
 <div class="content-body">
     <!-- row -->
     <div class="container-fluid">
+    <div class="row page-titles mx-0">
+            <div class="col-sm-6 p-md-0">
+                <div class="welcome-text">
+                    <h4>Hi, welcome {{auth()->user()->name}}</h4>
+                    <!-- <p class="mb-0">Your business dashboard template</p> -->
+                </div>
+            </div>
+            <!-- <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Add Job Role</a></li>
+                </ol>
+            </div> -->
+        </div>
         <!-- <div class="form-head d-flex mb-3  mb-lg-5   align-items-start">
             <a href="javascript:void(0);" class="btn btn-danger">+ New Job</a>
             <div class="input-group search-area ml-auto d-inline-flex">
@@ -98,7 +112,10 @@ use App\Models\AppliedJob;
                         <div class="col-xl-6">
                             <div class="card">
                                 <div class="card-header">
-                                    <h5 class="card-title">{{$job->job_title}}</h5>
+
+                                <a href="{{route('talent.job_desc',['id'=>$job->id])}}">
+                                <h5 class="card-title">{{$job->job_title}}</h5></a>
+
                                 </div>
                                 <div class="card-body">
                                     <p class="card-text">{{$job->description}}</p>

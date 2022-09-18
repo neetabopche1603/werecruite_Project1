@@ -142,13 +142,13 @@
                     </li> -->
                 </ul>
             
-				<div class="plus-box">
+				<!-- <div class="plus-box">
 					<p>Create new appointment</p>
 				</div>
 				<div class="copyright">
 					<p><strong>We Recruite</strong> © 2022 All Rights Reserved</p>
 					<p>Made with <i class="fa fa-heart"></i> by EMS</p>
-				</div>
+				</div> -->
 			</div>
         </div>
         <!--**********************************

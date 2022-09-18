@@ -96,12 +96,12 @@
                         </ul>
                     </li> -->
                     <li><a href="{{route('client.showJob')}}" class="ai-icon" aria-expanded="false">
-							<i class="flaticon-381-settings-2"></i>
+                    <i class="flaticon-381-settings-2"></i>
 							<span class="nav-text">Job Post</span>
 						</a>
 					</li>
                     <li><a href="{{route('client.getAllJob')}}" class="ai-icon" aria-expanded="false">
-							<i class="flaticon-381-settings-2"></i>
+                            <i class="flaticon-381-notepad"></i>
 							<span class="nav-text">Applied Jobs</span>
 						</a>
 					</li>
@@ -147,13 +147,13 @@
                     </li> -->
                 </ul>
             
-				<div class="plus-box">
+				<!-- <div class="plus-box">
 					<p>Create new appointment</p>
 				</div>
 				<div class="copyright">
 					<p><strong>We Recruite</strong> © 2020 All Rights Reserved</p>
 					<p>Made with <i class="fa fa-heart"></i> by EMS</p>
-				</div>
+				</div> -->
 			</div>
         </div>
         <!--**********************************

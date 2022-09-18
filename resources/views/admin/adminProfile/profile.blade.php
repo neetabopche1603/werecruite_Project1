@@ -27,7 +27,11 @@
 
                     <!-- Notification Start -->
                     @if(Session::get('success'))
-                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <div class="alert alert-success solid alert-rounded alert-dismissible fade show" role="alert">
+                        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="mr-2">
+                            <polyline points="9 11 12 14 22 4"></polyline>
+                            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                        </svg>
                         <strong>{{session::get('success')}}</strong>
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
@@ -42,7 +46,12 @@
                 </div>--}}
 
                 @elseif (Session::get('error'))
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <div class="alert alert-danger solid alert-rounded alert-dismissible fade show" role="alert">
+                    <svg viewBox="0 0 24 24" width="24 " height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="mr-2">
+                        <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon>
+                        <line x1="15" y1="9" x2="9" y2="15"></line>
+                        <line x1="9" y1="9" x2="15" y2="15"></line>
+                    </svg>
                     <strong>{{session::get('error')}}</strong>
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -50,7 +59,11 @@
                 </div>
 
                 @elseif (Session::get('danger'))
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <div class="alert alert-danger solid alert-rounded alert-dismissible fade show" role="alert">
+                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="mr-2">
+                        <polyline points="9 11 12 14 22 4"></polyline>
+                        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                    </svg>
                     <strong>{{session::get('danger')}}</strong>
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -94,7 +107,7 @@
                                         <input type="password" name="password" class="form-control input-default " placeholder="********">
                                     </div>
                                 </div> -->
-                                
+
                                 {{-- <div class="col-12">
                                          <div class="form-group">
                                              <label for=""><span class="text-danger">*</span><b>Highest Education:</b></label>
@@ -135,9 +148,13 @@
 <!--Change Password  -->
 <div class="col-xl-5 col-lg-5">
     <div class="card">
-     -- Notification Start --
+        <!-- -- Notification Start -- -->
         @if(Session::get('password'))
-        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <div class="alert alert-success solid alert-rounded alert-dismissible fade show" role="alert">
+        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="mr-2">
+                            <polyline points="9 11 12 14 22 4"></polyline>
+                            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+                        </svg>
             <strong>{{session::get('password')}}</strong>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
@@ -145,9 +162,9 @@
         </div>
         @endif
 
-       -- Notification Start 
+        <!-- -- Notification Start -- -->
 
-         <div class="card-header">
+        <div class="card-header">
             <h4 class="card-title">Change Password</h4>
         </div>
         <div class="card-body">
@@ -157,7 +174,7 @@
                     <div class="form-group">
                         <label for="">
                             <span class="text-danger">*</span><b>Current Password</b></label>
-                        <input type="password" name="current_password" class="form-control input-rounded" placeholder="Cruurent Password">
+                        <input type="password" name="current_password" class="form-control input-rounded" placeholder="Current Password">
                         <span class="text-danger">
                             @error('current_password')
                             {{$message}}
@@ -188,7 +205,7 @@
                     <input type="submit" class="btn btn-primary" value="Save">
                 </form>
             </div>
-        </div> 
+        </div>
     </div>
 </div>
 
