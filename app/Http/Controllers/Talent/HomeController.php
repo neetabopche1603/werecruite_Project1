@@ -17,6 +17,7 @@ class HomeController extends Controller
         return view('talentPartner.home',compact('setting'));
     }
 
+    // NOTIFICATION SEEN FUNCTION
     public function seen(Request $request)
     {
         Notification::where('id',$request->id)->update(['is_seen' => 1]);

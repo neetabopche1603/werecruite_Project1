@@ -20,6 +20,8 @@ class HomeController extends Controller
         $super_admin = SuperAdmin::get();
         return view('admin.home',compact('super_admin'));
     }
+
+    
 // ======================Admin Job Role Function=============================
     // Job Role Function (View Tbl)
     public function jobRole()
@@ -365,6 +367,15 @@ class HomeController extends Controller
             return response()->json(['result'=>'Not Selected','status'=>'success']);
         }
     }
+
+     // NOTIFICATION SEEN FUNCTION
+     public function seen(Request $request)
+     {
+         Notification::where('id',$request->id)->update(['is_seen' => 1]);
+         return response()->json([
+             "status"=>"success"
+         ]);
+     }
 
 
 }

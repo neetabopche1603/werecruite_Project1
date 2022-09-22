@@ -133,6 +133,9 @@ Route::group(['prefix' => 'admin',], function () {
     Route::post('change-screening-status', [HomeController::class, 'jobStatusScreening'])->name('admin.screening');
     Route::post('change-interview-status', [HomeController::class, 'jobStatusInterview'])->name('admin.interview');
     Route::post('change-selected-status', [HomeController::class, 'jobStatusSelected'])->name('admin.selected');
+
+    Route::post('notification-seen',[HomeController::class,'seen'])->name('admin.notificationSeen');
+
 });
 
 

@@ -53,6 +53,7 @@
 			<div class="col-xl-8">
 				<div class="row">
 					<div class="col-md-12">
+
 						<div class="card">
 							<div class="card-body">
 								<div class="d-flex doctor-info-details mb-5">
@@ -80,6 +81,7 @@
 												</div> -->
 
 										<div class="btn d-flex justify-content-center align-content-center">
+											@if ($applied_job != NULL)
 											@if($applied_job->status == 0 && $applied_job->screening_schedule == 0 && $applied_job->interview_schedule == 0 && $applied_job->selected == 0)
 											<a href="#">
 												<button type="button" class="btn btn-success">Applied</button>
@@ -88,22 +90,23 @@
 											<a href="#">
 												<button type="button" class="btn btn-success">Screening</button>
 											</a>
-											
+
 											@elseif ($applied_job->status == 1 && $applied_job->screening_schedule == 1 && $applied_job->interview_schedule == 0 && $applied_job->selected == 0)
 											<a href="#">
 												<button type="button" class="btn btn-success">Screening Scheduled</button>
 											</a>
-											
+
 											@elseif ($applied_job->status == 1 && $applied_job->screening_schedule == 1 && $applied_job->interview_schedule == 1 && $applied_job->selected == 0)
 											<a href="#">
 												<button type="button" class="btn btn-success">Interview Scheduled</button>
 											</a>
-											
+
 											@elseif ($applied_job->status == 1 && $applied_job->screening_schedule == 1 && $applied_job->interview_schedule == 1 && $applied_job->selected == 1)
 											<a href="#">
 												<button type="button" class="btn btn-success">Selected</button>
 											</a>
-											
+											@endif
+
 											@else
 											<a href="{{ route('talent.appliedJob', ['job_id'=> $jobs->id]) }}">
 												<button type="button" class="btn btn-primary">Apply Job</button>
@@ -137,15 +140,15 @@
 									</a>
 									@else
 									<a href="{{ route('talent.appliedJob', ['job_id'=> $jobs->id]) }}">
-										<button type="button" class="btn btn-primary">Apply Job</button>
-									</a>
-									@endif
-								</div>--}}
-							</div>
+								<button type="button" class="btn btn-primary">Apply Job</button>
+								</a>
+								@endif
+							</div>--}}
 						</div>
-
 					</div>
-					<!-- <div class="col-md-12">
+
+				</div>
+				<!-- <div class="col-md-12">
 								<div class="card">
 									<div class="card-header border-0 pb-0">
 										<h4 class="card-title">Assigned Patient</h4>
@@ -170,7 +173,7 @@
 									</div>
 								</div>
 							</div> -->
-					<!-- <div class="col-md-12">
+				<!-- <div class="col-md-12">
 								<div class="card">
 									<div class="card-header border-0 pb-0">
 										<h4 class="card-title">Recent Review</h4>
@@ -240,10 +243,10 @@
 								</div>
 								
 							</div> -->
-				</div>
 			</div>
 		</div>
 	</div>
+</div>
 </div>
 
 

@@ -9,7 +9,9 @@ use App\Models\JobRole;
 use App\Models\Notification;
 use App\Models\Setting;
 use App\Models\Skill;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -138,13 +140,30 @@ class HomeController extends Controller
             $appliedJob->update();
 
             $job = Job::find($appliedJob->job_id);
-            $notification = new Notification();
-            $notification->title = $job->job_title." Status Updated Screening.";
-            $notification->user_id = $appliedJob->user_id;
-            $notification->job_id = $appliedJob->job_id;
-            $notification->type = "User";
-            $notification->save();
-            
+            $user = User::find($appliedJob->user_id);
+            $datas = [
+                [
+                    'title' => $job->job_title . " Status Updated Screening.",
+                    'user_id' => $appliedJob->user_id,
+                    'job_id' => $appliedJob->job_id,
+                    'type' => "User",
+                    'created_at' => date('Y-m-d H:i:s'),
+                    'updated_at' => date('Y-m-d H:i:s'),
+                ],
+                [
+                    'title' => $job->job_title . ' <b>' . $user->name . "</b> Screening Updated Client.",
+                    'user_id' => 0,
+                    'job_id' => $appliedJob->job_id,
+                    'type' => "Admin",
+                    'created_at' => date('Y-m-d H:i:s'),
+                    'updated_at' => date('Y-m-d H:i:s'),
+                ]
+            ];
+
+            foreach ($datas as $data) {
+                DB::table('notifications')->insert($data);
+            }
+
             return response()->json('Screening');
         } else {
             $appliedJob->status = 0;

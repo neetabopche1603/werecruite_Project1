@@ -28,16 +28,17 @@ $settings = Setting::get();
     <!-- <link href="{{asset('admin/vendor/sweetalert2/dist/sweetalert2.min.css')}}" rel="stylesheet"> -->
     <link href="https://cdn.lineicons.com/2.0/LineIcons.css" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- datetime picker -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/3.1.4/css/bootstrap-datetimepicker.min.css" />
 
-<!-- Datatable -->
-<link href="{{asset('admin/vendor/datatables/css/jquery.dataTables.min.css')}}" rel="stylesheet">
+    <!-- Datatable -->
+    <link href="{{asset('admin/vendor/datatables/css/jquery.dataTables.min.css')}}" rel="stylesheet">
 
 
     <style>
-    .custom-select
-    {
-        padding-right: 20px !important;
-    }
+        .custom-select {
+            padding-right: 20px !important;
+        }
     </style>
 
 </head>
@@ -45,6 +46,10 @@ $settings = Setting::get();
 @stack('style')
 
 <body>
+
+
+
+    
 
     <!--*******************
         Preloader start
@@ -88,16 +93,20 @@ $settings = Setting::get();
     <!-- Dashboard 1 -->
     <script src="{{asset('admin/js/dashboard/dashboard-1.js')}}"></script>
 
-     <!-- Datatable -->
+    <!-- Datatable -->
     <script src="{{asset('admin/vendor/datatables/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('admin/js/plugins-init/datatables.init.js')}}"></script>
-
+    <!-- DateTime Picker -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/3.1.4/js/bootstrap-datetimepicker.min.js"></script>
     <!-- <script src="{{asset('admin/vendor/sweetalert2/dist/sweetalert2.min.js')}}"></script>
     <script src="{{asset('admin/js/plugins-init/sweetalert.init.js')}}"></script> -->
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         $(function() {
-            setTimeout(function() { $(".alert").fadeOut(1500); }, 3000)
+            setTimeout(function() {
+                $(".alert").fadeOut(1500);
+            }, 3000)
         });
     </script>
 

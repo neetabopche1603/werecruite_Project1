@@ -163,10 +163,13 @@
                                         <td>{{$job->mobile_no}}</td>
                                         <td>{{$job->email}}</td>
                                         <td>
-                                            <label class="switch">
+                                            <div class="btn text-center">
+                                                <button type="button" class="btn btn-primary screening_schedule" data-id="{{$job->applied_job_id}}">Schedule</button>
+                                            </div>
+                                            <!-- <label class="switch">
                                                 <input type="checkbox" name="screening" class="screening" data-id="{{$job->applied_job_id}}" @php if($job->screening_schedule==1) echo "checked"; @endphp>
                                                 <span class="slider round"></span>
-                                            </label>
+                                            </label> -->
                                         </td>
                                         <td>
                                             <label class="switch">
@@ -198,6 +201,33 @@
 
         </div>
 
+    </div>
+</div>
+
+
+<div class="modal fade" id="screeningModel" tabindex="-1" role="dialog" aria-labelledby="screeningModelLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="screeningModelLabel">Screening Scheduling</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <input type="hidden" name="id" id="id">
+                    <div class="form-group">
+                        <label for="date-time" class="col-form-label">Choose Date Time :</label>
+                        <input type="datetime-local" class="form-control" id="dateTime">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Send Mail</button>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -310,6 +340,28 @@
             }
         });
     })
+</script>
+
+<!-- Screening Schedule Process -->
+<script>
+    // $('.screening_schedule').datetimepicker({
+    //     format: 'DD/MM/YYYY HH:mm:ss',
+    //     defaultDate: new Date(),
+    // });
+
+
+    $(document).ready(function() {
+
+        $(function() {
+            $(".screening_schedule").click(function() {
+                let id = $(this).data('id');
+                let model = $("#screeningModel");
+                model.modal("show");
+                model.find('#id').val(id)
+                
+            });
+        });
+    });
 </script>
 
 @endpush
