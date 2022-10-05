@@ -1,3 +1,7 @@
+<?php
+
+use App\Models\Scheduler;
+?>
 @extends('partials.admin.app')
 @section('adminTitle','Screening User')
 @section('admin-content')
@@ -62,6 +66,15 @@
 
     .slider.round:before {
         border-radius: 50%;
+    }
+
+    .selected {
+        border: 1px solid black;
+        border-radius: 20px;
+        background-color: #450b5a !important;
+        padding: 10px;
+        color: #fff !important;
+        text-align: center !important;
     }
 </style>
 @endpush
@@ -163,9 +176,29 @@
                                         <td>{{$job->mobile_no}}</td>
                                         <td>{{$job->email}}</td>
                                         <td>
+                                            <?php $schedule = Scheduler::where('job_id', $job->jobId)->where('user_id', $job->user_id)->first();
+                                            ?>
+
+                                            @if ($schedule != '')
+                                            @if ($schedule->user_sche_date == NULL && $schedule->actual_sche_date == NULL)
                                             <div class="btn text-center">
-                                                <button type="button" class="btn btn-primary screening_schedule" data-id="{{$job->applied_job_id}}">Schedule</button>
+                                                <button type="button" class="btn btn-secondary">Email Send</button>
                                             </div>
+                                            @elseif ($schedule->user_sche_date != NULL && $schedule->actual_sche_date == NULL)
+                                            <div class="btn text-center">
+                                                <button type="button" class="btn btn-warning checkDate" data-id="{{$job->user_id}}" data-jobid="{{$job->jobId}}">Check Availability</button>
+                                            </div>
+                                            @elseif ($schedule->user_sche_date == NULL && $schedule->actual_sche_date != NULL)
+                                            <div class="btn text-center">
+                                                <button type="button" class="btn btn-success">Screening Scheduled</button>
+                                            </div>
+                                            @endif
+                                            @else
+                                            <div class="btn text-center">
+                                                <button type="button" class="btn btn-primary screening_schedule" data-id="{{$job->user_id}}" data-jobid="{{$job->jobId}}">Schedule</button>
+                                            </div>
+                                            @endif
+
                                             <!-- <label class="switch">
                                                 <input type="checkbox" name="screening" class="screening" data-id="{{$job->applied_job_id}}" @php if($job->screening_schedule==1) echo "checked"; @endphp>
                                                 <span class="slider round"></span>
@@ -204,7 +237,7 @@
     </div>
 </div>
 
-
+<!-- Screening Model -->
 <div class="modal fade" id="screeningModel" tabindex="-1" role="dialog" aria-labelledby="screeningModelLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -214,22 +247,63 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <form>
-                    <input type="hidden" name="id" id="id">
+            <form method="POST" action="/admin/schedule-interview">
+                @csrf
+                <div class="modal-body">
+                    <input type="hidden" name="user_id" id="user_id">
+                    <input type="hidden" name="job_id" id="job_id">
+                    <div class="form-group">
+                        <label for="date-time" class="col-form-label">Title :</label>
+                        <input type="text" name="title" class="form-control" id="title">
+                    </div>
                     <div class="form-group">
                         <label for="date-time" class="col-form-label">Choose Date Time :</label>
-                        <input type="datetime-local" class="form-control" id="dateTime">
+                        <input type="datetime-local" name="date" class="form-control" id="dateTime">
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Send Mail</button>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Send Mail</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
+<!-- Screening Model End-->
+
+<!-- CheckDate Model -->
+<div class="modal fade" id="checkDate" tabindex="-1" role="dialog" aria-labelledby="checkDateModelLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="checkDateModelLabel">Select User Prefered Date</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="javascript:void(0)">
+                @csrf
+                <div class="modal-body">
+                    <input type="hidden" name="user_id1" id="user_id1">
+                    <input type="hidden" name="job_id1" id="job_id1">
+
+                    <ul id="dates">
+
+                    </ul>
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" id="saveDate">Save Date</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- CheckDate Model End-->
+
+
 
 @endsection
 @push('script')
@@ -354,13 +428,91 @@
 
         $(function() {
             $(".screening_schedule").click(function() {
-                let id = $(this).data('id');
+                let user_id = $(this).data('id');
+                let job_id = $(this).data('jobid');
                 let model = $("#screeningModel");
                 model.modal("show");
-                model.find('#id').val(id)
-                
+                model.find('#user_id').val(user_id)
+                model.find('#job_id').val(job_id)
+
             });
         });
+    });
+
+    $(document).on('click', '.date', function() {
+        $('.date').removeClass('selected')
+        $(this).addClass('selected');
+    })
+
+    $(document).ready(function() {
+        $(".checkDate").click(function() {
+            let user_id = $(this).data('id');
+            let job_id = $(this).data('jobid');
+            $.ajax({
+                type: "post",
+                url: "{{route('admin.checkUserDate')}}",
+                data: {
+                    'user_id': user_id,
+                    "job_id": job_id
+                },
+                success: function(result) {
+                    let datas = JSON.parse(result)
+                    let html = '';
+                    $.each(datas, function(i) {
+                        // console.log(datas[i]);
+                        let dateval = new Date(datas[i])
+                        start_date = dateval.toLocaleString();
+                        html += `<li>
+                                <div class="form-group">
+                                    <label for="date-time" class="col-form-label">Select Date :</label>
+                                    <a href="javascript:void(0)" class="date form-control" data-date="${datas[i]}">${start_date}</a>
+                                </div>
+                            </li>`
+                    })
+
+                    let model = $("#checkDate");
+                    model.modal("show");
+                    model.find('#user_id1').val(user_id)
+                    model.find('#job_id1').val(job_id)
+                    model.find('#dates').html(html)
+                }
+            });
+
+        })
+    });
+
+    $('#saveDate').on('click', function() {
+        let btn = $(this)
+        let user_id = $('#user_id1').val();
+        let job_id = $('#job_id1').val();
+        let getClass = $('#dates li').find('.selected')
+        if (getClass.length != 0) {
+            let interviewDate = getClass.data('date');
+            $.ajax({
+                type: "post",
+                url: "{{route('admin.scheduleInterviewSelectedDate')}}",
+                data: {
+                    "user_id": user_id,
+                    "job_id": job_id,
+                    "date": interviewDate
+                },
+                beforeSend: function() {
+                    btn.css('background-color','red')
+                    btn.attr('disabled',true)
+                   btn.html('Sending..')
+                },
+                success: function(response) {
+                    if (response.status == 'success') {
+                        alert("Screening Scheduled.");
+                        setTimeout(function() {
+                            location.reload();
+                        }, 500)
+                    }
+                }
+            });
+        } else {
+            alert('Please Select Any One Date.')
+        }
     });
 </script>
 

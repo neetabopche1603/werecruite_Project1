@@ -14,6 +14,7 @@ use App\Http\Controllers\Talent\HomeController as TalentHomeController;
 use App\Http\Controllers\Talent\TalentProfileController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Spatie\GoogleCalendar\Event;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,16 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+
+
+Route::get('wel', function () {
+    return view('wel');
+})->name('welcome');
+
+
+Route::resource('bokking', BookingController::class);
+
 
 Route::get('/', function () {
     return view('login.login');
@@ -90,12 +101,31 @@ Route::group(['prefix' => 'admin',], function () {
     //     return view('admin.home');
     // })->name('admin.home');
 
+    Route::post('/schedule-interview', [HomeController::class, 'scheduleInterview'])->name('admin.scheduleInterview');
+    Route::get('/schedule-interview-confirm/{id}', [HomeController::class, 'scheduleInterviewConfirm'])->name('admin.scheduleInterviewConfirm');
+    Route::get('/schedule-interview-cancel/{id}/{user_id}', [HomeController::class, 'scheduleInterviewCancel'])->name('admin.scheduleInterviewCancel');
+
+    // Check User Prefered Date
+    Route::post('check-date',[HomeController::class,'checkUserDate'])->name('admin.checkUserDate');
+    Route::post('schedule-interview-date',[HomeController::class,'scheduleInterviewSelectedDate'])->name('admin.scheduleInterviewSelectedDate');
+
+    // Route::get('/schedule-interview',function(){
+    //     dd(213);
+    //     $event = new Event;
+
+    //     $event->name = 'A new event';
+    //     $event->startDateTime = Carbon\Carbon::now();
+    //     $event->endDateTime = Carbon\Carbon::now()->addHour();
+    //     $event->save();
+    //     $e =Event::get();
+
+    // });
 
     //===================Profile Update Route===================
     Route::get('profile', [ProfileController::class, 'adminProfile'])->name('admin.profile');
     Route::post('profile', [ProfileController::class, 'updateProfiles'])->name('admin.updateProfiles');
     //===================Change password===================
-    
+
     Route::post('change-password', [ProfileController::class, 'adminChangePassword'])->name('admin.adminChangePassword');
 
     // ===================Setting Route===================
@@ -134,8 +164,7 @@ Route::group(['prefix' => 'admin',], function () {
     Route::post('change-interview-status', [HomeController::class, 'jobStatusInterview'])->name('admin.interview');
     Route::post('change-selected-status', [HomeController::class, 'jobStatusSelected'])->name('admin.selected');
 
-    Route::post('notification-seen',[HomeController::class,'seen'])->name('admin.notificationSeen');
-
+    Route::post('notification-seen', [HomeController::class, 'seen'])->name('admin.notificationSeen');
 });
 
 
@@ -167,8 +196,7 @@ Route::group(['prefix' => 'client', 'middleware' => 'clientPartner'], function (
     Route::post('change-applied-job-status', [ClientHomeController::class, 'jobStatus'])->name('client.jobStatus');
 
     // ===================Notification===================
-    Route::get('notification-seen/{id}',[ClientHomeController::class,'seen'])->name('client.notificationSeen');
-
+    Route::get('notification-seen/{id}', [ClientHomeController::class, 'seen'])->name('client.notificationSeen');
 });
 
 
@@ -189,5 +217,10 @@ Route::group(['prefix' => 'user', 'middleware' => 'talentPartner'], function () 
     // ===================Applied Job Route===================
     Route::get('applied_Job/{job_id}', [AppliedJobController::class, 'appliedJob'])->name('talent.appliedJob');
     // ==================Notification==================== 
-    Route::post('notification-seen',[TalentHomeController::class,'seen'])->name('talent.notificationSeen');
+    Route::post('notification-seen', [TalentHomeController::class, 'seen'])->name('talent.notificationSeen');
+
+    // Calendar Route
+    Route::get('full-calender', [TalentHomeController::class, 'schedule_calendar'])->name('talent.scheduleCalendar');
+    Route::get('getEvent', [TalentHomeController::class, 'getEvents'])->name('talent.getEvents');
+    Route::post('interview-date',[TalentHomeController::class, 'setInterviewDate'])->name('talent.setInterviewDate');
 });

@@ -1,14 +1,14 @@
   <!--**********************************
             Sidebar start
         ***********************************-->
-        <div class="deznav">
-            <div class="deznav-scroll">
-				<ul class="metismenu" id="menu">
-                    <li><a class="" href="{{route('talentPartner.home')}}" aria-expanded="false">
-							<i class="flaticon-381-networking"></i>
-							<span class="nav-text">Dashboard</span>
-						</a>
-                        <!-- <ul aria-expanded="false">
+  <div class="deznav">
+      <div class="deznav-scroll">
+          <ul class="metismenu" id="menu">
+              <li><a class="" href="{{route('talentPartner.home')}}" aria-expanded="false">
+                      <i class="flaticon-381-networking"></i>
+                      <span class="nav-text">Dashboard</span>
+                  </a>
+                  <!-- <ul aria-expanded="false">
 							<li><a href="index.html">Dashboard</a></li>
 							<li><a href="doctors.html">Doctors</a></li>
 							<li><a href="doctors-details.html">Doctors Details</a></li>
@@ -16,8 +16,8 @@
 							<li><a href="patient-details.html">Patient Details</a></li>
 						</ul> -->
 
-                    </li>
-                    <!-- <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+              </li>
+              <!-- <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 						<i class="flaticon-381-television"></i>
 							<span class="nav-text">Apps</span>
 						</a>
@@ -44,7 +44,7 @@
                             </li>
                         </ul>
                     </li> -->
-                    <!-- <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+              <!-- <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 							<i class="flaticon-381-controls-3"></i>
 							<span class="nav-text">Charts</span>
 						</a>
@@ -57,7 +57,7 @@
                             <li><a href="./chart-peity.html">Peity</a></li>
                         </ul>
                     </li> -->
-                    <!-- <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+              <!-- <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 							<i class="flaticon-381-internet"></i>
 							<span class="nav-text">Bootstrap</span>
 						</a>
@@ -82,7 +82,7 @@
 
                         </ul>
                     </li> -->
-                    <!-- <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+              <!-- <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 							<i class="flaticon-381-heart"></i>
 							<span class="nav-text">Plugins</span>
 						</a>
@@ -95,12 +95,17 @@
                             <li><a href="./map-jqvmap.html">Jqv Map</a></li>
                         </ul>
                     </li> -->
-                    <li><a href="{{route('talent.jobsView')}}" class="ai-icon" aria-expanded="false">
-							<i class="flaticon-381-settings-2"></i>
-							<span class="nav-text">Show Jobs</span>
-						</a>
-					</li>
-                    <!-- <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+              <li><a href="{{route('talent.jobsView')}}" class="ai-icon" aria-expanded="false">
+                      <i class="flaticon-381-settings-2"></i>
+                      <span class="nav-text">Show Jobs</span>
+                  </a>
+              </li>
+              <li><a href="{{route('talent.scheduleCalendar')}}" class="ai-icon" aria-expanded="false">
+                      <i class="flaticon-381-settings-2"></i>
+                      <span class="nav-text text-center">Scheduled Interview</span>
+                  </a>
+              </li>
+              <!-- <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 							<i class="flaticon-381-notepad"></i>
 							<span class="nav-text">Forms</span>
 						</a>
@@ -112,7 +117,7 @@
                             <li><a href="form-validation-jquery.html">Jquery Validate</a></li>
                         </ul>
                     </li> -->
-                    <!-- <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+              <!-- <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 							<i class="flaticon-381-network"></i>
 							<span class="nav-text">Table</span>
 						</a>
@@ -121,7 +126,7 @@
                             <li><a href="table-datatable-basic.html">Datatable</a></li>
                         </ul>
                     </li> -->
-                    <!-- <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+              <!-- <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 							<i class="flaticon-381-layer-1"></i>
 							<span class="nav-text">Pages</span>
 						</a>
@@ -140,17 +145,17 @@
                             <li><a href="./page-lock-screen.html">Lock Screen</a></li>
                         </ul>
                     </li> -->
-                </ul>
-            
-				<!-- <div class="plus-box">
+          </ul>
+
+          <!-- <div class="plus-box">
 					<p>Create new appointment</p>
 				</div>
 				<div class="copyright">
 					<p><strong>We Recruite</strong> © 2022 All Rights Reserved</p>
 					<p>Made with <i class="fa fa-heart"></i> by EMS</p>
 				</div> -->
-			</div>
-        </div>
-        <!--**********************************
+      </div>
+  </div>
+  <!--**********************************
             Sidebar end
         ***********************************-->

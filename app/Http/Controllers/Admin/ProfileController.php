@@ -13,9 +13,10 @@ use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
-    public function adminProfile(){
-        $adminProfile = SuperAdmin::where('email','=',session()->get('user_name'))->first();
-        return view('admin.adminProfile.profile',compact('adminProfile'));
+    public function adminProfile()
+    {
+        $adminProfile = SuperAdmin::where('email', '=', session()->get('user_name'))->first();
+        return view('admin.adminProfile.profile', compact('adminProfile'));
     }
 
     public function updateProfiles(Request $request)
@@ -25,9 +26,9 @@ class ProfileController extends Controller
         $updateProfiles->email = $request->email;
         $updateProfiles->dob = $request->dob;
         // $updateProfiles->highest_education = $request->highest_education;
-            if ($request->password != '') {
-                $updateProfiles->password = Hash::make($request->password);
-            }
+        if ($request->password != '') {
+            $updateProfiles->password = Hash::make($request->password);
+        }
         $updateProfiles->mobile_no = $request->mobile_number;
         $updateProfiles->dob = $request->dob;
         $updateProfiles->address = $request->address;
@@ -57,7 +58,6 @@ class ProfileController extends Controller
         $updateProfiles->update();
 
         return redirect()->back()->with('success', 'Profile Update Successfully Changed......!');
-
     }
 
     // =============  Admin Change Passwords Function ==================
@@ -69,13 +69,13 @@ class ProfileController extends Controller
             'new_confirm_password' => ['same:new_password'],
         ]);
 
-        SuperAdmin::where('email',session()->get('user_name'))->update(['password' => Hash::make($request->new_password)]);
+        SuperAdmin::where('email', session()->get('user_name'))->update(['password' => Hash::make($request->new_password)]);
 
         // dd('Password change successfully.');
         return redirect()->back()->with('password', 'Password Successfully Changed......!');
     }
 
- // =============  Admin Setting Function ==================
+    // =============  Admin Setting Function ==================
 
     public function settingView()
     {

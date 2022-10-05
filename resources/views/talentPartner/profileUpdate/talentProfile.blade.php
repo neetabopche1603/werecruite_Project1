@@ -155,7 +155,7 @@
                 </div>
                 @endif
 
-                <!-- -- Notification Start -- -->
+                <!-- -- Notification End -- -->
 
                 <div class="card-header">
                     <h4 class="card-title">Change Password</h4>
