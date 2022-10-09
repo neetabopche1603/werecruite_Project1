@@ -1,1 +1,0 @@
-https://www.webslesson.info/2021/03/how-to-implement-fullcalendar-in-laravel-8-using-ajax.html

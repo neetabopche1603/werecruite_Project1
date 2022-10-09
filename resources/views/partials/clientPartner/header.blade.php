@@ -12,8 +12,8 @@ $notification = Notification::where('is_seen', 0)->where('type', 'Client')->wher
 	<a href="#" class="brand-logo">
 		<img class="logo-abbr" src="{{ asset('settings/'.$setting[0]['logo'] )}}" alt="">
 
-		<img class="logo-compact" src="{{asset('admin/images/logo-text.png')}}" alt="">
-		<img class="brand-title" src="{{asset('admin/images/logo-text.png')}}" alt="">
+		<!-- <img class="logo-compact" src="{{asset('admin/images/logo-text.png')}}" alt="">
+		<img class="brand-title" src="{{asset('admin/images/logo-text.png')}}" alt=""> -->
 	</a>
 
 	<div class="nav-control">
@@ -24,18 +24,6 @@ $notification = Notification::where('is_seen', 0)->where('type', 'Client')->wher
 </div>
 <!--**********************************
             Nav header end
-        ***********************************-->
-
-<!--**********************************
-            Chat box start
-        ***********************************-->
-
-<!--**********************************
-            Chat box End
-        ***********************************-->
-
-<!--**********************************
-            Header start
         ***********************************-->
 <div class="header">
 	<div class="header-content">

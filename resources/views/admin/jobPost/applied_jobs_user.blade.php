@@ -186,7 +186,7 @@ use App\Models\Scheduler;
                                             </div>
                                             @elseif ($schedule->user_sche_date != NULL && $schedule->actual_sche_date == NULL)
                                             <div class="btn text-center">
-                                                <button type="button" class="btn btn-warning checkDate" data-id="{{$job->user_id}}" data-jobid="{{$job->jobId}}">Check Availability</button>
+                                                <button type="button" class="btn btn-warning btn-sm checkDate" data-id="{{$job->user_id}}" data-jobid="{{$job->jobId}}">Check User Availability</button>
                                             </div>
                                             @elseif ($schedule->user_sche_date == NULL && $schedule->actual_sche_date != NULL)
                                             <div class="btn text-center">
@@ -258,8 +258,10 @@ use App\Models\Scheduler;
                     </div>
                     <div class="form-group">
                         <label for="date-time" class="col-form-label">Choose Date Time :</label>
-                        <input type="datetime-local" name="date" class="form-control" id="dateTime">
+                        <!-- <input type="datetime-local" name="date" class="form-control" id="dateTime"> -->
+                        <input type="text" id="date-format" name="date" class="form-control" placeholder="Pick Interview Date Time">
                     </div>
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -295,7 +297,7 @@ use App\Models\Scheduler;
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" id="saveDate">Save Date</button>
+                    <button type="submit" class="btn btn-primary" id="saveDate">Schedule Date</button>
                 </div>
             </form>
         </div>
@@ -499,7 +501,7 @@ use App\Models\Scheduler;
                 beforeSend: function() {
                     btn.css('background-color','red')
                     btn.attr('disabled',true)
-                   btn.html('Sending..')
+                   btn.html('Sending...')
                 },
                 success: function(response) {
                     if (response.status == 'success') {

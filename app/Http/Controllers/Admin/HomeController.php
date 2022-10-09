@@ -229,7 +229,7 @@ class HomeController extends Controller
     // =================================Applied Job User Function============================
     public function allJobs()
     {
-        $allJobs = job::join('users', 'users.id', '=', 'jobs.user_id')->select('jobs.id as job_id', 'jobs.job_title', 'users.*')->get();
+        $allJobs = job::leftjoin('users', 'users.id', '=', 'jobs.user_id')->select('jobs.id as job_id', 'jobs.job_title', 'users.*')->get();
 
         // $allJobs = AppliedJob::join('jobs','jobs.id','=','applied_jobs.job_id')->join('users','users.id','=','jobs.user_id')->where('applied_jobs.status', 1)->select('jobs.id as job_id', 'jobs.job_title', 'users.name')->get();
 
@@ -412,7 +412,8 @@ class HomeController extends Controller
         $data = [
             'name' => $user->name,
             'email' => $user->email,
-            'date' => Carbon::parse($request->date)->format('d/m/Y'),
+            'title'=>$request->title,
+            'date' => Carbon::parse($request->date)->format('d/m/Y'), 
             'time' => Carbon::parse($request->date)->format('g:i A'),
             'user_id' => $request->user_id,
             'schedule_id' => $schedule->id
@@ -423,7 +424,7 @@ class HomeController extends Controller
         // die();
         // $data = User::where('id', $request->user_id)->get()->toArray();
         Mail::send('mail', $data, function ($message) use ($user, $request) {
-            $message->to($user->email, $request->title)->subject('Interview Schedule');
+            $message->to($user->email, $request->title)->subject($user->name.' Your Interview Schedule by Werecuite');
             $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
         });
 
@@ -483,6 +484,7 @@ class HomeController extends Controller
 
         // Notification
         $applied_job = AppliedJob::where('job_id', $schedule->job_id)->where('user_id', $schedule->user_id)->first();
+        $applied_job->screening_schedule = 1;
         $applied_job->interview_schedule = 1;
         $applied_job->update();
 
@@ -519,14 +521,15 @@ class HomeController extends Controller
             'date' => Carbon::parse($date)->format('d/m/Y'),
             'time' => Carbon::parse($time)->format('g:i A'),
             'user_id' => $user_email->id,
+            'title'=>$schedule->title,
             'schedule_id' => $schedule->id
         ];
-        Mail::send('mailed', $data, function ($message) use ($user_email) {
-            $message->to($user_email->email)->subject('Interview Scheduled');
+        Mail::send('confim-interview-mail', $data, function ($message) use ($user_email) {
+            $message->to($user_email->email)->subject($user_email->name.' Your Interview Confirmed by Werecuite');
             $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
         });
 
-        // return redirect()->back()->with('success', 'Interview Scheduled Successfully.....!');
+        return redirect()->route('login')->with('success', 'Interview Scheduled Successfully...! Please Login Your Account.');
 
     }
 
@@ -548,6 +551,7 @@ class HomeController extends Controller
 
         // Notification Start
         $applied_job = AppliedJob::where('job_id', $request->job_id)->where('user_id', $request->user_id)->first();
+        $applied_job->screening_schedule = 1;
         $applied_job->interview_schedule = 1;
         $applied_job->update();
 
@@ -584,14 +588,70 @@ class HomeController extends Controller
             'date' => Carbon::parse($request->date)->format('d/m/Y'),
             'time' => Carbon::parse($request->date)->format('g:i A'),
             'user_id' => $user_email->id,
+            'title'=>$schedule->title,
             'schedule_id' => $schedule->id
         ];
-        Mail::send('confim-mailed', $data, function ($message) use ($user_email) {
-            $message->to($user_email->email)->subject('Interview Scheduled');
+        Mail::send('confim-interview-mail', $data, function ($message) use ($user_email) {
+            $message->to($user_email->email)->subject($user_email->name.' Your Interview Confirmed by Werecuite');
             $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
         });
-
-
         return response()->json(['status' => 'success']);
     }
+
+    //==================Applied Job User Function===========
+    public function appliedJobs(){
+        $appliedJobs = Job::where('user_id',0)->get();
+        return view('admin.jobAppliedUser.applied_jobs',compact('appliedJobs'));
+    }
+
+    public function appliedJobUsers($jobid)
+    {
+        $appliedJobs = AppliedJob::join('users', 'users.id', '=', 'applied_jobs.user_id')->join('jobs', 'jobs.id', '=', 'applied_jobs.job_id')->where('applied_jobs.job_id', $jobid)->select('applied_jobs.id as applied_job_id', 'applied_jobs.status', 'users.id as user_id', 'users.name', 'users.email', 'users.mobile_no', 'jobs.job_title')->get();
+        return view('admin.jobAppliedUser.applied_jobs_user', compact('appliedJobs'));
+    }
+
+    public function jobStatus(Request $request)
+    {
+        //  echo "<pre>";
+        //     print_r($request->checked);
+        //     exit();
+
+        $appliedJob = AppliedJob::find($request->applied_job_id);
+        if ($request->checked == 1) {
+            $appliedJob->status = 1;
+            $appliedJob->update();
+
+            $job = Job::find($appliedJob->job_id);
+            $user = User::find($appliedJob->user_id);
+            $datas = [
+                [
+                    'title' => $job->job_title . " Status Updated Screening.",
+                    'user_id' => $appliedJob->user_id,
+                    'job_id' => $appliedJob->job_id,
+                    'type' => "User",
+                    'created_at' => date('Y-m-d H:i:s'),
+                    'updated_at' => date('Y-m-d H:i:s'),
+                ],
+                [
+                    'title' => $job->job_title . ' <b>' . $user->name . "</b> Screening Updated Admin.",
+                    'user_id' => 0,
+                    'job_id' => $appliedJob->job_id,
+                    'type' => "Admin",
+                    'created_at' => date('Y-m-d H:i:s'),
+                    'updated_at' => date('Y-m-d H:i:s'),
+                ]
+            ];
+
+            foreach ($datas as $data) {
+                DB::table('notifications')->insert($data);
+            }
+
+            return response()->json('Screening');
+        } else {
+            $appliedJob->status = 0;
+            $appliedJob->update();
+            return response()->json('applied');
+        }
+    }
 }
+

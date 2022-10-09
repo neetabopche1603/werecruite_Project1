@@ -1,6 +1,6 @@
-@extends('partials.clientPartner.app')
-@section('clientPartnerTitle','Applied Jobs')
-@section('clientPartner-content')
+@extends('partials.admin.app')
+@section('adminTitle','Applied Jobs User')
+@section('admin-content')
 @push('style')
 <style>
     .switch {
@@ -69,7 +69,7 @@
         <div class="row page-titles mx-0">
             <div class="col-sm-6 p-md-0">
                 <div class="welcome-text">
-                    <h4>Hi, welcome {{auth()->user()->name}}</h4>
+                    <h4>Hi, welcome </h4>
                     <!-- <p class="mb-0">Your business dashboard template</p> -->
                 </div>
             </div>
@@ -208,7 +208,7 @@
         let applied_job_id = $(this).data('id')
         $.ajax({
             type: "POST",
-            url: "{{route('client.jobStatus')}}",
+            url: "{{route('admin.jobStatus')}}",
             data: {
                 'checked': status,
                 'applied_job_id': applied_job_id

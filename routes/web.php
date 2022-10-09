@@ -28,10 +28,9 @@ use Spatie\GoogleCalendar\Event;
 */
 
 
-
 Route::get('wel', function () {
-    return view('wel');
-})->name('welcome');
+    return view('welcome12');
+});
 
 
 Route::resource('bokking', BookingController::class);
@@ -109,18 +108,6 @@ Route::group(['prefix' => 'admin',], function () {
     Route::post('check-date',[HomeController::class,'checkUserDate'])->name('admin.checkUserDate');
     Route::post('schedule-interview-date',[HomeController::class,'scheduleInterviewSelectedDate'])->name('admin.scheduleInterviewSelectedDate');
 
-    // Route::get('/schedule-interview',function(){
-    //     dd(213);
-    //     $event = new Event;
-
-    //     $event->name = 'A new event';
-    //     $event->startDateTime = Carbon\Carbon::now();
-    //     $event->endDateTime = Carbon\Carbon::now()->addHour();
-    //     $event->save();
-    //     $e =Event::get();
-
-    // });
-
     //===================Profile Update Route===================
     Route::get('profile', [ProfileController::class, 'adminProfile'])->name('admin.profile');
     Route::post('profile', [ProfileController::class, 'updateProfiles'])->name('admin.updateProfiles');
@@ -142,6 +129,11 @@ Route::group(['prefix' => 'admin',], function () {
     Route::post('edit-jobsPost', [HomeController::class, 'jobPostUpdate'])->name('admin.jobPostUpdate');
     Route::get('delete-jobsPost/{id}', [HomeController::class, 'jobPostDelete'])->name('admin.jobPostDelete');
 
+     //=================== Applied Job User Route ===================
+     Route::get('applied-job-user',[HomeController::class,'appliedJobs'])->name('admin.appliedJobs');
+     Route::get('get-applied-users/{jobid}', [HomeController::class, 'appliedJobUsers'])->name('admin.appliedJobUsers');
+     Route::post('change-applied-jobs-status', [HomeController::class, 'jobStatus'])->name('admin.jobStatus');
+     
     //=================== JobRole Route ===================
     Route::get('show-job-role', [HomeController::class, 'jobRole'])->name('admin.jobRole');
     Route::get('add-job-role', [HomeController::class, 'jobRoleAddForm'])->name('admin.jobRoleAddForm');

@@ -1,8 +1,9 @@
 <!doctype html>
 <html lang="en-US">
+
 <head>
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-    <title>Interview Timings</title>
+    <title>Confirmation Mail</title>
     <meta name="description" content="Reset Password Email Template.">
     <style type="text/css">
         a:hover {
@@ -38,21 +39,14 @@
                                 </tr>
                                 <tr>
                                     <td style="padding:0 35px;">
-                                        <h1 style="color:#1e1e2d; font-weight:500; margin:0;font-size:32px;font-family:'Rubik',sans-serif;">Interview Timings</h1>
+                                        <h1 style="color:#1e1e2d; font-weight:500; margin:0;font-size:32px;font-family:'Rubik',sans-serif;">Your Interview Confirmed</h1>
                                         <span style="display:inline-block; vertical-align:middle; margin:29px 0 26px; border-bottom:1px solid #cecece; width:100px;"></span>
-                                        <p style="color:#455056; font-size:15px;line-height:24px; margin:0;">
-                                            This is your Interview Timings please confirm by clicking confirm button.
+                                        <p style="color:#455056; font-size:15px;line-height:24px; margin:0;"><?= $title; ?>
                                         </p>
 
                                         <h4>Hi, <?php echo $name; ?></h4>
-                                        <p>Interview Title : <?= $title; ?></p>
                                         <p>Date : <?= $date; ?></p>
                                         <p>Time : <?= $time; ?></p>
-                                        {{-- <p>schedule_id : <?= $schedule_id; ?></p> --}}
-
-                                        <a href="{{route('admin.scheduleInterviewConfirm',['id'=>$schedule_id])}}" style="background:#450b5a;;text-decoration:none !important; font-weight:500; margin-top:35px; color:#fff;text-transform:uppercase; font-size:14px;padding:10px 24px;display:inline-block;border-radius:50px;">Confirm Interview</a>
-
-                                        <a href="{{route('admin.scheduleInterviewCancel',['id'=>$schedule_id,'user_id'=>$user_id])}}" style="background:#ff5c00;;text-decoration:none !important; font-weight:500; margin-top:35px; color:#fff;text-transform:uppercase; font-size:14px;padding:10px 24px;display:inline-block;border-radius:50px;">Cancel Interview</a>
                                     </td>
                                 </tr>
                                 <tr>

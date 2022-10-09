@@ -93,6 +93,7 @@ use App\Models\User;
                                     @php
                                     $skills = implode(",",$job->skills);
                                     @endphp
+                                    
                                     <tr>
                                         <td>{{ $key+1 }}</td>
                                         <td>
@@ -117,7 +118,7 @@ use App\Models\User;
 
                                         </td>
                                     </tr>
-
+                                    
                                     @endforeach
 
                                 </tbody>

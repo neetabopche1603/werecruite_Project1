@@ -1,6 +1,19 @@
 @extends('partials.clientPartner.app')
 @section('clientPartnerTitle','Client Home')
 @section('clientPartner-content')
+<?php
+
+use Illuminate\Support\Facades\DB;
+
+$totaljobs = DB::table('jobs')->where('user_id', '=',auth()->user()->id)->count();
+$getJobs = DB::table('jobs')->where('user_id', '=',auth()->user()->id)->get(['id']);
+$jobs = [];
+foreach($getJobs as $id){
+array_push($jobs,$id->id);
+}
+$appliedJobsUser = DB::table('applied_jobs')->whereIn('job_id',$jobs)->count();
+
+?>
 
 <!--**********************************
             Content body start
@@ -13,7 +26,6 @@
 				<h3 class="text-primary font-w600">Welcome to {{auth()->user()->name}}</h3>
 				<!-- <p class="mb-0">Hospital Admin Dashboard Template</p> -->
 			</div>
-
 			<!-- <div class="input-group search-area ml-auto d-inline-flex">
 						<input type="text" class="form-control" placeholder="Search here">
 						<div class="input-group-append">
@@ -370,43 +382,15 @@
 										<i class="flaticon-381-calendar-1"></i>
 									</span>
 									<div class="media-body text-white text-right">
-										<p class="mb-1">Appointment</p>
-										<h3 class="text-white">76</h3>
+										<p class="mb-1">Total Post Job</p>
+										<h3 class="text-white">{{ $totaljobs }}</h3>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-					<div class="col-xl-6 col-lg-6 col-sm-6">
-						<div class="widget-stat card bg-success">
-							<div class="card-body p-4">
-								<div class="media">
-									<span class="mr-3">
-										<i class="flaticon-381-diamond"></i>
-									</span>
-									<div class="media-body text-white text-right">
-										<p class="mb-1">Hospital Earning</p>
-										<h3 class="text-white">$56K</h3>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-xl-6 col-lg-6 col-sm-6">
-						<div class="widget-stat card bg-info">
-							<div class="card-body p-4">
-								<div class="media">
-									<span class="mr-3">
-										<i class="flaticon-381-heart"></i>
-									</span>
-									<div class="media-body text-white text-right">
-										<p class="mb-1">Total Patient</p>
-										<h3 class="text-white">783K</h3>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
+
+
 					<div class="col-xl-6 col-lg-6 col-sm-6">
 						<div class="widget-stat card bg-primary">
 							<div class="card-body p-4">
@@ -415,13 +399,14 @@
 										<i class="flaticon-381-user-7"></i>
 									</span>
 									<div class="media-body text-white text-right">
-										<p class="mb-1">Doctor</p>
-										<h3 class="text-white">$76</h3>
+										<p class="mb-1">Applied Job User's</p>
+										<h3 class="text-white">{{ $appliedJobsUser }}</h3>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
+					
 				</div>
 				<!-- <div class="row">
 							<div class="col-xl-12 col-xxl-12 col-lg-12 col-md-12">

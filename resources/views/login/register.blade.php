@@ -9,6 +9,8 @@
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{asset('admin/images/favicon.png')}}">
     <link href="{{asset('admin/css/style.css')}}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.tutorialjinni.com/intl-tel-input/17.0.8/css/intlTelInput.css" />
+
 
 </head>
 
@@ -98,7 +100,7 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="mb-1"><strong><span class="text-danger">*</span> Mobile Number</strong></label>
-                                                    <input type="text" name="mobile_number" class="form-control" placeholder="+91-XXXXXXXXXXX">
+                                                    <input type="text" name="mobile_number" class="form-control" id="phone" placeholder="98XXXXXXXXX" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0');" minlength="5" maxlength="15">
                                                     <span class="text-danger">
                                                         @error('mobile_number')
                                                         {{$message}}
@@ -150,22 +152,22 @@
                                             </div>
 
                                             <div class="col-md-7">
-                                            <div class="form-group">
-                                                <label class="mb-1"><strong><span class="text-danger">*</span> Confirm Password</strong></label>
-                                                <div class="input-group" id="show_hide_password_confirmation">
-                                                    <input class="form-control" name="password_confirmation" type="password" placeholder="********">
-                                                    <div class="input-group-addon" style="background-color: #450b5a;
+                                                <div class="form-group">
+                                                    <label class="mb-1"><strong><span class="text-danger">*</span> Confirm Password</strong></label>
+                                                    <div class="input-group" id="show_hide_password_confirmation">
+                                                        <input class="form-control" name="password_confirmation" type="password" placeholder="********">
+                                                        <div class="input-group-addon" style="background-color: #450b5a;
                                                         padding: 8px;
                                                         border-radius: 0px 10px 10px 0px;">
-                                                        <a href="" style="color: white;"><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
+                                                            <a href="" style="color: white;"><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
+                                                        </div>
                                                     </div>
+                                                    <span class="text-danger">
+                                                        @error('password_confirmation')
+                                                        {{$message}}
+                                                        @enderror
+                                                    </span>
                                                 </div>
-                                                <span class="text-danger">
-                                                    @error('password_confirmation')
-                                                    {{$message}}
-                                                    @enderror
-                                                </span>
-                                            </div>
                                             </div>
 
                                             <!-- <div class="col-md-7">
@@ -234,6 +236,7 @@
     <script src="{{asset('admin/vendor/bootstrap-select/dist/js/bootstrap-select.min.js')}}"></script>
     <script src="{{asset('admin/js/custom.min.js')}}"></script>
     <script src="{{asset('admin/js/deznav-init.js')}}"></script>
+    <script src="https://cdn.tutorialjinni.com/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
 
     <!-- Password Show Hide Script -->
     <script>
@@ -253,8 +256,8 @@
         });
     </script>
 
-<!-- Show hide password confirmation Script-->
-<script>
+    <!-- Show hide password confirmation Script-->
+    <script>
         $(document).ready(function() {
             $("#show_hide_password_confirmation a").on('click', function(event) {
                 event.preventDefault();
@@ -268,6 +271,15 @@
                     $('#show_hide_password_confirmation i').addClass("fa-eye");
                 }
             });
+        });
+    </script>
+
+    <script>
+        var input = document.querySelector("#phone");
+        window.intlTelInput(input, {
+            separateDialCode: true,
+            // excludeCountries: ["in", "il"],
+            preferredCountries: ["in","pk", "us",]
         });
     </script>
 

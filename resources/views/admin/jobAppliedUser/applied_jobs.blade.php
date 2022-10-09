@@ -1,82 +1,19 @@
-@extends('partials.clientPartner.app')
-@section('clientPartnerTitle','Applied Jobs')
-@section('clientPartner-content')
-@push('style')
-<style>
-    .switch {
-        position: relative;
-        display: inline-block;
-        width: 60px;
-        height: 34px;
-    }
-
-    .switch input {
-        opacity: 0;
-        width: 0;
-        height: 0;
-    }
-
-    .slider {
-        position: absolute;
-        cursor: pointer;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: #ccc;
-        -webkit-transition: .4s;
-        transition: .4s;
-    }
-
-    .slider:before {
-        position: absolute;
-        content: "";
-        height: 26px;
-        width: 26px;
-        left: 4px;
-        bottom: 4px;
-        background-color: white;
-        -webkit-transition: .4s;
-        transition: .4s;
-    }
-
-    input:checked+.slider {
-        background-color: #450b5a;
-    }
-
-    input:focus+.slider {
-        box-shadow: 0 0 1px #450b5a;
-    }
-
-    input:checked+.slider:before {
-        -webkit-transform: translateX(26px);
-        -ms-transform: translateX(26px);
-        transform: translateX(26px);
-    }
-
-    /* Rounded sliders */
-    .slider.round {
-        border-radius: 34px;
-    }
-
-    .slider.round:before {
-        border-radius: 50%;
-    }
-</style>
-@endpush
+@extends('partials.admin.app')
+@section('adminTitle','Applied Users')
+@section('admin-content')
 <div class="content-body">
     <div class="container-fluid">
         <div class="row page-titles mx-0">
             <div class="col-sm-6 p-md-0">
                 <div class="welcome-text">
-                    <h4>Hi, welcome {{auth()->user()->name}}</h4>
+                    <h4>Hi, welcome </h4>
                     <!-- <p class="mb-0">Your business dashboard template</p> -->
                 </div>
             </div>
             <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Show Applied Job</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Show Applies Job</a></li>
                 </ol>
             </div>
         </div>
@@ -126,11 +63,10 @@
             <div class="col-12">
                 <div class="card">
                 {{--<pre>
-                    {{print($appliedJobs)}}
+                    {{print($allJobs)}}
                     </pre>--}}
                     <div class="card-header">
-                        <h4 class="card-title">Show All Posted Job</h4>
-                        <a href="javascript:void(0)" onclick="history.back()" class="btn btn-primary btn-outline-light float-lg-right" style="background-color: #450b5a; color: #fff;"><i class="fa fa-backward"></i> Back</a>
+                        <h4 class="card-title">Show All Posted Job's</h4>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -139,10 +75,7 @@
                                 <tr>
                                     <th>S.No.</th>
                                     <th>Job Title</th>
-                                    <th>User Name(Telent)</th>
-                                    <th>Mobile No</th>
-                                    <th>Email</th>
-                                    <th>Screening User</th>
+                                    <th>Show All Users</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -150,19 +83,11 @@
                                 $i=1;
                                 @endphp
 
-                                @foreach ($appliedJobs as $job)
+                                @foreach ($appliedJobs as $row)
                                 <tr>
                                     <td>{{$i++}}</td>
-                                    <td>{{$job->job_title}}</td>
-                                    <td>{{$job->name}}</td>
-                                    <td>{{$job->mobile_no}}</td>
-                                    <td>{{$job->email}}</td>
-                                    <td>
-                                        <label class="switch">
-                                            <input type="checkbox" name="screening" class="screening" data-id="{{$job->applied_job_id}}" @php if($job->status==1) echo "checked"; @endphp>
-                                            <span class="slider round"></span>
-                                        </label>
-                                    </td>
+                                    <td>{{$row->job_title}}</td>
+                                    <td><a href="{{route('admin.appliedJobUsers',['jobid'=>$row->id])}}" class="btn btn-btn-outline-light" style="background-color: #df5301; color: #fff;">Show All Applied Users</a></td>
                                     {{-- <td>
                                         <a href="{{url('client/edit_job')}}/{{$job->id}}" class="btn btn-warning btn-sm btn-outline-light" style="background-color: #df5301; color: #fff;"><i class="fa fa-pencil-square" aria-hidden="true"></i></a>
 
@@ -173,6 +98,7 @@
                                 @endforeach
 
                             </tbody>
+
                             </table>
                         </div>
                     </div>
@@ -186,46 +112,6 @@
 
 @endsection
 @push('script')
-<script>
-    $(document).ready(function() {
-        $('#jobs').DataTable();
-    });
 
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-
-    $('.screening').on('click', function() {
-        let checked = $(this).is(':checked')
-        let status
-        if (checked) {
-            status = 1;
-        } else {
-            status = 0;
-        }
-        let applied_job_id = $(this).data('id')
-        $.ajax({
-            type: "POST",
-            url: "{{route('client.jobStatus')}}",
-            data: {
-                'checked': status,
-                'applied_job_id': applied_job_id
-            },
-            success: function(result) {
-                // console.log(result)
-                Swal.fire({
-                    // position: 'top-end',
-                    icon: 'success',
-                    title: 'Screening Status Updated.',
-                    showConfirmButton: true,
-                    // timer: 3000
-                })
-            }
-        });
-
-    })
-</script>
 
 @endpush

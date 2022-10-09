@@ -8,7 +8,6 @@ use Illuminate\Support\Carbon;
 <!-- Calendar CSS -->
 <link href="{{asset('admin/vendor/fullcalendar/css/fullcalendar.min.css')}}" rel="stylesheet">
 <link href="{{asset('admin/css/icomoon.css')}}" rel="stylesheet">
-
 <div class="content-body">
 
     {{-- <pre>
@@ -22,7 +21,7 @@ use Illuminate\Support\Carbon;
             <div class="col-sm-6 p-md-0">
                 <div class="welcome-text">
                     <h4>{{auth()->user()->name}}</h4>
-                    <p class="mb-0">InterView Schedule Calendar</p>
+                    <p class="mb-0">InterView Schedule List and Calendar</p>
                 </div>
             </div>
             <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
@@ -34,31 +33,23 @@ use Illuminate\Support\Carbon;
         </div>
         <!-- row -->
 
-         <!-- -- Notification Start -- -->
-         @if(Session::get('success'))
-                <div class="alert alert-success solid alert-rounded alert-dismissible fade show" role="alert">
-                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="mr-2">
-                        <polyline points="9 11 12 14 22 4"></polyline>
-                        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
-                    </svg>
-                    <strong>{{session::get('success')}}</strong>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                @endif
-
-                <!-- -- Notification End -- -->
-
-        <div class="row">
-            <div class="col-xl-10 col-md-10 col-lg-10 col-sm-12">
-                <div class="card">
-                    <div class="card-body">
-                        <div id="calendar" class="app-fullcalendar"></div>
-                    </div>
-                </div>
-            </div>
+        <!-- -- Notification Start -- -->
+        @if(Session::get('success'))
+        <div class="alert alert-success solid alert-rounded alert-dismissible fade show" role="alert">
+            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="mr-2">
+                <polyline points="9 11 12 14 22 4"></polyline>
+                <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+            </svg>
+            <strong>{{session::get('success')}}</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
         </div>
+        @endif
+
+        <!-- -- Notification End -- -->
+
+        <!-- Show Interview Schedule List -->
         <div class="table-responsive">
             <table class="table table-bordered table-hover table-striped text-center">
                 <thead>
@@ -70,10 +61,10 @@ use Illuminate\Support\Carbon;
                     </tr>
                 </thead>
                 <tbody>
-                 
+
                     <?php $i = 1; ?>
                     @foreach ($schedules as $schedule)
-                  
+
                     <tr>
                         <td scope="row">{{$i++}}</td>
                         <td>{{$schedule->title}}</td>
@@ -84,7 +75,7 @@ use Illuminate\Support\Carbon;
                             @elseif($schedule->user_sche_date != NULL)
                             <a href="javascript:void(0)" class="btn btn-success">Date Successfully Send</a>
                             @else
-                            <a href="javascript:void(0)" class="btn btn-primary interviewDateChoose" data-id="{{$schedule->user_id}}" data-jobid="{{$schedule->job_id}}">Schedule Date</a>
+                            <a href="javascript:void(0)" class="btn btn-primary interviewDateChoose" data-id="{{$schedule->user_id}}" data-jobid="{{$schedule->job_id}}">ReSchedule Date</a>
                             @endif
                         </td>
                     </tr>
@@ -93,6 +84,18 @@ use Illuminate\Support\Carbon;
                 </tbody>
             </table>
         </div>
+
+                <h3 class="text-primary mt-4 mb-4"> Show InterView Calendar </h3>
+        <div class="row">
+            <div class="col-xl-10 col-md-10 col-lg-10 col-sm-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div id="calendar" class="app-fullcalendar"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
     </div>
 </div>
@@ -111,20 +114,23 @@ use Illuminate\Support\Carbon;
                 <div class="modal-body">
                     <input type="hidden" name="user_id" id="user_id">
                     <input type="hidden" name="job_id" id="job_id">
-                   
+
                     <div class="form-group">
                         <label for="date-time" class="col-form-label">First Date Time :</label>
-                        <input type="datetime-local" name="date[]" class="form-control" id="dateTime1">
+                        <!-- <input type="datetime-local" name="date[]" class="form-control" id="dateTime1"> -->
+                        <input type="text" id="date-format1" name="date[]" class="form-control" placeholder="Pick Interview Date Time">
                     </div>
 
                     <div class="form-group">
                         <label for="date-time" class="col-form-label">Second Date Time :</label>
-                        <input type="datetime-local" name="date[]" class="form-control" id="dateTime2">
+                        <!-- <input type="datetime-local" name="date[]" class="form-control" id="dateTime2"> -->
+                        <input type="text" id="date-format2" name="date[]" class="form-control" placeholder="Pick Interview Date Time">
                     </div>
 
                     <div class="form-group">
                         <label for="date-time" class="col-form-label">Third Date Time :</label>
-                        <input type="datetime-local" name="date[]" class="form-control" id="dateTime3">
+                        <!-- <input type="datetime-local" name="date[]" class="form-control" id="dateTime3"> -->
+                        <input type="text" id="date-format3" name="date[]" class="form-control" placeholder="Pick Interview Date Time">
                     </div>
                 </div>
                 <div class="modal-footer">

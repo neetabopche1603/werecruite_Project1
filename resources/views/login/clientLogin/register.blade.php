@@ -9,6 +9,7 @@
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{asset('admin/images/favicon.png')}}">
     <link href="{{asset('admin/css/style.css')}}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.tutorialjinni.com/intl-tel-input/17.0.8/css/intlTelInput.css" />
 
 </head>
 
@@ -97,7 +98,7 @@
                                             <div class="col-md-7">
                                                 <div class="form-group">
                                                     <label class="mb-1"><strong><span class="text-danger">*</span> Mobile Number</strong></label>
-                                                    <input type="text" name="mobile_number" value="{{old('mobile_number')}}" class="form-control" placeholder="+91-XXXXXXXXXXX">
+                                                    <input type="text" name="mobile_number" id="phone" value="{{old('mobile_number')}}" class="form-control" placeholder="98XXXXXXXXX" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0');" minlength="5" maxlength="15">
                                                     <span class="text-danger">
                                                         @error('mobile_number')
                                                         {{$message}}
@@ -222,6 +223,7 @@
     <script src="{{asset('admin/vendor/global/global.min.js')}}"></script>
     <script src="{{asset('admin/vendor/bootstrap-select/dist/js/bootstrap-select.min.js')}}"></script>
     <script src="{{asset('admin/js/custom.min.js')}}"></script>
+    <script src="https://cdn.tutorialjinni.com/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
     <script src="{{asset('admin/js/deznav-init.js')}}"></script>
 
     <!-- Password Show Hide Script -->
@@ -259,7 +261,14 @@
             });
         });
     </script>
-
+  <script>
+        var input = document.querySelector("#phone");
+        window.intlTelInput(input, {
+            separateDialCode: true,
+            // excludeCountries: ["in", "il"],
+            preferredCountries: ["in","pk", "us",]
+        });
+    </script>
 </body>
 
 </html>
