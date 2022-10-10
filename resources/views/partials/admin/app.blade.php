@@ -20,7 +20,7 @@ $settings = Setting::get();
     <meta name="csrf-token" id="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('adminTitle')</title>
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('settings/'.$settings[0]['favicon'] )}}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('settings/'.$settings[0]['favicon'] )}}" width="50px" hight="50px">
     <link href="{{asset('admin/vendor/jqvmap/css/jqvmap.min.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="{{asset('admin/vendor/chartist/css/chartist.min.css')}}">
     <link href="{{asset('admin/vendor/bootstrap-select/dist/css/bootstrap-select.min.css')}}" rel="stylesheet">

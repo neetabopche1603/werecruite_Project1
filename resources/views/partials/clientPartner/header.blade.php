@@ -9,8 +9,8 @@ $notification = Notification::where('is_seen', 0)->where('type', 'Client')->wher
             Nav header start
         ***********************************-->
 <div class="nav-header">
-	<a href="#" class="brand-logo">
-		<img class="logo-abbr" src="{{ asset('settings/'.$setting[0]['logo'] )}}" alt="">
+	<a href="{{route('clientPartner.home')}}" class="brand-logo">
+		<img class="logo-abbr" style="max-width: 170px;" src="{{ asset('settings/'.$setting[0]['logo'] )}}" alt="">
 
 		<!-- <img class="logo-compact" src="{{asset('admin/images/logo-text.png')}}" alt="">
 		<img class="brand-title" src="{{asset('admin/images/logo-text.png')}}" alt=""> -->

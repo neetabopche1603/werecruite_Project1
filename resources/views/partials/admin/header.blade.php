@@ -1,4 +1,5 @@
 <?php
+
 use App\Models\SuperAdmin;
 use App\Models\Notification;
 
@@ -14,8 +15,8 @@ $notification = Notification::where('is_seen', 0)->where('type', 'Admin')->where
             Nav header start
         ***********************************-->
 <div class="nav-header">
-	<a href="#" class="brand-logo">
-		<img class="logo-abbr" src="{{ asset('settings/'.$settings[0]['logo'] )}}" alt="">
+	<a href="{{route('admin.home')}}" class="brand-logo">
+		<img class="logo-abbr" style="max-width: 170px;" src="{{ asset('settings/'.$settings[0]['logo'] )}}" alt="">
 		<!-- <img class="logo-compact" src="{{asset('admin/images/logo-text.png')}}" alt="">
 		<img class="brand-title" src="{{asset('admin/images/logo-text.png')}}" alt=""> -->
 	</a>
@@ -62,39 +63,39 @@ $notification = Notification::where('is_seen', 0)->where('type', 'Admin')->where
 						</a>
 						<div class="dropdown-menu dropdown-menu-right">
 							<div id="DZ_W_Notification1" class="widget-media dz-scroll p-3" style="height:380px;">
-							<ul class="timeline">
- 									@forelse ($notification as $row)
- 									<li>
- 										<div class="timeline-panel">
- 											<!-- <div class="media mr-2">
+								<ul class="timeline">
+									@forelse ($notification as $row)
+									<li>
+										<div class="timeline-panel">
+											<!-- <div class="media mr-2">
 														<img alt="image" width="50" src="images/avatar/1.jpg">
 													</div> -->
- 											<div class="media-body">
- 												<?php
-													if ($row->is_seen == 0) {
-													?>
+											<div class="media-body">
+												<?php
+												if ($row->is_seen == 0) {
+												?>
 													{{--{{route('admin.job_desc',['id'=>$row->job_id])}}--}}
- 													<a href="javascript:void(0)" data-url="{{route('admin.screeningJobUsers',['jobid'=>$row->job_id])}}" class="jobStatus" data-id="{{$row->id}}">
- 														<h6 class="mb-1 text-warning"> {!!$row->title!!} </h6>
- 													</a>
- 												<?php
-													} else {
-														echo "<h6 class='mb-1 text-success'> $row->title </h6>";
-													}
-													?>
+													<a href="javascript:void(0)" data-url="{{route('admin.screeningJobUsers',['jobid'=>$row->job_id])}}" class="jobStatus" data-id="{{$row->id}}">
+														<h6 class="mb-1 text-warning"> {!!$row->title!!} </h6>
+													</a>
+												<?php
+												} else {
+													echo "<h6 class='mb-1 text-success'> $row->title </h6>";
+												}
+												?>
 
- 												<small class="d-block">{{ $row->created_at->diffForHumans() }}</small>
- 											</div>
- 										</div>
- 									</li>
-									 @empty
+												<small class="d-block">{{ $row->created_at->diffForHumans() }}</small>
+											</div>
+										</div>
+									</li>
+									@empty
 									<li>
 										<h5 class="text-center mt-5 text-primary">No Notifications</h5>
 									</li>
- 									@endforelse
+									@endforelse
 
 
- 								</ul>
+								</ul>
 							</div>
 							<!-- <a class="all-notification" href="#">See all notifications <i class="ti-arrow-right"></i></a> -->
 						</div>
@@ -140,27 +141,29 @@ $notification = Notification::where('is_seen', 0)->where('type', 'Admin')->where
         ***********************************-->
 
 @push('script')
- <script>
- 	$.ajaxSetup({
- 		headers: {
- 			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
- 		}
- 	});
- 	$(document).on('click', '.jobStatus', function() {
- 		let notification_id = $(this).data('id');
+<script>
+	$.ajaxSetup({
+		headers: {
+			'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		}
+	});
+	$(document).on('click', '.jobStatus', function() {
+		let notification_id = $(this).data('id');
 		let getJoburl = $(this).data('url');
-		
+
 		$.ajax({
 			type: "post",
 			url: "{{route('admin.notificationSeen')}}",
-			data: {"id":notification_id},
-			success: function (result) {
+			data: {
+				"id": notification_id
+			},
+			success: function(result) {
 				// console.log(result)
-				if(result.status == 'success'){
+				if (result.status == 'success') {
 					location.href = getJoburl
 				}
 			}
 		});
- 	})
- </script>
- @endpush
+	})
+</script>
+@endpush

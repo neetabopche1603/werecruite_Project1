@@ -1,3 +1,9 @@
+<?php
+
+use App\Models\Setting;
+
+$settings = Setting::get();
+?>
 <!DOCTYPE html>
 <html lang="en" class="h-100">
 
@@ -7,7 +13,8 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>404-Error Bad Request</title>
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('admin/images/favicon.png')}}">
+    <!-- <link rel="icon" type="image/png" sizes="16x16" href="{{asset('admin/images/favicon.png')}}"> -->
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('settings/'.$settings[0]['favicon'] )}}">
     <link href="{{asset('admin/css/style.css')}}" rel="stylesheet">
 
 </head>
@@ -22,7 +29,7 @@
                         <h4><i class="fa fa-thumbs-down text-danger"></i> Bad Request</h4>
                         <p>Your Request resulted in an error</p>
                         <div>
-                            <a class="btn btn-primary" href="./index.html">Back to Home</a>
+                            <a class="btn btn-primary" href="javascript:void(0)" onclick="history.back()">Back to Home</a>
                         </div>
                     </div>
                 </div>

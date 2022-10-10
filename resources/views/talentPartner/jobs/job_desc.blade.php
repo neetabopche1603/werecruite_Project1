@@ -50,7 +50,7 @@
 							</div>
 						</div>
 					</div> -->
-			<div class="col-xl-8">
+			<div class="col-xl-10">
 				<div class="row">
 					<div class="col-md-12">
 
@@ -124,8 +124,8 @@
 									</div>
 								</div>
 
-								<div class="doctor-info-content mb-lg-4" style="margin-bottom: 50px;">
-									<h4 class="text-black mb-3">{{$jobs->job_role}}</h4>
+								<div class="doctor-info-content mb-lg-0" style="margin-bottom: 50px;">
+									<h4 class="text-black mb-3"><span class="text-info"><b>Job Role -</b></span>&nbsp;&nbsp;{{$jobs->job_role}}</h4>
 									<h5>Job description</h5>
 									<p class="mb-3">{{$jobs->description}}</p>
 								</div>
