@@ -66,7 +66,7 @@
                     {{print($allJobs)}}
                     </pre>--}}
                     <div class="card-header">
-                        <h4 class="card-title">Show All Posted Job's</h4>
+                        <h4 class="card-title">Show All Applied Job</h4>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">

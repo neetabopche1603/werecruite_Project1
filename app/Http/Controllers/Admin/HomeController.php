@@ -77,11 +77,9 @@ class HomeController extends Controller
         $jobRoleDelete = JobRole::find($id)->delete();
         return redirect()->route('admin.jobRole')->with('delete', 'Job Role Deleted Successfully.!');
     }
-
     // ======================Admin Job Role End=============================
 
     // ======================Admin Skill Function=============================
-
     public function skill()
     {
         $skills = Skill::get();
@@ -231,16 +229,12 @@ class HomeController extends Controller
     {
         $allJobs = job::leftjoin('users', 'users.id', '=', 'jobs.user_id')->select('jobs.id as job_id', 'jobs.job_title', 'users.*')->get();
 
-        // $allJobs = AppliedJob::join('jobs','jobs.id','=','applied_jobs.job_id')->join('users','users.id','=','jobs.user_id')->where('applied_jobs.status', 1)->select('jobs.id as job_id', 'jobs.job_title', 'users.name')->get();
-
-
         $super_admin = SuperAdmin::get();
         return view('admin.jobPost.applied_jobs', compact('allJobs', 'super_admin'));
     }
     // ======================Admin Screening User Show Function=============================
     public function screeningJobUsers($jobid)
     {
-
         $appliedJobs = AppliedJob::join('users', 'users.id', '=', 'applied_jobs.user_id')->join('jobs', 'jobs.id', '=', 'applied_jobs.job_id')->where('applied_jobs.job_id', $jobid)->where('applied_jobs.status', 1)->select('applied_jobs.id as applied_job_id', 'applied_jobs.screening_schedule', 'applied_jobs.interview_schedule', 'applied_jobs.selected', 'users.id as user_id', 'users.name', 'users.email', 'users.mobile_no', 'jobs.job_title', 'jobs.id as jobId')->get();
         $super_admin = SuperAdmin::get();
         return view('admin.jobPost.applied_jobs_user', compact('appliedJobs', 'super_admin'));
@@ -654,4 +648,3 @@ class HomeController extends Controller
         }
     }
 }
-

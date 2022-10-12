@@ -129,7 +129,7 @@
                     {{print($appliedJobs)}}
                     </pre>--}}
                     <div class="card-header">
-                        <h4 class="card-title">Show All Posted Job</h4>
+                        <h4 class="card-title">Show All Applied Job</h4>
                         <a href="javascript:void(0)" onclick="history.back()" class="btn btn-primary btn-outline-light float-lg-right" style="background-color: #450b5a; color: #fff;"><i class="fa fa-backward"></i> Back</a>
                     </div>
                     <div class="card-body">

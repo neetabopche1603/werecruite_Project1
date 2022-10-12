@@ -54,8 +54,7 @@ class HomeController extends Controller
         $jobs->skills = $final;
 
         $applied_job = AppliedJob::where('job_id', $jobs->id)->where('user_id', auth()->user()->id)->first();
-
-
+        
         // $jobs = Job::join('job_roles','jobs.job_role','=','job_roles.id')->select('jobs.*','job_roles.*')->find($id)->get();
         return view('talentPartner.jobs.job_desc', compact('jobs', 'applied_job'));
     }
@@ -67,6 +66,8 @@ class HomeController extends Controller
         $schedules = Scheduler::join('jobs','jobs.id','=','schedulers.job_id')->select('jobs.job_title','schedulers.*')->where('schedulers.user_id',auth()->user()->id)->get();
         return view('talentPartner.calender',compact('schedules'));
     }
+
+
     public function getEvents()
     {
         $events = Scheduler::where('user_id', auth()->user()->id)->select('title','actual_sche_date')->get();

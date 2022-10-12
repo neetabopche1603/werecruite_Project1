@@ -33,7 +33,6 @@ class ProfileController extends Controller
         $updateProfiles->dob = $request->dob;
         $updateProfiles->address = $request->address;
 
-
         // if($request->file('profile_img')){
         //     $image = $request->file('profile_img');
         //     $destinationPath = 'images';
@@ -41,7 +40,6 @@ class ProfileController extends Controller
         //     $image->move($destinationPath, $uploadImage);
         //     $profileUpdate->image =  $uploadImage;
         // }
-
 
         if ($request->file('image')) {
             // Old Image Delete Code Start
