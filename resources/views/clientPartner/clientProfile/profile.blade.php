@@ -7,7 +7,7 @@
         <div class="row page-titles mx-0">
             <div class="col-sm-6 p-md-0">
                 <div class="welcome-text">
-                    <h4>Welcome to {{auth()->user()->name}}</h4>
+                    <h4>Welcome {{auth()->user()->name}}</h4>
                     <!-- <p class="mb-0">Your business dashboard template</p> -->
                 </div>
             </div>
@@ -86,16 +86,16 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label for=""><span class="text-danger">*</span><b>Name:</b></label>
+                                        <label for=""><span class="text-danger">*</span><b>Company Name:</b></label>
                                         <input type="text" name="name" value="{{$profiles->name}}" class="form-control input-default " placeholder="Enter Name">
                                     </div>
                                 </div>
-                                <div class="col-12">
+                                <!-- <div class="col-12">
                                     <div class="form-group">
                                         <label for=""><span class="text-danger">*</span><b>Date Of Birth:</b></label>
                                         <input type="date" name="dob" value="{{$profiles->dob}}" class="form-control input-default " placeholder="">
                                     </div>
-                                </div>
+                                </div> -->
 
                                 <div class="col-12">
                                     <div class="form-group">
@@ -106,15 +106,15 @@
 
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label for=""><span class="text-danger">*</span><b>Highest Education:</b></label>
-                                        <input type="text" name="highest_education" value="{{$profiles->highest_education}}" class="form-control input-default " placeholder="Highest Education">
+                                        <label for=""><span class="text-danger">*</span><b> Employment Size:</b></label>
+                                        <input type="text" name="emp_size" value="{{$profiles->emp_size}}" class="form-control input-default " placeholder="Employment Size">
                                     </div>
                                 </div>
 
                                 <div class="col-12">
                                     <div class="form-group">
                                         <label for=""><span class="text-danger">*</span><b>Mobile:</b></label>
-                                        <input type="text" name="mobile_number" value="{{$profiles->mobile_no}}" class="form-control input-default" placeholder="Enter Phone">
+                                        <input type="text" name="mobile_number" value="{{$profiles->mobile_no}}" class="form-control input-default" placeholder="Enter Phone" minlength="13" maxlength="13">
                                     </div>
                                 </div>
                                 <div class="col-12">

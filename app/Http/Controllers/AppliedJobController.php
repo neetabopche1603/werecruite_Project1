@@ -13,7 +13,7 @@ class AppliedJobController extends Controller
 {
     public function appliedJob($job_id){
 
-        $data = AppliedJob::where('job_id',$job_id)->get();
+        $data = AppliedJob::where('job_id',$job_id)->orderBy('id', 'DESC')->get();
         foreach($data as $row)
         {
             if($row->user_id == Auth::user()->id)
@@ -38,6 +38,6 @@ class AppliedJobController extends Controller
             'updated_at' => date('Y-m-d H:i:s'),
         ];
         // DB::table('notifications')->insert($data);
-        // return redirect()->back();
+        return redirect()->back();
     }
 }

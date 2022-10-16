@@ -10,6 +10,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="{{asset('admin/images/favicon.png')}}">
     <link href="{{asset('admin/css/style.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.tutorialjinni.com/intl-tel-input/17.0.8/css/intlTelInput.css" />
+  
 
 </head>
 
@@ -98,7 +99,8 @@
                                             <div class="col-md-7">
                                                 <div class="form-group">
                                                     <label class="mb-1"><strong><span class="text-danger">*</span> Mobile Number</strong></label>
-                                                    <input type="text" name="mobile_number" id="phone" value="{{old('mobile_number')}}" class="form-control" placeholder="98XXXXXXXXX" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0');" minlength="5" maxlength="15">
+                                                    <input type="text" id="phone" value="{{old('mobile_number')}}" class="form-control" placeholder="98XXXXXXXXX" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0');" minlength="5" maxlength="15" style="padding-left: 84px; padding-right: 97px;">
+                                                    <input type="hidden" name="mobile_number" id="phoneno" value="{{old('mobile_number')}}">
                                                     <span class="text-danger">
                                                         @error('mobile_number')
                                                         {{$message}}
@@ -107,18 +109,18 @@
                                                 </div>
                                             </div>
 
-                                            <!-- <div class="col-md-10">
+                                            <div class="col-md-10">
                                                 <div class="form-group">
-                                                    <label class="mb-1"><strong><span class="text-danger">*</span> Highest Education</strong></label>
-                                                    <input type="text" name="highest_education" class="form-control" placeholder="Highest education">
+                                                    <label class="mb-1"><strong><span class="text-danger">*</span>Employment size</strong></label>
+                                                    <input type="text" name="emp_size" value="{{old('emp_size')}}" class="form-control" placeholder="Employment size">
                                                     <span class="text-danger">
-                                                        @error('highest_education')
+                                                        @error('emp_size')
                                                         {{$message}}
                                                         @enderror
                                                     </span>
                                                 </div>
-                                            </div> -->
-                                          
+                                            </div>
+
                                             <div class="col-md-10">
                                                 <div class="form-group">
                                                     <label class="mb-1"><strong><span class="text-danger">*</span> Email</strong></label>
@@ -133,8 +135,8 @@
                                             <div class="col-md-7">
                                                 <div class="form-group">
                                                     <label class="mb-1"><strong><span class="text-danger">*</span> Password</strong></label>
-                                                    <div class="input-group" id="show_hide_password">
-                                                        <input class="form-control" name="password" type="password" placeholder="********">
+                                                    <div class="input-group" id="password">
+                                                        <input class="form-control" name="password" type="password" placeholder="********" onkeyup="checkPasswordStrength()">
                                                         <div class="input-group-addon" style="background-color: #450b5a;
                                                         padding: 8px;
                                                         border-radius: 0px 10px 10px 0px;">
@@ -150,29 +152,28 @@
                                             </div>
 
                                             <div class="col-md-7">
-                                            <div class="form-group">
-                                                <label class="mb-1"><strong><span class="text-danger">*</span> Confirm Password</strong></label>
-                                                <div class="input-group" id="show_hide_password_confirmation">
-                                                    <input class="form-control" name="password_confirmation" type="password" placeholder="********">
-                                                    <div class="input-group-addon" style="background-color: #450b5a;
+                                                <div class="form-group">
+                                                    <label class="mb-1"><strong><span class="text-danger">*</span> Confirm Password</strong></label>
+                                                    <div class="input-group" id="show_hide_password_confirmation">
+                                                        <input class="form-control" name="password_confirmation" type="password" placeholder="********">
+                                                        <div class="input-group-addon" style="background-color: #450b5a;
                                                         padding: 8px;
                                                         border-radius: 0px 10px 10px 0px;">
-                                                        <a href="" style="color: white;"><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
+                                                            <a href="" style="color: white;"><i class="fa fa-eye-slash" aria-hidden="true"></i></a>
+                                                        </div>
                                                     </div>
+                                                    <span class="text-danger">
+                                                        @error('password_confirmation')
+                                                        {{$message}}
+                                                        @enderror
+                                                    </span>
                                                 </div>
-                                                <span class="text-danger">
-                                                    @error('password_confirmation')
-                                                    {{$message}}
-                                                    @enderror
-                                                </span>
                                             </div>
-                                            </div>
-                                        
-                                               
+
 
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label class="mb-1"><strong><span class="text-danger">*</span> Image</strong></label>
+                                                    <label class="mb-1">Image</strong></label>
                                                     <input type="file" name="image" value="{{old('image')}}" class="form-control" placeholder="">
                                                     <span class="text-danger">
                                                         @error('image')
@@ -226,26 +227,29 @@
     <script src="https://cdn.tutorialjinni.com/intl-tel-input/17.0.8/js/intlTelInput.min.js"></script>
     <script src="{{asset('admin/js/deznav-init.js')}}"></script>
 
+    <!-- Password Validation -->
+
+
     <!-- Password Show Hide Script -->
     <script>
         $(document).ready(function() {
-            $("#show_hide_password a").on('click', function(event) {
+            $("#password a").on('click', function(event) {
                 event.preventDefault();
-                if ($('#show_hide_password input').attr("type") == "text") {
-                    $('#show_hide_password input').attr('type', 'password');
-                    $('#show_hide_password i').addClass("fa-eye-slash");
-                    $('#show_hide_password i').removeClass("fa-eye");
-                } else if ($('#show_hide_password input').attr("type") == "password") {
-                    $('#show_hide_password input').attr('type', 'text');
-                    $('#show_hide_password i').removeClass("fa-eye-slash");
-                    $('#show_hide_password i').addClass("fa-eye");
+                if ($('#password input').attr("type") == "text") {
+                    $('#password input').attr('type', 'password');
+                    $('#password i').addClass("fa-eye-slash");
+                    $('#password i').removeClass("fa-eye");
+                } else if ($('#password input').attr("type") == "password") {
+                    $('#password input').attr('type', 'text');
+                    $('#password i').removeClass("fa-eye-slash");
+                    $('#password i').addClass("fa-eye");
                 }
             });
         });
     </script>
 
-<!-- Show hide password confirmation Script-->
-<script>
+    <!-- Show hide password confirmation Script-->
+    <script>
         $(document).ready(function() {
             $("#show_hide_password_confirmation a").on('click', function(event) {
                 event.preventDefault();
@@ -261,14 +265,27 @@
             });
         });
     </script>
-  <script>
+    <script>
         var input = document.querySelector("#phone");
         window.intlTelInput(input, {
             separateDialCode: true,
             // excludeCountries: ["in", "il"],
-            preferredCountries: ["in","pk", "us",]
+            preferredCountries: ["in", "pk", "us", ]
         });
     </script>
+
+<script>
+        $(document).ready(function() {
+            $('#phone').on('keyup', function() {
+                let c_code = $('.iti__selected-dial-code').html();
+                let phone = $(this).val();
+                $('#phoneno').val(c_code + phone) 
+            })
+
+        });
+    </script>
+
+
 </body>
 
 </html>

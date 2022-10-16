@@ -17,25 +17,37 @@ class ClientAuthController extends Controller
 
     public function registerStore(Request $request)
     {
-        $validatedData = $request->validate([
-            'name' => 'required',
-            // 'dob' => 'required',
-            // 'gender' => 'required',
-            // 'highest_education' => 'required',
-            'mobile_number' => 'required|unique:users,mobile_no|max:10',
-            'email' => 'required|unique:users,email|max:255',
-            'password' => 'min:8',
-            'password_confirmation' => 'required_with:password|same:password|min:8',
-            'address' => 'required',
-            'image.*' => 'image|mimes:jpg,jpeg,png,gif|max:2048',
+        $validatedData = $request->validate(
+            [
+                'name' => 'required',
+                'emp_size' => 'required',
+                'mobile_number' => 'required|unique:users,mobile_no',
+                'email' => 'required|unique:users,email|max:255',
+                'password' => [
+                    'required',
+                    'string',
+                    'min:8',             // must be at least 8 characters in length
+                    'regex:/[a-z]/',      // must contain at least one lowercase letter
+                    'regex:/[A-Z]/',      // must contain at least one uppercase letter
+                    'regex:/[0-9]/',      // must contain at least one digit
+                    'regex:/[@$!%*#?&]/', // must contain a special character
+                ],
+                'password_confirmation' => 'required_with:password|same:password|min:8',
+                'address' => 'required',
+                'image' => 'image|mimes:jpg,jpeg,png,gif|max:2048',
 
-        ]);
+            ],
+            [
+                'image.image' => 'Please Choose Only jpg,jpeg,png,gif file.',
+                'password.min'=> 'Password must be at least 8 characters in length.',
+                'password.regex'=> 'Password containt at least one lowercase, uppercase, digit, character and must be at least 8 characters in length.'
+                
+            ]
+        );
 
         $registerStore = new User();
         $registerStore->name = strtoupper($request->name);
-        // $registerStore->dob = $request->dob;
-        // $registerStore->gender = $request->gender;
-        // $registerStore->highest_education = $request->highest_education;
+        $registerStore->emp_size = $request->emp_size;
         $registerStore->mobile_no = $request->mobile_number;
         $registerStore->email = $request->email;
         $registerStore->password = Hash::make($request->password);

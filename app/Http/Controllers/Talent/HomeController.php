@@ -10,6 +10,7 @@ use App\Models\Skill;
 use Illuminate\Http\Request;
 use App\Models\AppliedJob;
 use App\Models\Scheduler;
+use Illuminate\Support\Facades\DB;
 
 class HomeController extends Controller
 {
@@ -31,14 +32,14 @@ class HomeController extends Controller
     // =====================VIEW JOBS=========================
     public function jobsView()
     {
-        $jobs = Job::get();
+        $jobs = Job::orderBy('id', 'DESC')->get();
         return view('talentPartner.jobs.jobs', compact('jobs'));
     }
 
     public function job_desc($id)
     {
         // $jobs = Job::find($id);
-        $jobs = Job::join('job_roles', 'jobs.job_role', '=', 'job_roles.id')->select('jobs.*', 'job_roles.job_role')->where('jobs.id', $id)->first();
+        $jobs = Job::join('job_roles', 'jobs.job_role', '=', 'job_roles.id')->leftjoin('users','users.id','jobs.user_id')->select('jobs.*', 'job_roles.job_role','users.name as company_name')->where('jobs.id', $id)->first();
 
         $arr = array();
         $final = array();
@@ -63,7 +64,7 @@ class HomeController extends Controller
     // Calender Function
     public function schedule_calendar()
     {
-        $schedules = Scheduler::join('jobs','jobs.id','=','schedulers.job_id')->select('jobs.job_title','schedulers.*')->where('schedulers.user_id',auth()->user()->id)->get();
+        $schedules = Scheduler::join('jobs','jobs.id','=','schedulers.job_id')->leftjoin('users','users.id','jobs.user_id')->select('jobs.job_title','schedulers.*','users.id as user_ids','users.name as company_name')->where('schedulers.user_id',auth()->user()->id)->get();
         return view('talentPartner.calender',compact('schedules'));
     }
 
@@ -96,5 +97,13 @@ class HomeController extends Controller
 
         return redirect()->back()->with('success','Prefered Date Successfully Send.');
 
+    }
+
+
+    public function viewAppliedJob(){
+        // $totalAppliedJob = DB::table('applied_jobs')->where('user_id','=',auth()->user()->id)->orderBy('id','DESC')->get();
+
+        $viewAppliedJob = AppliedJob::join('jobs','jobs.id','=','applied_jobs.job_id')->leftjoin('users','users.id','=','jobs.user_id')->where('applied_jobs.user_id','=',auth()->user()->id)->select('users.name as company_name','jobs.job_title','applied_jobs.id as applied_job_id','jobs.id as jobId','users.id as userId','applied_jobs.created_at','applied_jobs.status','applied_jobs.screening_schedule','applied_jobs.interview_schedule','applied_jobs.selected')->orderBy('applied_jobs.id','DESC')->get();
+        return view('talentPartner.view-applied-job',compact('viewAppliedJob'));
     }
 }

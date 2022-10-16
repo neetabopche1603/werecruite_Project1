@@ -3,7 +3,7 @@
 use App\Models\Scheduler;
 ?>
 @extends('partials.admin.app')
-@section('adminTitle','Screening User')
+@section('adminTitle','Show Screening Users')
 @section('admin-content')
 
 @push('style')
@@ -84,14 +84,14 @@ use App\Models\Scheduler;
         <div class="row page-titles mx-0">
             <div class="col-sm-6 p-md-0">
                 <div class="welcome-text">
-                    <h4>Hi, welcome {{$super_admin[0]['name']}}</h4>
+                    <h4>Hi, Welcome {{$super_admin[0]['name']}}</h4>
                     <!-- <p class="mb-0">Your business dashboard template</p> -->
                 </div>
             </div>
             <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Show Screening User</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Show Screening User's</a></li>
                 </ol>
             </div>
         </div>
@@ -144,21 +144,21 @@ use App\Models\Scheduler;
                     {{print($appliedJobs)}}
                     </pre>--}}
                     <div class="card-header">
-                        <h4 class="card-title">Show Screening User</h4>
+                        <h4 class="card-title">Show Screening User's</h4>
                         <a href="javascript:void(0)" onclick="history.back()" class="btn btn-primary  float-lg-right"><i class="fa fa-backward"></i> Back</a>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table id="example" class="display" style="min-width: 845px">
+                            <table id="example" class="display text-center" style="min-width: 845px">
                                 <thead>
                                     <tr>
                                         <th>S.No.</th>
                                         <th>Job Title</th>
-                                        <th>User Name(Telent)</th>
+                                        <th>User Name(Talent)</th>
                                         <th>Mobile No</th>
                                         <th>Email</th>
-                                        <th>Screening Schedule</th>
-                                        <th>Interview Schedule</th>
+                                        <th>Screening Scheduled</th>
+                                        <th>Interview Scheduled</th>
                                         <th>Selected</th>
                                     </tr>
                                 </thead>
@@ -206,7 +206,7 @@ use App\Models\Scheduler;
                                         </td>
                                         <td>
                                             <label class="switch">
-                                                <input type="checkbox" name="interview" class="interview" data-id="{{$job->applied_job_id}}" @php if($job->interview_schedule==1) echo "checked"; @endphp>
+                                                <input type="checkbox" name="interview" disabled class="interview btn-sm" data-id="{{$job->applied_job_id}}" @php if($job->interview_schedule==1) echo "checked"; @endphp>
                                                 <span class="slider round"></span>
                                             </label>
                                         </td>

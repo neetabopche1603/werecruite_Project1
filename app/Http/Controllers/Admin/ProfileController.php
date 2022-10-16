@@ -30,16 +30,8 @@ class ProfileController extends Controller
             $updateProfiles->password = Hash::make($request->password);
         }
         $updateProfiles->mobile_no = $request->mobile_number;
-        $updateProfiles->dob = $request->dob;
+        // $updateProfiles->dob = $request->dob;
         $updateProfiles->address = $request->address;
-
-        // if($request->file('profile_img')){
-        //     $image = $request->file('profile_img');
-        //     $destinationPath = 'images';
-        //     $uploadImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
-        //     $image->move($destinationPath, $uploadImage);
-        //     $profileUpdate->image =  $uploadImage;
-        // }
 
         if ($request->file('image')) {
             // Old Image Delete Code Start

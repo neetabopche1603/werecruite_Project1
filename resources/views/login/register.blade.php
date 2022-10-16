@@ -100,7 +100,8 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="mb-1"><strong><span class="text-danger">*</span> Mobile Number</strong></label>
-                                                    <input type="text" name="mobile_number" class="form-control" id="phone" placeholder="98XXXXXXXXX" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0');" minlength="5" maxlength="15">
+                                                    <input type="text" class="form-control" id="phone" placeholder="98XXXXXXXXX" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0');" minlength="5" maxlength="15" style="padding-left: 84px; padding-right: 97px;" value="{{old('mobile_number')}}">
+                                                    <input type="hidden" name="mobile_number" id="phoneno" value="{{old('mobile_number')}}">
                                                     <span class="text-danger">
                                                         @error('mobile_number')
                                                         {{$message}}
@@ -279,7 +280,18 @@
         window.intlTelInput(input, {
             separateDialCode: true,
             // excludeCountries: ["in", "il"],
-            preferredCountries: ["in","pk", "us",]
+            preferredCountries: ["in", "pk", "us", ]
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#phone').on('keyup', function() {
+                let c_code = $('.iti__selected-dial-code').html();
+                let phone = $(this).val();
+                $('#phoneno').val(c_code + phone) 
+            })
+
         });
     </script>
 

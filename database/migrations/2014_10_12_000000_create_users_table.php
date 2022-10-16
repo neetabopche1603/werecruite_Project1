@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('mobile_no');
             $table->longText('address');
             $table->string('highest_education');
+            $table->string('emp_size')->nullable();
             $table->string('dob');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

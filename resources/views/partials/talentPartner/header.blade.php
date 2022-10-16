@@ -12,7 +12,7 @@
         ***********************************-->
  <div class="nav-header">
  	<a href="{{route('talentPartner.home')}}" class="brand-logo">
- 		<img class="logo-abbr" style="max-width: 170px;" src="{{ asset('settings/'.$setting[0]['logo'] )}}" alt="">
+ 		<img class="logo-abbr" style="max-width: 120px;" src="{{ asset('settings/'.$setting[0]['logo'] )}}" alt="">
 <!-- 
  		<img class="logo-compact" src="{{asset('admin/images/logo-text.png')}}" alt="">
  		<img class="brand-title" src="{{asset('admin/images/logo-text.png')}}" alt=""> -->
@@ -58,7 +58,10 @@
 
  						<a class="nav-link  ai-icon" href="#" role="button" data-toggle="dropdown">
  							<i class="flaticon-381-ring"></i>
- 							<div class="pulse-css"></div>
+							@if($notification->count() != 0)
+								<div class="pulse-css"></div>
+ 							@endif
+							
  						</a>
  						<div class="dropdown-menu dropdown-menu-right">
  							<div id="DZ_W_Notification1" class="widget-media dz-scroll p-3" style="height:380px;">

@@ -13,7 +13,7 @@
             <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Show Job Role</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Show Job Roles</a></li>
                 </ol>
             </div>
         </div>
@@ -63,12 +63,12 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Show All Job's Role</h4>
+                                <h4 class="card-title">Show All Job Role's</h4>
                                 <a href="{{route('admin.jobRoleAddForm')}}" class="btn btn-primary  float-lg-right"><i class="fa fa-plus" aria-hidden="true"></i> Add</a>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    <table id="example" class="display" style="min-width: 845px">
+                                    <table id="example" class="display text-center" style="min-width: 845px">
                                         <thead>
                                         <tr>
                                             <th>S.No.</th>

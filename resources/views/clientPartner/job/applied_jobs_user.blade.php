@@ -69,14 +69,14 @@
         <div class="row page-titles mx-0">
             <div class="col-sm-6 p-md-0">
                 <div class="welcome-text">
-                    <h4>Hi, welcome {{auth()->user()->name}}</h4>
+                    <h4>Hi, Welcome {{auth()->user()->name}}</h4>
                     <!-- <p class="mb-0">Your business dashboard template</p> -->
                 </div>
             </div>
             <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Show Applied Job</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Show Applied Job's</a></li>
                 </ol>
             </div>
         </div>
@@ -129,17 +129,17 @@
                     {{print($appliedJobs)}}
                     </pre>--}}
                     <div class="card-header">
-                        <h4 class="card-title">Show All Applied Job</h4>
+                        <h4 class="card-title">Show All Applied Users</h4>
                         <a href="javascript:void(0)" onclick="history.back()" class="btn btn-primary btn-outline-light float-lg-right" style="background-color: #450b5a; color: #fff;"><i class="fa fa-backward"></i> Back</a>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table id="example" class="display" style="min-width: 845px">
+                            <table id="example" class="display text-center" style="min-width: 845px">
                                 <thead>
                                 <tr>
                                     <th>S.No.</th>
                                     <th>Job Title</th>
-                                    <th>User Name(Telent)</th>
+                                    <th>User Name(Talent)</th>
                                     <th>Mobile No</th>
                                     <th>Email</th>
                                     <th>Screening User</th>

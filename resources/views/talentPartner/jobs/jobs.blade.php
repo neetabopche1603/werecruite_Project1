@@ -52,7 +52,7 @@ use App\Models\AppliedJob;
             <a href="javascript:void(0);" class="btn btn-outline-primary ml-3"><i class="flaticon-381-menu-1 mr-0"></i></a>
             <a href="javascript:void(0);" class="btn btn-light ml-3"><i class="flaticon-381-pad mr-0"></i></a>
         </div> -->
-        <h3 class="text-center text-warning mb-4 mt-4">Show All Jobs</h3>
+        <h3 class="text-center text-warning mb-4 mt-4">View All Jobs</h3>
         <div class="row">
             <div class="col-xl-12">
 

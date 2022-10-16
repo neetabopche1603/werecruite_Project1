@@ -20,7 +20,7 @@ $totalInterview = DB::table('applied_jobs')->where('interview_schedule','=', 1)-
 	<div class="container-fluid">
 		<div class="form-head d-flex mb-3 mb-md-5 align-items-start">
 			<div class="mr-auto d-none d-lg-block">
-				<h3 class="text-primary font-w600">Welcome to {{$super_admin[0]['name']}}</h3>
+				<h3 class="text-primary font-w600">Welcome {{$super_admin[0]['name']}}</h3>
 				<!-- <p class="mb-0">Hospital Admin Dashboard Template</p> -->
 			</div>
 
@@ -53,7 +53,7 @@ $totalInterview = DB::table('applied_jobs')->where('interview_schedule','=', 1)-
 										<i class="flaticon-381-diamond"></i>
 									</span>
 									<div class="media-body text-white text-right">
-										<p class="mb-1">Total Company</p>
+										<p class="mb-1">total  companies</p>
 										<h3 class="text-white">{{ $totalCompany }}</h3>
 									</div>
 								</div>
@@ -83,7 +83,7 @@ $totalInterview = DB::table('applied_jobs')->where('interview_schedule','=', 1)-
 										<i class="flaticon-381-user-7"></i>
 									</span>
 									<div class="media-body text-white text-right">
-										<p class="mb-1">Total InterView</p>
+										<p class="mb-1">total interviews</p>
 										<h3 class="text-white">{{ $totalInterview }}</h3>
 									</div>
 								</div>

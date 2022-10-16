@@ -7,7 +7,7 @@
         <div class="row page-titles mx-0">
             <div class="col-sm-6 p-md-0">
                 <div class="welcome-text">
-                    <h4>Hi, welcome {{auth()->user()->name}}!</h4>
+                    <h4>Hi, Welcome {{auth()->user()->name}}!</h4>
                     <!-- <p class="mb-0">Your business dashboard template</p> -->
                 </div>
             </div>

@@ -215,4 +215,8 @@ Route::group(['prefix' => 'user', 'middleware' => 'talentPartner'], function () 
     Route::get('full-calender', [TalentHomeController::class, 'schedule_calendar'])->name('talent.scheduleCalendar');
     Route::get('getEvent', [TalentHomeController::class, 'getEvents'])->name('talent.getEvents');
     Route::post('interview-date',[TalentHomeController::class, 'setInterviewDate'])->name('talent.setInterviewDate');
+
+    // View Apllied Job Talent Route
+    Route::get('view-applied-job', [TalentHomeController::class, 'viewAppliedJob'])->name('talent.viewAppliedJob');
+
 });

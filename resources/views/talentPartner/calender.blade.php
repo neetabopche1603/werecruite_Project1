@@ -9,18 +9,18 @@ use Illuminate\Support\Carbon;
 <link href="{{asset('admin/vendor/fullcalendar/css/fullcalendar.min.css')}}" rel="stylesheet">
 <link href="{{asset('admin/css/icomoon.css')}}" rel="stylesheet">
 <div class="content-body">
-
-    {{-- <pre>
-    {{print_r($calender)}}
+    {{--
+        <pre>
+    {{print_r($schedules->toArray())}}
     {{ die(); }}
-    </pre>
-    --}}
-
+    </pre> 
+        --}}
+     
     <div class="container-fluid">
         <div class="row page-titles mx-0">
             <div class="col-sm-6 p-md-0">
                 <div class="welcome-text">
-                    <h4>{{auth()->user()->name}}</h4>
+                    <h4>Welcome {{auth()->user()->name}}</h4>
                     <p class="mb-0">InterView Schedule List and Calendar</p>
                 </div>
             </div>
@@ -50,44 +50,55 @@ use Illuminate\Support\Carbon;
         <!-- -- Notification End -- -->
 
         <!-- Show Interview Schedule List -->
-        <div class="table-responsive">
-            <table class="table table-bordered table-hover table-striped text-center">
-                <thead>
-                    <tr>
-                        <th>SN</th>
-                        <th>Interview Title</th>
-                        <th>Job Title</th>
-                        <th>Interview Date</th>
-                    </tr>
-                </thead>
-                <tbody>
+        <div class="card-body shadow p-3 mb-5 bg-white rounded">
+            <div class="table-responsive">
+                <!-- <table class="table table-bordered table-hover table-striped text-center"> -->
+                <table id="example" class="display text-center" style="min-width: 845px">
+                    <thead>
+                        <tr>
+                            <th>SN</th>
+                            <th>Company Name</th>
+                            <th>Interview Title</th>
+                            <th>Job Title</th>
+                            <th>Interview Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
 
-                    <?php $i = 1; ?>
-                    @foreach ($schedules as $schedule)
+                        <?php $i = 1; ?>
+                        @foreach ($schedules as $schedule)
 
-                    <tr>
-                        <td scope="row">{{$i++}}</td>
-                        <td>{{$schedule->title}}</td>
-                        <td>{{$schedule->job_title}}</td>
-                        <td>@if ($schedule->actual_sche_date != NULL)
-                            <!-- {{Carbon::parse($schedule->actual_sche_date)->format('d M Y g:h A')}} -->
-                            {{Carbon::parse($schedule->actual_sche_date)->format('d-m-Y H:i')}}
-                            @elseif($schedule->user_sche_date != NULL)
-                            <a href="javascript:void(0)" class="btn btn-success">Date Successfully Send</a>
-                            @else
-                            <a href="javascript:void(0)" class="btn btn-primary interviewDateChoose" data-id="{{$schedule->user_id}}" data-jobid="{{$schedule->job_id}}">ReSchedule Date</a>
-                            @endif
-                        </td>
-                    </tr>
-                    @endforeach
+                        <tr>
+                            <td scope="row">{{$i++}}</td>
+                            <td>
+                                @if ($schedule->user_ids !== NULL)
+                                {{ $schedule->company_name }}
+                                @else
+                                Werecuite
+                                @endif
+                            </td>
+                            <td>{{$schedule->title}}</td>
+                            <td>{{$schedule->job_title}}</td>
+                            <td>@if ($schedule->actual_sche_date != NULL)
+                                <!-- {{Carbon::parse($schedule->actual_sche_date)->format('d M Y g:h A')}} -->
+                                {{Carbon::parse($schedule->actual_sche_date)->format('d-m-Y H:i')}}
+                                @elseif($schedule->user_sche_date != NULL)
+                                <a href="javascript:void(0)" class="btn btn-success">Date Successfully Send</a>
+                                @else
+                                <a href="javascript:void(0)" class="btn btn-primary interviewDateChoose" data-id="{{$schedule->user_id}}" data-jobid="{{$schedule->job_id}}">ReSchedule Date</a>
+                                @endif
+                            </td>
+                        </tr>
+                        @endforeach
 
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
-                <h3 class="text-primary mt-4 mb-4"> Show InterView Calendar </h3>
+        <h3 class="text-primary mt-4 mb-4"> Show InterView Calendar </h3>
         <div class="row">
-            <div class="col-xl-10 col-md-10 col-lg-10 col-sm-12">
+            <div class="col-xl-12 col-md-12 col-lg-12 col-sm-12">
                 <div class="card">
                     <div class="card-body">
                         <div id="calendar" class="app-fullcalendar"></div>

@@ -55,6 +55,13 @@
 					<div class="col-md-12">
 
 						<div class="card">
+
+							{{--<pre>
+							<?php print_r($jobs->toArray());
+							die;
+							?>
+						</pre>--}}
+
 							<div class="card-body">
 								<div class="d-flex doctor-info-details mb-5">
 									<!-- <div class="media align-self-start">
@@ -63,6 +70,14 @@
 											</div> -->
 									<div class="media-body">
 										<h3 class="mb-2">{{$jobs->job_title}}</h3>
+										<p>Company Name : <span class="text-success">
+												@if ($jobs->user_id!=0)
+												{{$jobs->company_name}}
+												@else
+												Werecuite
+												@endif
+												
+												{{-- {{($jobs->user_id!=0)?$jobs->company_name:"Werecuite" }} --}}</span></p>
 										@php
 										$skills = implode(",",$jobs->skills);
 										@endphp
@@ -128,6 +143,7 @@
 									<h4 class="text-black mb-3"><span class="text-info"><b>Job Role -</b></span>&nbsp;&nbsp;{{$jobs->job_role}}</h4>
 									<h5>Job description</h5>
 									<p class="mb-3">{{$jobs->description}}</p>
+									<p>Job Posted : {{ $jobs->created_at->format('d M Y h:i A')}} <span class="text-success">({{$jobs->created_at->diffForHumans()}})</span></p>
 								</div>
 							</div>
 							<div class="card-footer border-0 pt-0 text-center">

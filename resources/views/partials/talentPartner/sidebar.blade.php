@@ -97,9 +97,16 @@
                     </li> -->
               <li><a href="{{route('talent.jobsView')}}" class="ai-icon" aria-expanded="false">
                       <i class="flaticon-381-settings-2"></i>
-                      <span class="nav-text">Show Jobs</span>
+                      <span class="nav-text">View jobs</span>
                   </a>
               </li>
+              <li>
+                <a href="{{route('talent.viewAppliedJob')}}" class="ai-icon" aria-expanded="false">
+                      <i class="flaticon-381-settings-2"></i>
+                      <span class="nav-text text-center">View Applied Job's</span>
+                  </a>
+              </li>
+
               <li><a href="{{route('talent.scheduleCalendar')}}" class="ai-icon" aria-expanded="false">
                       <i class="flaticon-381-settings-2"></i>
                       <span class="nav-text text-center">Scheduled Interview</span>

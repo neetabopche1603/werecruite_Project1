@@ -17,7 +17,7 @@ $totalInterViewSchedule = DB::table('applied_jobs')->where('user_id','=',auth()-
 	<div class="container-fluid">
 		<div class="form-head d-flex mb-3 mb-md-5 align-items-start">
 			<div class="mr-auto d-none d-lg-block">
-				<h3 class="text-primary font-w600">Welcome to {{auth()->user()->name}}</h3>
+				<h3 class="text-primary font-w600">Welcome {{auth()->user()->name}}</h3>
 				<!-- <p class="mb-0">Hospital Admin Dashboard Template</p> -->
 			</div>
 		</div>
@@ -52,7 +52,7 @@ $totalInterViewSchedule = DB::table('applied_jobs')->where('user_id','=',auth()-
 										<i class="flaticon-381-user-7"></i>
 									</span>
 									<div class="media-body text-white text-right">
-										<p class="mb-1">Total Interview Schedule</p>
+										<p class="mb-1">Total Interview Scheduled</p>
 										<h3 class="text-white">{{ $totalInterViewSchedule }}</h3>
 									</div>
 								</div>

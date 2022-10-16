@@ -24,9 +24,9 @@ class ClientProfileController extends Controller
         $profileUpdate = User::find($request->id);
         $profileUpdate->name = $request->name;
         $profileUpdate->dob = $request->dob;
-        $profileUpdate->highest_education = $request->highest_education;
+        $profileUpdate->emp_size = $request->emp_size;
         $profileUpdate->mobile_no = $request->mobile_number;
-        $profileUpdate->dob = $request->dob;
+        // $profileUpdate->dob = $request->dob;
         $profileUpdate->address = $request->address;
 
 

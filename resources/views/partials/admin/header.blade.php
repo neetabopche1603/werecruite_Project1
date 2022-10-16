@@ -59,7 +59,9 @@ $notification = Notification::where('is_seen', 0)->where('type', 'Admin')->where
 					<li class="nav-item dropdown notification_dropdown">
 						<a class="nav-link  ai-icon" href="#" role="button" data-toggle="dropdown">
 							<i class="flaticon-381-ring"></i>
-							<div class="pulse-css"></div>
+							@if($notification->count() != 0)
+								<div class="pulse-css"></div>
+ 							@endif
 						</a>
 						<div class="dropdown-menu dropdown-menu-right">
 							<div id="DZ_W_Notification1" class="widget-media dz-scroll p-3" style="height:380px;">

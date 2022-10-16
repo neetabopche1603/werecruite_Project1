@@ -1,24 +1,19 @@
-<?php
-
-use App\Models\AppliedJob;
-
-?>
-@extends('partials.admin.app')
-@section('adminTitle','Screening Users ')
-@section('admin-content')
+@extends('partials.talentPartner.app')
+@section('talentPartnerTitle','View Applied Job')
+@section('talentPartner-content')
 <div class="content-body">
     <div class="container-fluid">
         <div class="row page-titles mx-0">
             <div class="col-sm-6 p-md-0">
                 <div class="welcome-text">
-                    <h4>Hi, Welcome {{$super_admin[0]['name']}}</h4>
+                    <h4>Hi, Welcome {{auth()->user()->name}} </h4>
                     <!-- <p class="mb-0">Your business dashboard template</p> -->
                 </div>
             </div>
             <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                    <li class="breadcrumb-item active"><a href="javascript:void(0)"> Show Screening User's</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)">View Applied Job's</a></li>
                 </ol>
             </div>
         </div>
@@ -63,17 +58,12 @@ use App\Models\AppliedJob;
 
         @endif
         <!-- Notification End -->
-
         <!-- row -->
         <div class="row">
             <div class="col-12">
                 <div class="card">
-
-                    {{--<pre>
-                    {{print_r($allJobs)}}
-                    </pre>--}}
                     <div class="card-header">
-                        <h4 class="card-title">Show Screening Users</h4>
+                        <h4 class="card-title">View Applied Job's</h4>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -81,53 +71,79 @@ use App\Models\AppliedJob;
                                 <thead>
                                     <tr>
                                         <th>S.No.</th>
-                                        <th>Job Title</th>
                                         <th>Company Name</th>
-                                        <th>Total Screening Users</th>
-                                        <th>Show All Users</th>
+                                        <th>Job Title</th>
+                                        <th>Applied Time</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @php
                                     $i=1;
                                     @endphp
-
-                                    @foreach ($allJobs as $job)
-                                    <?php
-                                    $totalCount = AppliedJob::where('job_id',$job->job_id)->where('status',1)->count();
-                                    ?>
-                                    @if ($totalCount > 0)
+                                    @foreach ($viewAppliedJob as $data)
                                     <tr>
-                                        <td>{{$i++}}</td>
-                                        <td>{{$job->job_title}}</td>
-                                        <td>{{$job->name}}</td>
-                                        <td>{{$totalCount}}</td>
-                                        <td><a href="{{route('admin.screeningJobUsers',['jobid'=>$job->job_id])}}" class="btn btn-outline-light" style="background-color: #df5301; color: #fff;">Show all screening users</a></td>
-                                        {{-- <td>
-                                        <a href="{{url('client/edit_job')}}/{{$job->id}}" class="btn btn-warning btn-sm btn-outline-light" style="background-color: #df5301; color: #fff;"><i class="fa fa-pencil-square" aria-hidden="true"></i></a>
+                                        <td>{{ $i++ }}</td>
+                                        <td>
+                                            @if ($data->userId== NULL)
+                                            Werecuite
+                                            @else
+                                            {{$data->company_name}}
+                                            @endif
 
-                                        <a href="{{url('client/delete_job')}}/{{$job->id}}" onclick="return confirm('Are you sure delete this job')" class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                        </td>
+                                        <td>{{ $data->job_title}}</td>
+                                        <td>{{ $data->created_at->format('d M Y h:i A')}} <span class="text-success">({{$data->created_at->diffForHumans()}})</span></td>
+                                        <td>
+                                            @if ($data != NULL)
+                                            @if($data->status == 0 && $data->screening_schedule == 0 && $data->interview_schedule == 0 && $data->selected == 0)
 
-                                        </td>--}}
+                                            <button type="button" class="btn btn-success btn-sm">Applied</button>
+
+                                            @elseif ($data->status == 1 && $data->screening_schedule == 0 && $data->interview_schedule == 0 && $data->selected == 0)
+
+                                            <button type="button" class="btn btn-success btn-sm">Screening</button>
+
+
+                                            @elseif ($data->status == 1 && $data->screening_schedule == 1 && $data->interview_schedule == 0 && $data->selected == 0)
+
+                                            <button type="button" class="btn btn-success btn-sm">Screening Scheduled</button>
+
+
+                                            @elseif ($data->status == 1 && $data->screening_schedule == 1 && $data->interview_schedule == 1 && $data->selected == 0)
+
+                                            <button type="button" class="btn btn-success btn-sm">Interview Scheduled</button>
+
+
+                                            @elseif ($data->status == 1 && $data->screening_schedule == 1 && $data->interview_schedule == 1 && $data->selected == 1)
+
+                                            <button type="button" class="btn btn-success btn-sm">Selected</button>
+
+                                            @endif
+                                            @endif
+
+                                        </td>
+
+                                        <td>
+                                            <a href="#"><a href="{{route('talent.job_desc',['id'=>$data->jobId])}}" class="btn btn-success btn-sm" title="View Job Description"><i class="fa fa-eye"></i></a></a>
+                                        </td>
                                     </tr>
-                                    @endif
-                                   
                                     @endforeach
 
-                                </tbody>
 
+                                </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
-
     </div>
 </div>
 
 @endsection
 @push('script')
+
 
 @endpush
