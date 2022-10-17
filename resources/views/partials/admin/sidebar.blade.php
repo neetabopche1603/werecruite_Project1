@@ -8,8 +8,6 @@
 							<i class="flaticon-381-networking"></i>
 							<span class="nav-text">Dashboard</span>
 						</a>
-                        
-
                     </li>
                   
                     <li><a href="{{route('admin.jobRole')}}" class="ai-icon" aria-expanded="false">
@@ -26,7 +24,7 @@
 
                     
                     <li><a href="{{route('admin.jobPosts')}}" class="ai-icon" aria-expanded="false">
-                    <i class="flaticon-381-network"></i>
+                    <i class="flaticon-381-layer-1"></i>
 							<span class="nav-text">Job Post</span>
 						</a>
 					</li>

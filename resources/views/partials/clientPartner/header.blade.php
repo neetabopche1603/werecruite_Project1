@@ -10,7 +10,7 @@ $notification = Notification::where('is_seen', 0)->where('type', 'Client')->wher
         ***********************************-->
 <div class="nav-header">
 	<a href="{{route('clientPartner.home')}}" class="brand-logo">
-		<img class="logo-abbr" style="max-width: 170px;" src="{{ asset('settings/'.$setting[0]['logo'] )}}" alt="">
+		<img class="logo-abbr" style="max-width: 120px;" src="{{ asset('settings/'.$setting[0]['logo'] )}}" alt="">
 
 		<!-- <img class="logo-compact" src="{{asset('admin/images/logo-text.png')}}" alt="">
 		<img class="brand-title" src="{{asset('admin/images/logo-text.png')}}" alt=""> -->
@@ -108,9 +108,6 @@ $notification = Notification::where('is_seen', 0)->where('type', 'Client')->wher
 								</small>
 							</div>
 							<img src="{{asset('image')}}/{{auth()->user()->image}}" width="20" alt="" />
-
-
-
 						</a>
 						<div class="dropdown-menu dropdown-menu-right">
 							<a href="{{route('client.profileView')}}" class="dropdown-item ai-icon">

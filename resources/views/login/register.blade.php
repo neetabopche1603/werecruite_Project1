@@ -54,7 +54,7 @@
                                             <div class="col-md-10">
                                                 <div class="form-group">
                                                     <label class="mb-1"><strong><span class="text-danger">*</span> User Name</strong></label>
-                                                    <input type="text" name="name" class="form-control" placeholder="Enter Full Name">
+                                                    <input type="text" name="name"  value="{{old('name')}}" class="form-control" placeholder="Enter Full Name">
                                                     <span class="text-danger">
                                                         @error('name')
                                                         {{$message}}
@@ -67,7 +67,7 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="mb-1"><strong><span class="text-danger">*</span> Date Of Birth</strong></label>
-                                                    <input type="date" name="dob" class="form-control" placeholder="Date of birth">
+                                                    <input type="date" name="dob" value="{{old('dob')}}" class="form-control" placeholder="Date of birth">
 
                                                     <span class="text-danger">
                                                         @error('dob')
@@ -82,11 +82,11 @@
                                                     <div class="radio">
                                                         <label class="mb-1"><strong><span class="text-danger">*</span> Gender</strong> </label> <br>
                                                         <div class="form-check form-check-inline mt-2">
-                                                            <input class="form-check-input" type="radio" name="gender" id="inlineRadio1" value="1">
+                                                            <input class="form-check-input" type="radio" name="gender" id="inlineRadio1" value="1" value="{{old('gender')}}">
                                                             <label class="form-check-label">Male</label>
                                                         </div>
                                                         <div class="form-check form-check-inline">
-                                                            <input class="form-check-input" type="radio" name="gender" id="inlineRadio2" value="0">
+                                                            <input class="form-check-input" type="radio" name="gender" id="inlineRadio2" value="0" value="{{old('gender')}}">
                                                             <label class="form-check-label">Female</label>
                                                         </div>
                                                     </div>
@@ -97,10 +97,24 @@
                                                     </span>
                                                 </div>
                                             </div>
+                                            <!-- <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="mb-1"><strong><span class="text-danger">*</span> Mobile Number</strong></label>
+                                                    <input type="text" class="form-control" id="phone" placeholder="98XXXXXXXXX" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0');" minlength="10" maxlength="15" style="padding-left: 84px; padding-right: 97px;" value="{{old('mobile_number')}}">
+                                                    <input type="hidden" name="mobile_number" id="phoneno" value="{{old('mobile_number')}}">
+                                                    <span class="text-danger">
+                                                        @error('mobile_number')
+                                                        {{$message}}
+                                                        @enderror
+                                                    </span>
+                                                </div>
+                                            </div> -->
+
+
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="mb-1"><strong><span class="text-danger">*</span> Mobile Number</strong></label>
-                                                    <input type="text" class="form-control" id="phone" placeholder="98XXXXXXXXX" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0');" minlength="5" maxlength="15" style="padding-left: 84px; padding-right: 97px;" value="{{old('mobile_number')}}">
+                                                    <input type="text" id="phone" value="{{old('mobile_number')}}" class="form-control" placeholder="98XXXXXXXXX" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1').replace(/^0[^.]/, '0');" minlength="5" maxlength="15" style="padding-left: 84px; padding-right: 97px;">
                                                     <input type="hidden" name="mobile_number" id="phoneno" value="{{old('mobile_number')}}">
                                                     <span class="text-danger">
                                                         @error('mobile_number')
@@ -113,7 +127,7 @@
                                             <div class="col-md-10">
                                                 <div class="form-group">
                                                     <label class="mb-1"><strong><span class="text-danger">*</span> Highest Education</strong></label>
-                                                    <input type="text" name="highest_education" class="form-control" placeholder="Highest education">
+                                                    <input type="text" name="highest_education" class="form-control" placeholder="Highest education" value="{{old('highest_education')}}">
                                                     <span class="text-danger">
                                                         @error('highest_education')
                                                         {{$message}}
@@ -125,7 +139,7 @@
                                             <div class="col-md-10">
                                                 <div class="form-group">
                                                     <label class="mb-1"><strong><span class="text-danger">*</span> Email</strong></label>
-                                                    <input type="email" name="email" class="form-control" placeholder="hello@example.com">
+                                                    <input type="email" name="email" value="{{old('email')}}" class="form-control" placeholder="hello@example.com">
                                                     <span class="text-danger">
                                                         @error('email')
                                                         {{$message}}
@@ -171,22 +185,10 @@
                                                 </div>
                                             </div>
 
-                                            <!-- <div class="col-md-7">
-                                                <div class="form-group">
-                                                    <label class="mb-1"><strong><span class="text-danger">*</span> Confirm Password</strong></label>
-                                                    <input type="password" name="password_confirmation" class="form-control" placeholder="Confirm Password"> <span class="text-danger">
-
-
-                                                        @error('password_confirmation')
-                                                        {{$message}}
-                                                        @enderror
-                                                    </span>
-                                                </div>
-                                            </div> -->
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="mb-1"><strong><span class="text-danger">*</span> Profile Image</strong></label>
-                                                    <input type="file" name="image" class="form-control" placeholder="">
+                                                    <input type="file" name="image" class="form-control" placeholder="" value="{{old('image')}}">
                                                     <span class="text-danger">
                                                         @error('image')
                                                         {{$message}}
@@ -200,7 +202,7 @@
                                                 <div class="form-group">
                                                     <label class="mb-1"><strong><span class="text-danger">*</span> Address</strong></label>
                                                     <!-- <input type="text" name="address" class="form-control"> -->
-                                                    <textarea class="form-control" name="address" placeholder="Type your Address..."></textarea>
+                                                    <textarea class="form-control" name="address" placeholder="Type your Address...">{{old('address')}}</textarea>
 
                                                     <span class="text-danger">
                                                         @error('address')

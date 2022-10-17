@@ -68,7 +68,7 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table id="example" class="display text-center" style="min-width: 845px">
+                            <table id="example" class="display" style="min-width: 845px">
                                 <thead>
                                 <tr>
                                     <th>S.No.</th>

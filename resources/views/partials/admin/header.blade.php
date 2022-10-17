@@ -16,7 +16,7 @@ $notification = Notification::where('is_seen', 0)->where('type', 'Admin')->where
         ***********************************-->
 <div class="nav-header">
 	<a href="{{route('admin.home')}}" class="brand-logo">
-		<img class="logo-abbr" style="max-width: 170px;" src="{{ asset('settings/'.$settings[0]['logo'] )}}" alt="">
+		<img class="logo-abbr" style="max-width: 120px;" src="{{ asset('settings/'.$settings[0]['logo'] )}}" alt="">
 		<!-- <img class="logo-compact" src="{{asset('admin/images/logo-text.png')}}" alt="">
 		<img class="brand-title" src="{{asset('admin/images/logo-text.png')}}" alt=""> -->
 	</a>

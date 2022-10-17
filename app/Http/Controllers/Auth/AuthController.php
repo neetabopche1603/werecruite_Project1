@@ -36,6 +36,7 @@ class AuthController extends Controller
             ],
             'password_confirmation' => 'required_with:password|same:password|min:8',
             'address' => 'required',
+            'image' =>'required',
             'image' => 'image|mimes:jpg,jpeg,png,gif|max:2048',
 
         ],

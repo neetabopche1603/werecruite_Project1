@@ -423,7 +423,7 @@ class HomeController extends Controller
         });
 
         // return redirect()->route('admin.screeningJobUsers', $request->id)->with('success', 'Interview Scheduled Successfully.....!');
-        return redirect()->back()->with('success', 'Interview Scheduled Successfully.....!');
+        return redirect()->back()->with('success', 'Interview Scheduled Successfully And Send Mail User.....!');
     }
 
     public function scheduleInterviewCancel($id, $user_id)

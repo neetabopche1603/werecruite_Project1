@@ -67,7 +67,6 @@ use Illuminate\Support\Carbon;
 
                         <?php $i = 1; ?>
                         @foreach ($schedules as $schedule)
-
                         <tr>
                             <td scope="row">{{$i++}}</td>
                             <td>
@@ -106,8 +105,6 @@ use Illuminate\Support\Carbon;
                 </div>
             </div>
         </div>
-
-
     </div>
 </div>
 

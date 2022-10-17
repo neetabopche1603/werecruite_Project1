@@ -173,7 +173,7 @@
 
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label class="mb-1">Image</strong></label>
+                                                    <label class="mb-1"><strong>Image</strong></label>
                                                     <input type="file" name="image" value="{{old('image')}}" class="form-control" placeholder="">
                                                     <span class="text-danger">
                                                         @error('image')
