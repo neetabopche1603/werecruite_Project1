@@ -3,7 +3,10 @@
 use Illuminate\Support\Carbon;
 ?>
 @extends('partials.talentPartner.app')
-@section('talentPartnerTitle','Telent Home')
+@section('talentPartnerTitle','Scheduled Interview |Show Calendar')
+@section('userBreadcrumbTitle')
+   <span class="titlePage">Scheduled Interview</span>
+@endsection
 @section('talentPartner-content')
 <!-- Calendar CSS -->
 <link href="{{asset('admin/vendor/fullcalendar/css/fullcalendar.min.css')}}" rel="stylesheet">
@@ -57,7 +60,7 @@ use Illuminate\Support\Carbon;
                     <thead>
                         <tr>
                             <th>SN</th>
-                            <th>Company Name</th>
+                            <!-- <th>Company Name</th> -->
                             <th>Interview Title</th>
                             <th>Job Title</th>
                             <th>Interview Date</th>
@@ -69,22 +72,22 @@ use Illuminate\Support\Carbon;
                         @foreach ($schedules as $schedule)
                         <tr>
                             <td scope="row">{{$i++}}</td>
-                            <td>
+                            {{--<td>
                                 @if ($schedule->user_ids !== NULL)
                                 {{ $schedule->company_name }}
                                 @else
                                 Werecuite
                                 @endif
-                            </td>
+                            </td>--}}
                             <td>{{$schedule->title}}</td>
                             <td>{{$schedule->job_title}}</td>
                             <td>@if ($schedule->actual_sche_date != NULL)
                                 <!-- {{Carbon::parse($schedule->actual_sche_date)->format('d M Y g:h A')}} -->
                                 {{Carbon::parse($schedule->actual_sche_date)->format('d-m-Y H:i')}}
                                 @elseif($schedule->user_sche_date != NULL)
-                                <a href="javascript:void(0)" class="btn btn-success">Date Successfully Send</a>
+                                <a href="javascript:void(0)" class="btn btn-success btn-sm">Date Successfully Send</a>
                                 @else
-                                <a href="javascript:void(0)" class="btn btn-primary interviewDateChoose" data-id="{{$schedule->user_id}}" data-jobid="{{$schedule->job_id}}">ReSchedule Date</a>
+                                <a href="javascript:void(0)" class="btn btn-primary interviewDateChoose btn-sm" data-id="{{$schedule->user_id}}" data-jobid="{{$schedule->job_id}}">ReSchedule Date</a>
                                 @endif
                             </td>
                         </tr>

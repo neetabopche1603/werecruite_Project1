@@ -104,6 +104,8 @@ Route::group(['prefix' => 'admin',], function () {
     Route::get('/schedule-interview-confirm/{id}', [HomeController::class, 'scheduleInterviewConfirm'])->name('admin.scheduleInterviewConfirm');
     Route::get('/schedule-interview-cancel/{id}/{user_id}', [HomeController::class, 'scheduleInterviewCancel'])->name('admin.scheduleInterviewCancel');
 
+    Route::post('/admin-change-status', [HomeController::class, 'adminChangeStatus'])->name('admin.adminChangeStatus');
+
     // Check User Prefered Date
     Route::post('check-date',[HomeController::class,'checkUserDate'])->name('admin.checkUserDate');
     Route::post('schedule-interview-date',[HomeController::class,'scheduleInterviewSelectedDate'])->name('admin.scheduleInterviewSelectedDate');
@@ -133,6 +135,7 @@ Route::group(['prefix' => 'admin',], function () {
      Route::get('applied-job-user',[HomeController::class,'appliedJobs'])->name('admin.appliedJobs');
      Route::get('get-applied-users/{jobid}', [HomeController::class, 'appliedJobUsers'])->name('admin.appliedJobUsers');
      Route::post('change-applied-jobs-status', [HomeController::class, 'jobStatus'])->name('admin.jobStatus');
+     Route::get('delete-applied-job/{appliedJobid}',[HomeController::class,'appliedJobDelete'])->name('admin.appliedJobDelete');
      
     //=================== JobRole Route ===================
     Route::get('show-job-role', [HomeController::class, 'jobRole'])->name('admin.jobRole');
@@ -155,8 +158,18 @@ Route::group(['prefix' => 'admin',], function () {
     Route::post('change-screening-status', [HomeController::class, 'jobStatusScreening'])->name('admin.screening');
     Route::post('change-interview-status', [HomeController::class, 'jobStatusInterview'])->name('admin.interview');
     Route::post('change-selected-status', [HomeController::class, 'jobStatusSelected'])->name('admin.selected');
+    Route::get('delete-screeningss-job/{appliedJobid}',[HomeController::class,'screeningUserDelete'])->name('admin.screeningUserDelete');
 
+// Notifications Route
     Route::post('notification-seen', [HomeController::class, 'seen'])->name('admin.notificationSeen');
+
+    // Show all Users List
+    Route::get('all-users',[HomeController::class,'userListShow'])->name('admin.userListShow');
+    Route::get('delete-users/{id}',[HomeController::class,'userListDelete'])->name('admin.userListDelete');
+
+     // Show all Company List
+    Route::get('all-companies',[HomeController::class,'companyListShow'])->name('admin.companyListShow');
+    Route::get('delete-companiess/{id}',[HomeController::class,'companyListDelete'])->name('admin.companyListDelete');
 });
 
 
@@ -186,6 +199,8 @@ Route::group(['prefix' => 'client', 'middleware' => 'clientPartner'], function (
     Route::get('show-applied-jobs', [ClientHomeController::class, 'allJobs'])->name('client.getAllJob');
     Route::get('get-all-users/{jobid}', [ClientHomeController::class, 'appliedJobUsers'])->name('client.appliedJobUsers');
     Route::post('change-applied-job-status', [ClientHomeController::class, 'jobStatus'])->name('client.jobStatus');
+
+    Route::get('delete-applied-jobs/{appliedJobid}',[ClientHomeController::class,'appliedJobsDeleted'])->name('client.appliedJobsDeleted');
 
     // ===================Notification===================
     Route::get('notification-seen/{id}', [ClientHomeController::class, 'seen'])->name('client.notificationSeen');

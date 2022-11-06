@@ -1,5 +1,11 @@
+<?php
+use App\Models\AppliedJob;
+?>
 @extends('partials.clientPartner.app')
-@section('clientPartnerTitle','Applied Users')
+@section('clientPartnerTitle','Applied Jobs')
+@section('clientBreadcrumbTitle')
+<span class="titlePage">Applied Jobs</span>
+@endsection
 @section('clientPartner-content')
 <div class="content-body">
     <div class="container-fluid">
@@ -13,7 +19,7 @@
             <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Show All Applied Job's</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Show All Applied Jobs</a></li>
                 </ol>
             </div>
         </div>
@@ -62,42 +68,43 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                {{--<pre>
+                    {{--<pre>
                     {{print($allJobs)}}
                     </pre>--}}
                     <div class="card-header">
-                        <h4 class="card-title">Show All Applied Job's</h4>
+                        <h4 class="card-title">Show All Applied Jobs</h4>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <table id="example" class="display text-center" style="min-width: 845px">
                                 <thead>
-                                <tr>
-                                    <th>S.No.</th>
-                                    <th>Job Title</th>
-                                    <th>Show All Users</th>
-                                </tr>
+                                    <tr>
+                                        <th>S.No.</th>
+                                        <th>Job Title</th>
+                                        <th>Total user</th>
+                                        <th>Show All Users</th>
+
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                @php
-                                $i=1;
-                                @endphp
+                                    @php
+                                    $i=1;
+                                    @endphp
 
-                                @foreach ($allJobs as $job)
-                                <tr>
-                                    <td>{{$i++}}</td>
-                                    <td>{{$job->job_title}}</td>
-                                    <td><a href="{{route('client.appliedJobUsers',['jobid'=>$job->id])}}" class="btn btn-btn-outline-light" style="background-color: #df5301; color: #fff;">Show All Applied Users</a></td>
-                                    {{-- <td>
-                                        <a href="{{url('client/edit_job')}}/{{$job->id}}" class="btn btn-warning btn-sm btn-outline-light" style="background-color: #df5301; color: #fff;"><i class="fa fa-pencil-square" aria-hidden="true"></i></a>
+                                    @foreach ($allJobs as $job)
+                                    <?php
+                                    $totalAppliedJob = AppliedJob::where('job_id', $job->id)->count();
+                                    ?>
+                                    <tr>
+                                        <td>{{$i++}}</td>
+                                        <td>{{$job->job_title}}</td>
+                                        <td>{{$totalAppliedJob}}</td>
+                                        <td><a href="{{route('client.appliedJobUsers',['jobid'=>$job->id])}}" class="btn btn-btn-outline-light btn-sm" style="background-color: #df5301; color: #fff;">Show All Applied Users</a></td>
 
-                                    <a href="{{url('client/delete_job')}}/{{$job->id}}" onclick="return confirm('Are you sure delete this job')" class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                    </tr>
+                                    @endforeach
 
-                                    </td>--}}
-                                </tr>
-                                @endforeach
-
-                            </tbody>
+                                </tbody>
 
                             </table>
                         </div>

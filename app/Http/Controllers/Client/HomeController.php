@@ -25,16 +25,19 @@ class HomeController extends Controller
     public function index()
     {
         // $jobs = Job::where('user_id',auth()->user()->id)->get();
-        $jobs = Job::join('users', 'jobs.user_id', '=', 'users.id')->join('job_roles', 'jobs.job_role', '=', 'job_roles.id')->where('jobs.user_id', auth()->user()->id)->select('users.*', 'jobs.*', 'job_roles.*',)->get();
+        $jobs = Job::join('users', 'jobs.user_id', '=', 'users.id')->join('job_roles', 'jobs.job_role', '=', 'job_roles.id')->where('jobs.user_id', auth()->user()->id)->select('users.*', 'jobs.*', 'job_roles.*','users.id as user_id','jobs.id as job_id','job_roles.id as jobRole_id')->get();
 
         // $jobs = Job::get();
         foreach ($jobs as $val) {
             $arr = array();
             $final = array();
+            if(is_array(json_decode($val->skill)))
+            {
             foreach (json_decode($val->skill) as $row) {
                 $data = Skill::where('id', $row)->select('skill')->first();
                 array_push($arr, $data);
             }
+        }
             foreach ($arr as $res) {
                 if (!is_null($res)) {
                     array_push($final, $res->skill);
@@ -112,6 +115,7 @@ class HomeController extends Controller
     public function jobDelete($id)
     {
         Job::find($id)->delete();
+        AppliedJob::where('job_id',$id)->delete();
         return redirect()->route('client.showJob')->with('delete', 'Job Deleted Successfully.....!');
     }
 
@@ -137,6 +141,7 @@ class HomeController extends Controller
         $appliedJob = AppliedJob::find($request->applied_job_id);
         if ($request->checked == 1) {
             $appliedJob->status = 1;
+            $appliedJob->adminChangeStatus = "screening by company";
             $appliedJob->update();
 
             $job = Job::find($appliedJob->job_id);
@@ -171,6 +176,15 @@ class HomeController extends Controller
             return response()->json('applied');
         }
     }
+
+    public function appliedJobsDeleted($appliedJobId)
+    {
+        AppliedJob::find($appliedJobId)->delete();
+        return redirect()->back()->with('delete', 'Applied Job Deleted Successfully.!');
+    }
+
+
+
 
     public function seen($id)
     {

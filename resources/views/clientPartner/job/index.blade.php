@@ -1,5 +1,8 @@
 @extends('partials.clientPartner.app')
-@section('clientPartnerTitle','Show Posted Job')
+@section('clientPartnerTitle','Show All  Posted Job')
+@section('clientBreadcrumbTitle')
+   <span class="titlePage">Post Job</span>
+@endsection
 @section('clientPartner-content')
 <div class="content-body">
     <div class="container-fluid">
@@ -13,7 +16,7 @@
             <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Show All Posted Job's</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Show All Posted Jobs</a></li>
                 </ol>
             </div>
         </div>
@@ -63,7 +66,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Show All Posted Job's</h4>
+                        <h4 class="card-title">Show All Posted Jobs</h4>
                         <a href="{{route('client.jobAddView')}}" class="btn btn-primary  float-lg-right"><i class="fa fa-plus" aria-hidden="true"></i> Post Job</a>
                     </div>
                     <div class="card-body">
@@ -83,7 +86,8 @@
                                 @php
                                 $i=1;
                                 @endphp
-
+                                
+                                @if(count($jobs) >0)
                                 @foreach ($jobs as $job)
                                 @php
                                     $skills = implode(",",$job->skills);
@@ -96,14 +100,14 @@
                                     <td>{{wordwrap($job->description, 20)}}
                                     </td>
                                     <td>
-                                        <a href="{{url('client/edit-job')}}/{{$job->id}}" class="btn btn-warning btn-sm btn-outline-light" style="background-color: #df5301; color: #fff;"><i class="fa fa-pencil-square" aria-hidden="true"></i></a>
+                                        <a href="{{url('client/edit-job')}}/{{$job->job_id}}" class="btn btn-warning btn-sm btn-outline-light" style="background-color: #df5301; color: #fff;"><i class="fa fa-pencil-square" aria-hidden="true"></i></a>
 
-                                        <a href="{{url('client/delete-job')}}/{{$job->id}}" onclick="return confirm('Are you sure delete this job')" class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                        <a href="{{url('client/delete-job')}}/{{$job->job_id}}" onclick="return confirm('Are you sure delete this job')" class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i></a>
 
                                     </td>
                                 </tr>
                                 @endforeach
-
+                                @endif
                             </tbody>
                             </table>
                         </div>

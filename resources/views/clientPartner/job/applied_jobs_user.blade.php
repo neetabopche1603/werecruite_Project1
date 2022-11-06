@@ -1,5 +1,8 @@
 @extends('partials.clientPartner.app')
-@section('clientPartnerTitle','Applied Jobs')
+@section('clientPartnerTitle','Applied Jobs |All Applied Users')
+@section('clientBreadcrumbTitle')
+   <span class="titlePage">Applied Jobs |All Applied Users</span>
+@endsection
 @section('clientPartner-content')
 @push('style')
 <style>
@@ -76,7 +79,7 @@
             <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Show Applied Job's</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)">All Applied Users</a></li>
                 </ol>
             </div>
         </div>
@@ -129,7 +132,7 @@
                     {{print($appliedJobs)}}
                     </pre>--}}
                     <div class="card-header">
-                        <h4 class="card-title">Show All Applied Users</h4>
+                        <h4 class="card-title">All Applied Users</h4>
                         <a href="javascript:void(0)" onclick="history.back()" class="btn btn-primary btn-outline-light float-lg-right" style="background-color: #450b5a; color: #fff;"><i class="fa fa-backward"></i> Back</a>
                     </div>
                     <div class="card-body">
@@ -143,6 +146,7 @@
                                     <th>Mobile No</th>
                                     <th>Email</th>
                                     <th>Screening User</th>
+                                    <th>Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -159,16 +163,13 @@
                                     <td>{{$job->email}}</td>
                                     <td>
                                         <label class="switch">
-                                            <input type="checkbox" name="screening" class="screening" data-id="{{$job->applied_job_id}}" @php if($job->status==1) echo "checked"; @endphp>
+                                            <input type="checkbox" name="screening" class="screening" data-id="{{$job->applied_job_id}}" @php if($job->status==1) echo "checked disabled"; @endphp>
                                             <span class="slider round"></span>
                                         </label>
                                     </td>
-                                    {{-- <td>
-                                        <a href="{{url('client/edit_job')}}/{{$job->id}}" class="btn btn-warning btn-sm btn-outline-light" style="background-color: #df5301; color: #fff;"><i class="fa fa-pencil-square" aria-hidden="true"></i></a>
-
-                                    <a href="{{url('client/delete_job')}}/{{$job->id}}" onclick="return confirm('Are you sure delete this job')" class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i></a>
-
-                                    </td>--}}
+                                    <td>
+                                        <a href="{{route('client.appliedJobsDeleted',['appliedJobid'=>$job->applied_job_id])}}" onclick="return confirm('Are you sure delete this Data')" class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                        </td>
                                 </tr>
                                 @endforeach
 
@@ -221,7 +222,13 @@
                     title: 'Screening Status Updated.',
                     showConfirmButton: true,
                     // timer: 3000
-                })
+                }).then(function(isConfirm) {
+                    if (isConfirm) {
+                        location.reload();
+                    } else {
+                        //if no clicked => do something else
+                    }
+                });
             }
         });
 

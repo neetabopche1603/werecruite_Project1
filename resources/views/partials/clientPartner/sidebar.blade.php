@@ -10,12 +10,20 @@
 						</a>
                     </li>
                     
-                    <li><a href="{{route('client.showJob')}}" class="ai-icon" aria-expanded="false">
+                    <li class="{{ (request()->is('client/show-job'))||(request()->is('client/add-job'))||(request()->is('client/edit-job*')) ? 'mm-active active-no-child' : '' }}">
+                    <!-- <a href="{{route('client.showJob')}}" class="ai-icon" aria-expanded="false"> -->
+                    <a href="{{route('client.showJob')}}" class="ai-icon {{ (request()->is('client/show-job'))||(request()->is('client/add-job'))||(request()->is('client/edit-job*')) ? 'mm-active' : '' }}" aria-expanded="false">
                     <i class="flaticon-381-settings-2"></i>
-							<span class="nav-text">Job Post</span>
+							<span class="nav-text">Post Job</span>
 						</a>
 					</li>
-                    <li><a href="{{route('client.getAllJob')}}" class="ai-icon" aria-expanded="false">
+
+                    <li class="{{ (request()->is('client/show-applied-jobs'))||(request()->is('client/get-all-users*')) ? 'mm-active active-no-child' : '' }}">
+                        
+                    <!-- <a href="{{route('client.getAllJob')}}" class="ai-icon" aria-expanded="false"> -->
+                        
+                    <a href="{{ route('client.getAllJob') }}" class="ai-icon {{ (request()->is('client/show-applied-jobs'))||(request()->is('client/get-all-users*')) ? 'mm-active' : '' }}" aria-expanded="false">
+
                             <i class="flaticon-381-notepad"></i>
 							<span class="nav-text">Applied Jobs</span>
 						</a>

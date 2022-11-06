@@ -1,5 +1,8 @@
 @extends('partials.admin.app')
-@section('adminTitle','Add Job Role')
+@section('adminTitle','Job Role |Add Job Role')
+@section('titlePage')
+   <span class="titlePage">Job Role |Add Job Role</span>
+@endsection
 @section('admin-content')
 <div class="content-body">
     <div class="container-fluid">
@@ -22,7 +25,7 @@
             <div class="col-xl-12 col-xxl-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Add Job Role Form</h4>
+                        <h4 class="card-title">Add Job Role</h4>
                         <a href="javascript:void(0)" onclick="history.back()" class="btn btn-primary btn-outline-light float-lg-right" style="background-color: #450b5a; color: #fff;"><i class="fa fa-backward"></i> Back</a>
                     </div>
                     <div class="card-body">
@@ -35,7 +38,7 @@
                                         <div class="col-lg-7 mb-2">
                                             <div class="form-group">
                                                 <label class="text-label"><strong style="color: red;">*</strong><b>Job Role :</b></label>
-                                                <input type="text" name="job_role" class="form-control" placeholder="Job Role">
+                                                <input type="text" name="job_role" value="{{ old('job_role') }}" class="form-control" placeholder="Job Role">
                                                 <span class="text-danger">
                                                     @error('job_role')
                                                     {{$message}}

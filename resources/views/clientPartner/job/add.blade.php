@@ -1,5 +1,8 @@
 @extends('partials.clientPartner.app')
-@section('clientPartnerTitle','Add Job')
+@section('clientPartnerTitle','Post Job | Add Job')
+@section('clientBreadcrumbTitle')
+   <span class="titlePage">Post Job | Add Job</span>
+@endsection
 @section('clientPartner-content')
 
 <div class="content-body">
@@ -23,7 +26,7 @@
             <div class="col-xl-12 col-xxl-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Add Job Form</h4>
+                        <h4 class="card-title">Add Job</h4>
                         <a href="javascript:void(0)" onclick="history.back()" class="btn btn-primary btn-outline-light float-lg-right" style="background-color: #450b5a; color: #fff;"><i class="fa fa-backward"></i> Back</a>
                     </div>
                     <div class="card-body">
@@ -36,7 +39,7 @@
                                         <div class="col-lg-7 mb-2">
                                             <div class="form-group">
                                                 <label class="text-label"><strong style="color: red;">*</strong><b>Job Tilte :</b></label>
-                                                <input type="text" name="job_title" class="form-control" placeholder="Job Title">
+                                                <input type="text" name="job_title" value="{{ old('job_title') }}" class="form-control" placeholder="Job Title">
                                                 <span class="text-danger">
                                                     @error('job_title')
                                                         {{$message}}
@@ -83,7 +86,7 @@
                                         <div class="col-lg-7 mb-2">
                                             <div class="form-group">
                                                 <label class="text-label"><strong style="color: red;">*</strong><b>Description:</b></label>
-                                                <textarea class="form-control input-default" name="description" placeholder="Type your description..."></textarea>
+                                                <textarea class="form-control input-default" name="description" placeholder="Type your description...">{{old('description')}}</textarea>
                                                 <span class="text-danger">
                                                     @error('description')
                                                         {{$message}}

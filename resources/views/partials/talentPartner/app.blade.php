@@ -43,10 +43,11 @@ $setting = Setting::get();
     <!-- Custom Stylesheet -->
     <link href="{{asset('admin/vendor/bootstrap-select/dist/css/bootstrap-select.min.css')}}" rel="stylesheet">
 
-
-
-
-
+<style>
+     .titlePage{
+            font-size: 25px;
+        }
+</style>
 
 </head>
 

@@ -82,7 +82,7 @@
                                                     <div class="radio">
                                                         <label class="mb-1"><strong><span class="text-danger">*</span> Gender</strong> </label> <br>
                                                         <div class="form-check form-check-inline mt-2">
-                                                            <input class="form-check-input" type="radio" name="gender" id="inlineRadio1" value="1" value="{{old('gender')}}">
+                                                            <input class="form-check-input" type="radio" name="gender" id="inlineRadio1" value="1" value="{{old('gender')}}" checked>
                                                             <label class="form-check-label">Male</label>
                                                         </div>
                                                         <div class="form-check form-check-inline">

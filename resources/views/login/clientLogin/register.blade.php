@@ -10,7 +10,7 @@
     <link rel="icon" type="image/png" sizes="16x16" href="{{asset('admin/images/favicon.png')}}">
     <link href="{{asset('admin/css/style.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.tutorialjinni.com/intl-tel-input/17.0.8/css/intlTelInput.css" />
-  
+
 
 </head>
 
@@ -170,8 +170,7 @@
                                                 </div>
                                             </div>
 
-
-                                            <div class="col-md-6">
+                                            <div class="col-md-7">
                                                 <div class="form-group">
                                                     <label class="mb-1"><strong>Image</strong></label>
                                                     <input type="file" name="image" value="{{old('image')}}" class="form-control" placeholder="">
@@ -184,7 +183,6 @@
                                             </div>
 
                                             <div class="col-md-10">
-
                                                 <div class="form-group">
                                                     <label class="mb-1"><strong><span class="text-danger">*</span> Address</strong></label>
                                                     <!-- <input type="text" name="address" class="form-control"> -->
@@ -198,6 +196,68 @@
                                                 </div>
                                             </div>
 
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="mb-1"><strong><span class="text-danger">*</span> </strong>Street</label>
+                                                    <input type="text" name="street" class="form-control" value="{{old('street')}}" placeholder="Street">
+                                                    <span class="text-danger">
+                                                        @error('street')
+                                                        {{$message}}
+                                                        @enderror
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="mb-1"><strong><span class="text-danger">*</span> </strong>City</label>
+                                                    <input type="text" name="city" class="form-control" value="{{old('city')}}" placeholder="City">
+
+                                                    <span class="text-danger">
+                                                        @error('city')
+                                                        {{$message}}
+                                                        @enderror
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="mb-1"><strong><span class="text-danger">*</span> </strong>State</label>
+                                                    <input type="text" name="state" class="form-control" value="{{old('state')}}" placeholder="State">
+
+                                                    <span class="text-danger">
+                                                        @error('state')
+                                                        {{$message}}
+                                                        @enderror
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="mb-1"><strong><span class="text-danger">*</span> </strong>Country</label>
+                                                    <input type="text" name="country" class="form-control" value="{{old('country')}}" placeholder="Country">
+
+                                                    <span class="text-danger">
+                                                        @error('country')
+                                                        {{$message}}
+                                                        @enderror
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label class="mb-1"><strong><span class="text-danger">*</span> </strong>Zip Code</label>
+                                                    <input type="text" name="zip_code" class="form-control" value="{{old('zip_code')}}" placeholder="Zip Code" spellcheck="false" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" minlength="6" maxlength="6">
+
+                                                    <span class="text-danger">
+                                                        @error('zip_code')
+                                                        {{$message}}
+                                                        @enderror
+                                                    </span>
+                                                </div>
+                                            </div>
                                         </div>
 
                                         <div class="text-center mt-4">
@@ -274,12 +334,12 @@
         });
     </script>
 
-<script>
+    <script>
         $(document).ready(function() {
             $('#phone').on('keyup', function() {
                 let c_code = $('.iti__selected-dial-code').html();
                 let phone = $(this).val();
-                $('#phoneno').val(c_code + phone) 
+                $('#phoneno').val(c_code + phone)
             })
 
         });

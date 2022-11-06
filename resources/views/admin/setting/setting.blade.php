@@ -1,7 +1,14 @@
 @extends('partials.admin.app')
-@section('adminTitle','Setting')
+@section('adminTitle','Settings')
+@section('titlePage')
+<span class="titlePage">Settings</span>
+@endsection
 @section('admin-content')
-
+<style>
+    .error {
+        color: red;
+    }
+</style>
 <div class="content-body">
     <div class="container-fluid">
         <div class="row page-titles mx-0">
@@ -14,7 +21,7 @@
             <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Setting</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Settings</a></li>
                 </ol>
             </div>
         </div>
@@ -60,14 +67,15 @@
                 @endif
                 <!-- Notification End -->
                 <div class="card-header">
-                    <h4 class="card-title">Setting</h4>
+                    <h4 class="card-title">Settings</h4>
                 </div>
                 <div class="card-body">
                     <div class="basic-form">
-                        <form action="{{route('admin.logoUpdate')}}" method="post" enctype="multipart/form-data">
+                        <form action="{{route('admin.logoUpdate')}}" id="settingss" method="post" enctype="multipart/form-data">
                             @csrf
+                            @if ($settings->count() > 0)
                             <input type="hidden" name="id" value="{{$settings[0]['id']}}">
-                           
+                            @endif
                             <div class="row">
                                 <div class="col-md-5">
                                     <div class="form-group">
@@ -75,7 +83,7 @@
                                         <input type="file" name="logo" value="" class="form-control input-default" placeholder="">
                                         <span class="text-danger">
                                             @error('logo')
-                                                {{$message}}
+                                            {{$message}}
                                             @enderror
                                         </span>
                                     </div>
@@ -83,7 +91,9 @@
 
                                 <div class="col-md-5">
                                     <div class="form-group">
+                                        @if ($settings->count() > 0)
                                         <img src="{{ asset('settings/'.$settings[0]['logo'] )}}" alt="" width="100" height="100">
+                                        @endif
                                     </div>
                                 </div>
 
@@ -96,9 +106,12 @@
                         </form>
 
                         <!-- favicon Update -->
-                        <form action="{{route('admin.faviconUpdate')}}" method="post" enctype="multipart/form-data">
+                        <form action="{{route('admin.faviconUpdate')}}" id="settingss" method="post" enctype="multipart/form-data">
                             @csrf
+
+                            @if ($settings->count() > 0)
                             <input type="hidden" name="id" value="{{$settings[0]['id']}}">
+                            @endif
                             <div class="row">
                                 <div class="col-5">
                                     <div class="form-group">
@@ -106,7 +119,7 @@
                                         <input type="file" name="favicon" value="" class="form-control input-default " placeholder="">
                                         <span class="text-danger">
                                             @error('favicon')
-                                                {{$message}}
+                                            {{$message}}
                                             @enderror
                                         </span>
                                     </div>
@@ -114,7 +127,11 @@
 
                                 <div class="col-5">
                                     <div class="form-group">
+
+                                        @if ($settings->count() > 0)
                                         <img src="{{ asset('settings/'.$settings[0]['favicon'] )}}" alt="" width="100" height="100">
+                                        @endif
+
                                     </div>
                                 </div>
 
@@ -139,5 +156,33 @@
 @endsection
 
 @push('script')
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+<script>
+    $(document).ready(function() {
 
+        var settingss = $("#settingss");
+        var validatorAdd = settingss.validate({
+
+            rules: {
+
+                logo: {
+                    required: true
+                },
+                favicon: {
+                    required: true
+                },
+            },
+            messages: {
+                logo: {
+                    required: "Enter Logo"
+                },
+                favicon: {
+                    required: "Enter Favicon"
+                },
+
+            }
+        });
+
+    });
+</script>
 @endpush

@@ -1,5 +1,8 @@
 @extends('partials.admin.app')
-@section('adminTitle','Applied Jobs User')
+@section('adminTitle','Applied Job |All Applied Users')
+@section('titlePage')
+   <span class="titlePage">Applied Job |All Applied Users</span>
+@endsection
 @section('admin-content')
 @push('style')
 <style>
@@ -69,14 +72,14 @@
         <div class="row page-titles mx-0">
             <div class="col-sm-6 p-md-0">
                 <div class="welcome-text">
-                    <h4>Hi, Welcome </h4>
+                    <h4>Hi, Welcome {{$super_admin[0]['name']}}</h4>
                     <!-- <p class="mb-0">Your business dashboard template</p> -->
                 </div>
             </div>
             <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Show All Posted Job</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Show All Applied Users</a></li>
                 </ol>
             </div>
         </div>
@@ -125,54 +128,52 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                {{--<pre>
+                    {{--<pre>
                     {{print($appliedJobs)}}
                     </pre>--}}
                     <div class="card-header">
-                        <h4 class="card-title">Show All Posted Job</h4>
-                        <a href="javascript:void(0)" onclick="history.back()" class="btn btn-primary btn-outline-light float-lg-right" style="background-color: #450b5a; color: #fff;"><i class="fa fa-backward"></i> Back</a>
+                        <h4 class="card-title">All Applied Users</h4>
+                        <a href="javascript:void(0)" onclick="history.back()" class="btn btn-primary btn-outline-light float-lg-right btn-sm" style="background-color: #450b5a; color: #fff;"><i class="fa fa-backward"></i> Back</a>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <table id="example" class="display text-center" style="min-width: 845px">
                                 <thead>
-                                <tr>
-                                    <th>S.No.</th>
-                                    <th>Job Title</th>
-                                    <th>User Name(Telent)</th>
-                                    <th>Mobile No</th>
-                                    <th>Email</th>
-                                    <th>Screening User</th>
-                                </tr>
+                                    <tr>
+                                        <th>S.No.</th>
+                                        <th>Job Title</th>
+                                        <th>User Name(Talent)</th>
+                                        <th>Mobile No</th>
+                                        <th>Email</th>
+                                        <th>Screening User</th>
+                                        <th>Action</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
-                                @php
-                                $i=1;
-                                @endphp
+                                    @php
+                                    $i=1;
+                                    @endphp
 
-                                @foreach ($appliedJobs as $job)
-                                <tr>
-                                    <td>{{$i++}}</td>
-                                    <td>{{$job->job_title}}</td>
-                                    <td>{{$job->name}}</td>
-                                    <td>{{$job->mobile_no}}</td>
-                                    <td>{{$job->email}}</td>
-                                    <td>
-                                        <label class="switch">
-                                            <input type="checkbox" name="screening" class="screening" data-id="{{$job->applied_job_id}}" @php if($job->status==1) echo "checked"; @endphp>
-                                            <span class="slider round"></span>
-                                        </label>
-                                    </td>
-                                    {{-- <td>
-                                        <a href="{{url('client/edit_job')}}/{{$job->id}}" class="btn btn-warning btn-sm btn-outline-light" style="background-color: #df5301; color: #fff;"><i class="fa fa-pencil-square" aria-hidden="true"></i></a>
+                                    @foreach ($appliedJobs as $job)
+                                    <tr>
+                                        <td>{{$i++}}</td>
+                                        <td>{{$job->job_title}}</td>
+                                        <td>{{$job->name}}</td>
+                                        <td>{{$job->mobile_no}}</td>
+                                        <td>{{$job->email}}</td>
+                                        <td>
+                                            <label class="switch">
+                                                <input type="checkbox" name="screening" class="screening" data-id="{{$job->applied_job_id}}" @php if($job->status==1) echo "checked disabled"; @endphp>
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </td>
+                                         <td>
+                                        <a href="{{route('admin.appliedJobDelete',['appliedJobid'=>$job->applied_job_id])}}" onclick="return confirm('Are you sure delete this Data')" class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                                        </td>
+                                    </tr>
+                                    @endforeach
 
-                                    <a href="{{url('client/delete_job')}}/{{$job->id}}" onclick="return confirm('Are you sure delete this job')" class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i></a>
-
-                                    </td>--}}
-                                </tr>
-                                @endforeach
-
-                            </tbody>
+                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -220,8 +221,14 @@
                     icon: 'success',
                     title: 'Screening Status Updated.',
                     showConfirmButton: true,
-                    // timer: 3000
-                })
+                    // timer: 1000
+                }).then(function(isConfirm) {
+                    if (isConfirm) {
+                        location.reload();
+                    } else {
+                        //if no clicked => do something else
+                    }
+                });
             }
         });
 

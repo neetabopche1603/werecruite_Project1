@@ -1,5 +1,8 @@
 @extends('partials.talentPartner.app')
 @section('talentPartnerTitle','View Applied Job')
+@section('userBreadcrumbTitle')
+   <span class="titlePage">View Applied Jobs</span>
+@endsection
 @section('talentPartner-content')
 <div class="content-body">
     <div class="container-fluid">
@@ -13,7 +16,7 @@
             <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                    <li class="breadcrumb-item active"><a href="javascript:void(0)">View Applied Job's</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)">View Applied Jobs</a></li>
                 </ol>
             </div>
         </div>
@@ -63,7 +66,7 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">View Applied Job's</h4>
+                        <h4 class="card-title">View Applied Jobs</h4>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -71,7 +74,7 @@
                                 <thead>
                                     <tr>
                                         <th>S.No.</th>
-                                        <th>Company Name</th>
+                                        <!-- <th>Company Name</th> -->
                                         <th>Job Title</th>
                                         <th>Applied Time</th>
                                         <th>Status</th>
@@ -85,40 +88,40 @@
                                     @foreach ($viewAppliedJob as $data)
                                     <tr>
                                         <td>{{ $i++ }}</td>
-                                        <td>
+                                        <!-- <td>
                                             @if ($data->userId== NULL)
                                             Werecuite
                                             @else
                                             {{$data->company_name}}
                                             @endif
 
-                                        </td>
+                                        </td> -->
                                         <td>{{ $data->job_title}}</td>
-                                        <td>{{ $data->created_at->format('d M Y h:i A')}} <span class="text-success">({{$data->created_at->diffForHumans()}})</span></td>
+                                        <td>{{ $data->created_at->format('d M Y h:i A')}} <span class="text-info">({{$data->created_at->diffForHumans()}})</span></td>
                                         <td>
                                             @if ($data != NULL)
                                             @if($data->status == 0 && $data->screening_schedule == 0 && $data->interview_schedule == 0 && $data->selected == 0)
 
-                                            <button type="button" class="btn btn-success btn-sm">Applied</button>
+                                            <button type="button" class="btn btn-primary btn-sm" style="width:164px;">Applied</button>
 
                                             @elseif ($data->status == 1 && $data->screening_schedule == 0 && $data->interview_schedule == 0 && $data->selected == 0)
 
-                                            <button type="button" class="btn btn-success btn-sm">Screening</button>
+                                            <button type="button" class="btn btn-primary btn-sm" style="width:164px;">Screening</button>
 
 
                                             @elseif ($data->status == 1 && $data->screening_schedule == 1 && $data->interview_schedule == 0 && $data->selected == 0)
 
-                                            <button type="button" class="btn btn-success btn-sm">Screening Scheduled</button>
+                                            <button type="button" class="btn btn-primary btn-sm" >Screening Scheduled</button>
 
 
                                             @elseif ($data->status == 1 && $data->screening_schedule == 1 && $data->interview_schedule == 1 && $data->selected == 0)
 
-                                            <button type="button" class="btn btn-success btn-sm">Interview Scheduled</button>
+                                            <button type="button" class="btn btn-primary btn-sm" >Interview Scheduled</button>
 
 
                                             @elseif ($data->status == 1 && $data->screening_schedule == 1 && $data->interview_schedule == 1 && $data->selected == 1)
 
-                                            <button type="button" class="btn btn-success btn-sm">Selected</button>
+                                            <button type="button" class="btn btn-primary btn-sm" style="width:164px;">Selected</button>
 
                                             @endif
                                             @endif
@@ -126,7 +129,7 @@
                                         </td>
 
                                         <td>
-                                            <a href="#"><a href="{{route('talent.job_desc',['id'=>$data->jobId])}}" class="btn btn-success btn-sm" title="View Job Description"><i class="fa fa-eye"></i></a></a>
+                                            <a href="#"><a href="{{route('talent.job_desc',['id'=>$data->jobId])}}" class="btn btn-info btn-sm"  title="View Job Description"><i class="fa fa-eye"></i></a></a>
                                         </td>
                                     </tr>
                                     @endforeach

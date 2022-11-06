@@ -5,6 +5,9 @@ use App\Models\User;
 ?>
 @extends('partials.admin.app')
 @section('adminTitle','Job Post')
+@section('titlePage')
+<span class="titlePage">Post Job</span>
+@endsection
 @section('admin-content')
 <div class="content-body">
     <div class="container-fluid">
@@ -70,8 +73,8 @@ use App\Models\User;
 
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Show All Posted Job's </h4>
-                        <a href="{{route('admin.addJobPostView')}}" class="btn btn-primary  float-lg-right"><i class="fa fa-plus" aria-hidden="true"></i> Job Post</a>
+                        <h4 class="card-title">Show All Posted Jobs </h4>
+                        <a href="{{route('admin.addJobPostView')}}" class="btn btn-primary  float-lg-right"><i class="fa fa-plus" aria-hidden="true"></i> Post Job</a>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -88,39 +91,39 @@ use App\Models\User;
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @if(count($jobs) >0)
+                                        @foreach($jobs as $key=>$job)
+                                            @php
+                                            $skills = implode(",",$job->skills);
+                                            @endphp
+                                            
+                                            <tr>
+                                                <td>{{ $key+1 }}</td>
+                                                <td>
+                                                    <?php
+                                                    if ($job->user_id == 0) {
+                                                        echo "Admin";
+                                                    } else {
+                                                        $user = User::find($job->user_id);
+                                                        echo $user->name;
+                                                    }
+                                                    ?>
+                                                </td>
+                                                <td>{{$job->job_title}}</td>
+                                                <td>{{$skills}}</td>
+                                                <td>{{$job->job_role}}</td>
+                                                <td>{{wordwrap($job->description, 20)}}
+                                                </td>
+                                                <td>
+                                                    <a href="{{url('admin/edit-jobsPost')}}/{{$job->id}}" class="btn btn-warning btn-sm btn-outline-light" style="background-color: #df5301; color: #fff;"><i class="fa fa-pencil-square" aria-hidden="true"></i></a>
 
-                                    @foreach($jobs as $key=>$job)
-                                    @php
-                                    $skills = implode(",",$job->skills);
-                                    @endphp
-                                    
-                                    <tr>
-                                        <td>{{ $key+1 }}</td>
-                                        <td>
-                                            <?php
-                                            if ($job->user_id == 0) {
-                                                echo "Admin";
-                                            } else {
-                                                $user = User::find($job->user_id);
-                                                echo $user->name;
-                                            }
-                                            ?>
-                                        </td>
-                                        <td>{{$job->job_title}}</td>
-                                        <td>{{$skills}}</td>
-                                        <td>{{$job->job_role}}</td>
-                                        <td>{{wordwrap($job->description, 20)}}
-                                        </td>
-                                        <td>
-                                            <a href="{{url('admin/edit-jobsPost')}}/{{$job->id}}" class="btn btn-warning btn-sm btn-outline-light" style="background-color: #df5301; color: #fff;"><i class="fa fa-pencil-square" aria-hidden="true"></i></a>
+                                                    <a href="{{url('admin/delete-jobsPost')}}/{{$job->id}}" onclick="return confirm('Are you sure delete this job')" class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i></a>
 
-                                            <a href="{{url('admin/delete-jobsPost')}}/{{$job->id}}" onclick="return confirm('Are you sure delete this job')" class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i></a>
-
-                                        </td>
-                                    </tr>
-                                    
-                                    @endforeach
-
+                                                </td>
+                                            </tr>
+                                        
+                                        @endforeach
+                                    @endif
                                 </tbody>
                             </table>
                         </div>

@@ -36,12 +36,18 @@ class ClientAuthController extends Controller
                 'address' => 'required',
                 'image' => 'image|mimes:jpg,jpeg,png,gif|max:2048',
 
+                'street' => 'required',
+                'city' => 'required',
+                'state' => 'required',
+                'country' => 'required',
+                'zip_code' => 'required|min:6|max:6',
+
             ],
             [
                 'image.image' => 'Please Choose Only jpg,jpeg,png,gif file.',
-                'password.min'=> 'Password must be at least 8 characters in length.',
-                'password.regex'=> 'Password containt at least one lowercase, uppercase, digit, character and must be at least 8 characters in length.'
-                
+                'password.min' => 'Password must be at least 8 characters in length.',
+                'password.regex' => 'Password containt at least one lowercase, uppercase, digit, character and must be at least 8 characters in length.',
+                // 'zip_code' =>  'Please 6 Charactor',
             ]
         );
 
@@ -51,7 +57,7 @@ class ClientAuthController extends Controller
         $registerStore->mobile_no = $request->mobile_number;
         $registerStore->email = $request->email;
         $registerStore->password = Hash::make($request->password);
-        $registerStore->address = $request->address;
+        
 
         if ($request->file('image')) {
             $image = $request->file('image');
@@ -60,6 +66,14 @@ class ClientAuthController extends Controller
             $image->move($destinationPath, $uploadImage);
             $registerStore->image =  $uploadImage;
         }
+
+        $registerStore->street = $request->street;
+        $registerStore->city = $request->city;
+        $registerStore->state = $request->state;
+        $registerStore->country = $request->country;
+        $registerStore->zip_code = $request->zip_code;
+        $address = $request->street.', '.$request->city.', '.$request->address.', '.$request->state.', '.$request->country.', '.$request->zip_code;
+        $registerStore->address = $address;
 
         $registerStore->role = 1;
         $register = $registerStore->save();

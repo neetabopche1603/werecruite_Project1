@@ -19,6 +19,15 @@ class TalentProfileController extends Controller
 
     public function ProfileUpdate(Request $request)
     {
+        $validatedData = $request->validate(
+            [
+                'image' => 'image|mimes:jpg,jpeg,png,gif|max:2048',
+            ],
+            [
+                'image' => 'Please Choose Only jpg,jpeg,png,gif file.',
+            ]
+        );
+        
         $ProfileUpdate = User::find($request->id);
         $ProfileUpdate->name = strtoupper($request->name);
         $ProfileUpdate->dob = $request->dob;
@@ -31,7 +40,9 @@ class TalentProfileController extends Controller
 
             // Old Image Delete Code Start
             if ($ProfileUpdate->image != NULL) {
-                unlink('image/' . $ProfileUpdate->image);
+                if (file_exists('image/' . $ProfileUpdate->image)) {
+                    unlink('image/' . $ProfileUpdate->image);
+                }
             }
             // Old Image Delete Code End
             $image = $request->file('image');
@@ -45,19 +56,18 @@ class TalentProfileController extends Controller
         return redirect()->back()->with('success', 'Profile Update Successfully Changed......!');
     }
 
-   // ============= Client Change Passwords Function ==================
-   public function passwordChange(Request $request)
-   {
-       $request->validate([
-           'current_password' => ['required', new TalentOldPassword],
-           'new_password' => ['required'],
-           'new_confirm_password' => ['same:new_password'],
-       ]);
+    // ============= Client Change Passwords Function ==================
+    public function passwordChange(Request $request)
+    {
+        $request->validate([
+            'current_password' => ['required', new TalentOldPassword],
+            'new_password' => ['required'],
+            'new_confirm_password' => ['same:new_password'],
+        ]);
 
-       User::find(auth()->user()->id)->update(['password' => Hash::make($request->new_password)]);
+        User::find(auth()->user()->id)->update(['password' => Hash::make($request->new_password)]);
 
-       // dd('Password change successfully.');
-       return redirect()->back()->with('password', 'Password Successfully Changed......!');
-   }
-
+        // dd('Password change successfully.');
+        return redirect()->back()->with('password', 'Password Successfully Changed......!');
+    }
 }

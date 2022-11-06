@@ -15,9 +15,13 @@ return new class extends Migration
     {
         Schema::create('applied_jobs', function (Blueprint $table) {
             $table->id();
-            $table->tinyInteger('user_id');
-            $table->tinyInteger('job_id');
-            $table->tinyInteger('status')->comment("0=Applied, 1= Screening, 2=Selected,3=Schedule");
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('job_id');
+            $table->tinyInteger('status')->comment("0=Applied, 1= Screening");
+            $table->string('adminChangeStatus')->nullable();
+            $table->tinyInteger('screening_schedule')->default(0);
+            $table->tinyInteger('interview_schedule')->default(0);
+            $table->tinyInteger('selected')->default(0);
             $table->timestamps();
         });
     }

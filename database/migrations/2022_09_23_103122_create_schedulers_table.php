@@ -17,8 +17,10 @@ return new class extends Migration
             $table->id();
             $table->tinyInteger('user_id');
             $table->tinyInteger('job_id');
-            $table->string('admin_sche_date');
-            $table->string('user_sche_date');
+            $table->mediumText('title')->nullable();;
+            $table->string('admin_sche_date')->nullable();
+            $table->string('user_sche_date')->nullable();
+            $table->string('actual_sche_date')->nullable();
             $table->timestamps();
         });
     }

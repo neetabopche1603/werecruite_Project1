@@ -15,11 +15,11 @@ return new class extends Migration
     {
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
+            $table->tinyInteger('user_id')->default(0);
+            $table->tinyInteger('job_id')->default(0);
             $table->string('title');
-            $table->tinyInteger('user_id');
-            $table->tinyInteger('job_id');
-            $table->tinyInteger('is_seen')->comment('0=seen,1=unseen');
-            $table->tinyInteger('type')->comment('0=job,1=Applied job');
+            $table->tinyInteger('is_seen')->comment('0=seen,1=unseen')->default(0);
+            $table->string('type')->nullable();
             $table->timestamps();
         });
     }

@@ -1,7 +1,14 @@
 @extends('partials.admin.app')
 @section('adminTitle','Admin Profile')
+@section('titlePage')
+   <span class="titlePage">Profile</span>
+@endsection
 @section('admin-content')
-
+<style>
+    .error {
+        color: red;
+    }
+</style>
 <div class="content-body">
     <div class="container-fluid">
         <div class="row page-titles mx-0">
@@ -77,7 +84,7 @@
                 </div>
                 <div class="card-body">
                     <div class="basic-form">
-                        <form action="{{route('admin.updateProfiles')}}" method="post" enctype="multipart/form-data">
+                        <form action="{{route('admin.updateProfiles')}}" id="adminProfileChangeForm" method="post" enctype="multipart/form-data">
                             @csrf
                             <input type="hidden" name="id" value="{{$adminProfile->id}}">
                             <div class="row">
@@ -124,10 +131,15 @@
                     </div>
                     <div class="col-12">
                         <div class="form-group">
-                            <label for=""><span class="text-danger">*</span><b>Image:</b></label>
+                            <label for=""><b>Image:</b></label>
                             <input type="file" name="image" class="form-control input-default " placeholder="">
                             <!-- <img src="{{asset('image')}}/{{$adminProfile->image}}" alt="image" width="100px" height="100px"> -->
                         </div>
+                        <span class="text-danger">
+                            @error('image')
+                            {{$message}}
+                            @enderror
+                        </span>
                     </div>
 
                     <div class="col-12">
@@ -151,10 +163,10 @@
         <!-- -- Notification Start -- -->
         @if(Session::get('password'))
         <div class="alert alert-success solid alert-rounded alert-dismissible fade show" role="alert">
-        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="mr-2">
-                            <polyline points="9 11 12 14 22 4"></polyline>
-                            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
-                        </svg>
+            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="mr-2">
+                <polyline points="9 11 12 14 22 4"></polyline>
+                <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+            </svg>
             <strong>{{session::get('password')}}</strong>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
@@ -217,5 +229,51 @@
 @endsection
 
 @push('script')
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+<script>
+    $(document).ready(function() {
 
+        var adminProfileChangeForm = $("#adminProfileChangeForm");
+        var validatorAdd = adminProfileChangeForm.validate({
+
+            rules: {
+
+                name: {
+                    required: true
+                },
+                dob: {
+                    required: true
+                },
+                email: {
+                    required: true
+                },
+                mobile_number: {
+                    required: true
+                },
+                address: {
+                    required: true
+                },
+            },
+            messages: {
+                name: {
+                    required: "Enter Name"
+                },
+                dob: {
+                    required: "Enter Date Of Birth"
+                },
+                email: {
+                    required: "Enter Email"
+                },
+                mobile_number: {
+                    required: "Enter Mobile Number"
+                },
+                address: {
+                    required: "Enter Address"
+                },
+
+            }
+        });
+
+    });
+</script>
 @endpush

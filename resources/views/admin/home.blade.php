@@ -1,5 +1,8 @@
 @extends('partials.admin.app')
-@section('adminTitle','Admin Home')
+@section('adminTitle','Dashboard| Admin Home')
+@section('titlePage')
+<span class="titlePage"> Dashboard</span>
+@endsection
 @section('admin-content')
 
 <?php
@@ -7,9 +10,9 @@
 use Illuminate\Support\Facades\DB;
 
 $totalJobs = DB::table('jobs')->count();
-$totalCompany = DB::table('users')->where('role','=', 0)->count();
-$totalScreening = DB::table('applied_jobs')->where('status','=', 1)->count();
-$totalInterview = DB::table('applied_jobs')->where('interview_schedule','=', 1)->count();
+$totalCompany = DB::table('users')->where('role', 0)->count();
+$totalScreening = DB::table('applied_jobs')->where('status', 1)->count();
+$totalInterview = DB::table('applied_jobs')->where('interview_schedule', 1)->count();
 ?>
 
 <!--**********************************

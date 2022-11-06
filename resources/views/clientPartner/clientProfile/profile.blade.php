@@ -1,7 +1,14 @@
 @extends('partials.clientPartner.app')
-@section('clientPartnerTitle','Profile Page Client')
+@section('clientPartnerTitle','Profile')
+@section('clientBreadcrumbTitle')
+   <span class="titlePage">Profile</span>
+@endsection
 @section('clientPartner-content')
-
+<style>
+    .error {
+        color: red;
+    }
+</style>
 <div class="content-body">
     <div class="container-fluid">
         <div class="row page-titles mx-0">
@@ -80,7 +87,7 @@
                 </div>
                 <div class="card-body">
                     <div class="basic-form">
-                        <form action="{{route('client.updateProfile')}}" method="post" enctype="multipart/form-data">
+                        <form action="{{route('client.updateProfile')}}" id="clientProfileChangeForm" method="post" enctype="multipart/form-data">
                             @csrf
                             <input type="hidden" name="id" value="{{$profiles->id}}">
                             <div class="row">
@@ -119,10 +126,16 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label for=""><span class="text-danger">*</span><b>Image:</b></label>
+                                        <label for=""><b>Image:</b></label>
                                         <input type="file" name="image" class="form-control input-default " placeholder="">
+                                        <span class="text-danger">
+                                        @error('image')
+                                        {{$message}}
+                                        @enderror
+                                    </span>
                                         <!-- <img src="{{asset('image')}}/{{auth()->user()->image}}" alt="image" width="100px" height="100px"> -->
                                     </div>
+                                    
                                 </div>
 
                                 <div class="col-12">
@@ -212,5 +225,51 @@
 @endsection
 
 @push('script')
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+<script>
+    $(document).ready(function() {
 
+        var clientProfileChangeForm = $("#clientProfileChangeForm");
+        var validatorAdd = clientProfileChangeForm.validate({
+
+            rules: {
+
+                name: {
+                    required: true
+                },
+                email: {
+                    required: true
+                },
+                emp_size: {
+                    required: true
+                },
+                mobile_number: {
+                    required: true
+                },
+                address: {
+                    required: true
+                },
+            },
+            messages: {
+                name: {
+                    required: "Enter Company Name"
+                },
+                email: {
+                    required: "Enter Email"
+                },
+                emp_size: {
+                    required: "Enter Employment Size"
+                },
+                mobile_number: {
+                    required: "Enter Mobile Number"
+                },
+                address: {
+                    required: "Enter Address"
+                },
+
+            }
+        });
+
+    });
+</script>
 @endpush

@@ -1,5 +1,8 @@
 @extends('partials.admin.app')
-@section('adminTitle','Add Job Role')
+@section('adminTitle','Job Role')
+@section('titlePage')
+   <span class="titlePage">Job Role</span>
+@endsection
 @section('admin-content')
 <div class="content-body">
     <div class="container-fluid">
@@ -63,7 +66,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4 class="card-title">Show All Job Role's</h4>
+                                <h4 class="card-title">Show All Job Roles</h4>
                                 <a href="{{route('admin.jobRoleAddForm')}}" class="btn btn-primary  float-lg-right"><i class="fa fa-plus" aria-hidden="true"></i> Add</a>
                             </div>
                             <div class="card-body">

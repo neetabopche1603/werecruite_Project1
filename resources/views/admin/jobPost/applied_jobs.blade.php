@@ -4,7 +4,10 @@ use App\Models\AppliedJob;
 
 ?>
 @extends('partials.admin.app')
-@section('adminTitle','Screening Users ')
+@section('adminTitle','Screening Users')
+@section('titlePage')
+   <span class="titlePage">Screening Users</span>
+@endsection
 @section('admin-content')
 <div class="content-body">
     <div class="container-fluid">
@@ -18,7 +21,7 @@ use App\Models\AppliedJob;
             <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                    <li class="breadcrumb-item active"><a href="javascript:void(0)"> Show Screening User's</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)"> Show Screening Users</a></li>
                 </ol>
             </div>
         </div>
@@ -100,9 +103,9 @@ use App\Models\AppliedJob;
                                     <tr>
                                         <td>{{$i++}}</td>
                                         <td>{{$job->job_title}}</td>
-                                        <td>{{$job->name}}</td>
+                                        <td>{{($job->name)!=''?$job->name:'Admin'}}</td>
                                         <td>{{$totalCount}}</td>
-                                        <td><a href="{{route('admin.screeningJobUsers',['jobid'=>$job->job_id])}}" class="btn btn-outline-light" style="background-color: #df5301; color: #fff;">Show all screening users</a></td>
+                                        <td><a href="{{route('admin.screeningJobUsers',['jobid'=>$job->job_id])}}" class="btn btn-outline-light btn-sm" style="background-color: #df5301; color: #fff; width: 196px">Show all screening users</a></td>
                                         {{-- <td>
                                         <a href="{{url('client/edit_job')}}/{{$job->id}}" class="btn btn-warning btn-sm btn-outline-light" style="background-color: #df5301; color: #fff;"><i class="fa fa-pencil-square" aria-hidden="true"></i></a>
 

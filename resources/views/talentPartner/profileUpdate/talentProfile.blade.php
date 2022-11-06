@@ -1,7 +1,14 @@
 @extends('partials.talentPartner.app')
 @section('talentPartnerTitle','Profile Page Talent')
+@section('userBreadcrumbTitle')
+   <span class="titlePage">Profile</span>
+@endsection
 @section('talentPartner-content')
-
+<style>
+    .error {
+        color: red;
+    }
+</style>
 <div class="content-body">
     <div class="container-fluid">
         <div class="row page-titles mx-0">
@@ -24,8 +31,6 @@
             <div class="col-xl-7 col-lg-7">
                 <!-- Change Profile -->
                 <div class="card">
-
-
                     <!-- Notification Start -->
                     @if(Session::get('success'))
                     <div class="alert alert-success solid alert-rounded alert-dismissible fade show" role="alert">
@@ -78,7 +83,7 @@
                 </div>
                 <div class="card-body">
                     <div class="basic-form">
-                        <form action="{{route('talent.ProfileUpdate')}}" method="post" enctype="multipart/form-data">
+                        <form action="{{route('talent.ProfileUpdate')}}" method="post" enctype="multipart/form-data" id="talentProfileChangeForm">
                             @csrf
                             <input type="hidden" name="id" value="{{$profileData->id}}">
                             <div class="row">
@@ -117,9 +122,14 @@
                                 </div>
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label for=""><span class="text-danger">*</span><b>Image:</b></label>
+                                        <label for=""><b>Image:</b></label>
                                         <input type="file" name="image" class="form-control input-default " placeholder="">
                                         <!-- <img src="{{asset('image')}}/{{auth()->user()->image}}" alt="image" width="100px" height="100px"> -->
+                                        <span class="text-danger">
+                                        @error('image')
+                                        {{$message}}
+                                        @enderror
+                                    </span>
                                     </div>
                                 </div>
 
@@ -210,5 +220,58 @@
 @endsection
 
 @push('script')
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+<script>
+    $(document).ready(function() {
 
+        var talentProfileChangeForm = $("#talentProfileChangeForm");
+        var validatorAdd = talentProfileChangeForm.validate({
+
+            rules: {
+
+                name: {
+                    required: true
+                },
+                email: {
+                    required: true
+                },
+                dob: {
+                    required: true
+                },
+                highest_education: {
+                    required: true
+                },
+               
+                mobile_number: {
+                    required: true
+                },
+                address: {
+                    required: true
+                },
+            },
+            messages: {
+                name: {
+                    required: "Enter Name"
+                },
+                email: {
+                    required: "Enter Email"
+                },
+                dob: {
+                    required: "Enter Date Of Birth"
+                },
+                highest_education: {
+                    required: "Enter Highest Education"
+                },
+                mobile_number: {
+                    required: "Enter Mobile Number"
+                },
+                address: {
+                    required: "Enter Address"
+                },
+
+            }
+        });
+
+    });
+</script>
 @endpush

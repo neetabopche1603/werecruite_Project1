@@ -1,5 +1,8 @@
 @extends('partials.clientPartner.app')
-@section('clientPartnerTitle','Client Home')
+@section('clientPartnerTitle','Dashboard| Client Home')
+@section('clientBreadcrumbTitle')
+   <span class="titlePage">Dashboard</span>
+@endsection
 @section('clientPartner-content')
 <?php
 
@@ -68,7 +71,7 @@ $appliedJobsUser = DB::table('applied_jobs')->whereIn('job_id',$jobs)->count();
 										<i class="flaticon-381-user-7"></i>
 									</span>
 									<div class="media-body text-white text-right">
-										<p class="mb-1">Applied Job User's</p>
+										<p class="mb-1">Jobs Applied</p>
 										<h3 class="text-white">{{ $appliedJobsUser }}</h3>
 									</div>
 								</div>

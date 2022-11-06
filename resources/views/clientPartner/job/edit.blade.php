@@ -1,5 +1,8 @@
 @extends('partials.clientPartner.app')
-@section('clientPartnerTitle','Edit Job')
+@section('clientPartnerTitle','Post Job |Edit Job')
+@section('clientBreadcrumbTitle')
+   <span class="titlePage">Post Job |Edit Job</span>
+@endsection
 @section('clientPartner-content')
 
 <div class="content-body">
@@ -14,7 +17,7 @@
             <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Edit Job's</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Edit Jobs</a></li>
                 </ol>
             </div>
         </div>
@@ -23,7 +26,7 @@
             <div class="col-xl-10 col-xxl-10">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Edit Job Form</h4>
+                        <h4 class="card-title">Edit Job</h4>
                         <a href="javascript:void(0)" onclick="history.back()" class="btn btn-primary btn-outline-light float-lg-right" style="background-color: #450b5a; color: #fff;"><i class="fa fa-backward"></i> Back</a>
                     </div>
                     <div class="card-body">

@@ -5,8 +5,10 @@ use App\Models\Notification;
 
 $admin = SuperAdmin::all();
 
+$date = \Carbon\Carbon::today()->subDays(7);
 //   $notification = Notification::where('type','User')->whereIn('user_id',$ids)->orderBy('id','desc')->get();
-$notification = Notification::where('is_seen', 0)->where('type', 'Admin')->where('user_id', 0)->orderBy('id', 'desc')->get();
+$notification = Notification::where('type', 'Admin')->where('user_id', 0)->where('created_at','>=',$date)->orderBy('id', 'desc')->get();
+$notificationNotSeen = Notification::where('is_seen',0)->where('type', 'Admin')->where('user_id', 0)->where('created_at','>=',$date)->orderBy('id', 'desc')->get();
 
 ?>
 
@@ -16,7 +18,11 @@ $notification = Notification::where('is_seen', 0)->where('type', 'Admin')->where
         ***********************************-->
 <div class="nav-header">
 	<a href="{{route('admin.home')}}" class="brand-logo">
+	@if ($settings->count() > 0)
 		<img class="logo-abbr" style="max-width: 120px;" src="{{ asset('settings/'.$settings[0]['logo'] )}}" alt="">
+		@else
+		<img class="logo-abbr" style="max-width: 120px;" src="{{ asset('settings/dummyLogo.png' )}}" alt="No Logo">
+		@endif
 		<!-- <img class="logo-compact" src="{{asset('admin/images/logo-text.png')}}" alt="">
 		<img class="brand-title" src="{{asset('admin/images/logo-text.png')}}" alt=""> -->
 	</a>
@@ -36,7 +42,7 @@ $notification = Notification::where('is_seen', 0)->where('type', 'Admin')->where
 			<div class="collapse navbar-collapse justify-content-between">
 				<div class="header-left">
 					<div class="dashboard_bar">
-						Dashboard
+						@yield('titlePage')
 					</div>
 				</div>
 
@@ -59,7 +65,7 @@ $notification = Notification::where('is_seen', 0)->where('type', 'Admin')->where
 					<li class="nav-item dropdown notification_dropdown">
 						<a class="nav-link  ai-icon" href="#" role="button" data-toggle="dropdown">
 							<i class="flaticon-381-ring"></i>
-							@if($notification->count() != 0)
+							@if($notificationNotSeen->count() != 0)
 								<div class="pulse-css"></div>
  							@endif
 						</a>
@@ -78,15 +84,18 @@ $notification = Notification::where('is_seen', 0)->where('type', 'Admin')->where
 												?>
 													{{--{{route('admin.job_desc',['id'=>$row->job_id])}}--}}
 													<a href="javascript:void(0)" data-url="{{route('admin.screeningJobUsers',['jobid'=>$row->job_id])}}" class="jobStatus" data-id="{{$row->id}}">
-														<h6 class="mb-1 text-warning"> {!!$row->title!!} </h6>
+														<b class="mb-1 text-warning"> {!!$row->title!!} </b>
 													</a>
 												<?php
 												} else {
-													echo "<h6 class='mb-1 text-success'> $row->title </h6>";
+													// echo "<h6 class='mb-1 text-success'> $row->title </h6>";
+													?>
+														<a href="{{route('admin.screeningJobUsers',['jobid'=>$row->job_id])}}" class="mb-1 text-secondary"> {!!$row->title!!} </a>
+													<?php
 												}
 												?>
 
-												<small class="d-block">{{ $row->created_at->diffForHumans() }}</small>
+												<small class="d-block">{{ \Carbon\Carbon::parse($row->created_at)->format('D d M, h:i A')}} <span class="text-dark">({{ $row->created_at->diffForHumans() }})</span></small>
 											</div>
 										</div>
 									</li>
@@ -121,7 +130,7 @@ $notification = Notification::where('is_seen', 0)->where('type', 'Admin')->where
 							<a href="{{route('admin.settingView')}}" class="dropdown-item ai-icon">
 								<!-- <svg id="icon-inbox" xmlns="http://www.w3.org/2000/svg" class="text-success" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg> -->
 								<i class="flaticon-381-settings-2"></i>
-								<span class="ml-2">Setting</span>
+								<span class="ml-2">Settings</span>
 							</a>
 							<a href="{{route('superadmin.logout')}}" onclick="return confirm('Are you sure logout this site')" class="dropdown-item ai-icon">
 								<svg id="icon-logout" xmlns="http://www.w3.org/2000/svg" class="text-danger" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">

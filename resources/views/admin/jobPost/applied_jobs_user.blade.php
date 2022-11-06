@@ -3,7 +3,10 @@
 use App\Models\Scheduler;
 ?>
 @extends('partials.admin.app')
-@section('adminTitle','Show Screening Users')
+@section('adminTitle','Screening Users|Show All Screening Users')
+@section('titlePage')
+   <span class="titlePage">Screening Users|Show All Screening Users</span>
+@endsection
 @section('admin-content')
 
 @push('style')
@@ -68,7 +71,7 @@ use App\Models\Scheduler;
         border-radius: 50%;
     }
 
-    .selected {
+    .dateSelect {
         border: 1px solid black;
         border-radius: 20px;
         background-color: #450b5a !important;
@@ -91,7 +94,7 @@ use App\Models\Scheduler;
             <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Show Screening User's</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Show All Screening Users</a></li>
                 </ol>
             </div>
         </div>
@@ -136,15 +139,18 @@ use App\Models\Scheduler;
 
         @endif
         <!-- Notification End -->
+{{--<pre>
+    {{
+        print_r($appliedJobs->toArray())
+    }}
+</pre>--}}
         <!-- row -->
         <div class="row">
             <div class="col-12">
                 <div class="card">
-                    {{--<pre>
-                    {{print($appliedJobs)}}
-                    </pre>--}}
+
                     <div class="card-header">
-                        <h4 class="card-title">Show Screening User's</h4>
+                        <h4 class="card-title">Show All Screening Users</h4>
                         <a href="javascript:void(0)" onclick="history.back()" class="btn btn-primary  float-lg-right"><i class="fa fa-backward"></i> Back</a>
                     </div>
                     <div class="card-body">
@@ -157,9 +163,10 @@ use App\Models\Scheduler;
                                         <th>User Name(Talent)</th>
                                         <th>Mobile No</th>
                                         <th>Email</th>
-                                        <th>Screening Scheduled</th>
-                                        <th>Interview Scheduled</th>
-                                        <th>Selected</th>
+                                        <th>Change Status</th>
+                                        <th>Status</th>
+                                        <th>User Activity</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
 
@@ -169,72 +176,101 @@ use App\Models\Scheduler;
                                     @endphp
 
                                     @foreach ($appliedJobs as $job)
+
                                     <tr>
                                         <td>{{$i++}}</td>
                                         <td>{{$job->job_title}}</td>
                                         <td>{{$job->name}}</td>
                                         <td>{{$job->mobile_no}}</td>
                                         <td>{{$job->email}}</td>
+                                       
                                         <td>
                                             <?php $schedule = Scheduler::where('job_id', $job->jobId)->where('user_id', $job->user_id)->first();
                                             ?>
 
-                                            @if ($schedule != '')
-                                            @if ($schedule->user_sche_date == NULL && $schedule->actual_sche_date == NULL)
-                                            <div class="btn text-center">
-                                                <button type="button" class="btn btn-secondary">Email Send</button>
-                                            </div>
-                                            @elseif ($schedule->user_sche_date != NULL && $schedule->actual_sche_date == NULL)
-                                            <div class="btn text-center">
-                                                <button type="button" class="btn btn-warning btn-sm checkDate" data-id="{{$job->user_id}}" data-jobid="{{$job->jobId}}">Check User Availability</button>
-                                            </div>
-                                            @elseif ($schedule->user_sche_date == NULL && $schedule->actual_sche_date != NULL)
-                                            <div class="btn text-center">
-                                                <button type="button" class="btn btn-success">Screening Scheduled</button>
-                                            </div>
-                                            @endif
-                                            @else
-                                            <div class="btn text-center">
-                                                <button type="button" class="btn btn-primary screening_schedule" data-id="{{$job->user_id}}" data-jobid="{{$job->jobId}}">Schedule</button>
-                                            </div>
-                                            @endif
+                                            {{--@if ($schedule != '')
+                                        @if ($schedule->user_sche_date == NULL && $schedule->actual_sche_date == NULL)
+                                        <div class="btn text-center">
+                                            <button type="button" class="btn btn-secondary btn-sm">Email Send</button>
+                                        </div>
+                                        @elseif ($schedule->user_sche_date != NULL && $schedule->actual_sche_date == NULL)
+                                        <div class="btn text-center">
+                                                                <button type="button" class="btn btn-warning btn-sm checkDate" data-id="{{$job->user_id}}" data-jobid="{{$job->jobId}}">Check User Availability</button>
+                        </div>
+                        @elseif ($schedule->user_sche_date == NULL && $schedule->actual_sche_date != NULL)
+                        <div class="btn text-center">
+                            <button type="button" class="btn btn-success btn-sm">Screening Scheduled</button>
+                        </div>
+                        @endif
+                        @else
+                        <div class="btn text-center">
+                            <button type="button" class="btn btn-primary btn-sm screening_schedule" data-id="{{$job->user_id}}" data-jobid="{{$job->jobId}}">Schedule</button>
+                        </div>
+                        @endif --}}
 
-                                            <!-- <label class="switch">
+
+                        <div class="btn text-center">
+                            <button type="button" class="btn btn-primary btn-sm changeStatus" data-id="{{$job->user_id}}" data-jobid="{{$job->jobId}}" data-appliedjobid="{{$job->applied_job_id}}">Change Status</button>
+                        </div>
+
+                        <!-- <label class="switch">
                                                 <input type="checkbox" name="screening" class="screening" data-id="{{$job->applied_job_id}}" @php if($job->screening_schedule==1) echo "checked"; @endphp>
                                                 <span class="slider round"></span>
                                             </label> -->
-                                        </td>
-                                        <td>
-                                            <label class="switch">
-                                                <input type="checkbox" name="interview" disabled class="interview btn-sm" data-id="{{$job->applied_job_id}}" @php if($job->interview_schedule==1) echo "checked"; @endphp>
-                                                <span class="slider round"></span>
-                                            </label>
-                                        </td>
-                                        <td>
-                                            <label class="switch">
-                                                <input type="checkbox" name="selected" class="selected" data-id="{{$job->applied_job_id}}" @php if($job->selected==1) echo "checked"; @endphp>
-                                                <span class="slider round"></span>
-                                            </label>
-                                        </td>
-                                        {{-- <td>
-                                        <a href="{{url('client/edit_job')}}/{{$job->id}}" class="btn btn-warning btn-sm btn-outline-light" style="background-color: #df5301; color: #fff;"><i class="fa fa-pencil-square" aria-hidden="true"></i></a>
 
-                                        <a href="{{url('client/delete_job')}}/{{$job->id}}" onclick="return confirm('Are you sure delete this job')" class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                        </td>
 
-                                        </td>--}}
-                                    </tr>
-                                    @endforeach
+                        <td><span class="badge badge-info">{{ucfirst($job->adminChangeStatus)}}</span></td>
+                        <td>
+                            <?php
+                            $checkAvailability = Scheduler::where('job_id', $job->jobId)->where('user_id', $job->user_id)->select('user_sche_date', 'actual_sche_date')->first();
+                            ?>
+                            @if ($checkAvailability != null)
+                            @if ($checkAvailability->user_sche_date != "" && $checkAvailability->user_sche_date != null)
+                            <div class="btn text-center">
+                                <button type="button" class="btn btn-warning btn-sm checkDate w-100" data-id="{{$job->user_id}}" data-jobid="{{$job->jobId}}">Check User Availability</button>
+                            </div>
+                            @elseif ($checkAvailability != null || $checkAvailability->actual_sche_date != "" && $checkAvailability->actual_sche_date != null)
+                            <div class="btn text-center">
+                                <button type="button" class="btn btn-secondary btn-sm checkDate w-100" data-id="{{$job->user_id}}" data-jobid="{{$job->jobId}}" disabled>Check User Availability</button>
+                            </div>
+                            
+                            @endif
+                            @else
+                            No Activity                
 
-                                </tbody>
-                            </table>
-                        </div>
+                            @endif
+                            <!-- Check Availiblity -->
+                        </td>
+
+                        {{-- <td>
+                            <label class="switch">
+                                <input type="checkbox" name="interview" disabled class="interview btn-sm" data-id="{{$job->applied_job_id}}" @php if($job->interview_schedule==1) echo "checked"; @endphp>
+                        <span class="slider round"></span>
+                        </label>
+                        </td>
+                        <td>
+                            <label class="switch">
+                                <input type="checkbox" name="selected" class="selected" data-id="{{$job->applied_job_id}}" @php if($job->selected==1) echo "checked"; @endphp>
+                                <span class="slider round"></span>
+                            </label>
+                        </td> --}}
+                       
+                        <td>
+                        <a href="{{url('admin/delete-screeningss-job')}}/{{$job->applied_job_id}}" onclick="return confirm('Are you sure delete this Data')" class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                        </td>
+                        </tr>
+                        @endforeach
+                        </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
-
         </div>
 
     </div>
+
+</div>
 </div>
 
 <!-- Screening Model -->
@@ -243,7 +279,7 @@ use App\Models\Scheduler;
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="screeningModelLabel">Screening Scheduling</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close interviewModelClose" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -252,6 +288,7 @@ use App\Models\Scheduler;
                 <div class="modal-body">
                     <input type="hidden" name="user_id" id="user_id">
                     <input type="hidden" name="job_id" id="job_id">
+                    <input type="hidden" name="applied_job_id" id="applied_job_id">
                     <div class="form-group">
                         <label for="date-time" class="col-form-label">Title :</label>
                         <input type="text" name="title" class="form-control" id="title">
@@ -264,7 +301,7 @@ use App\Models\Scheduler;
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary interviewModelClose" data-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary">Send Mail</button>
                 </div>
             </form>
@@ -292,8 +329,6 @@ use App\Models\Scheduler;
                     <ul id="dates">
 
                     </ul>
-
-
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -304,6 +339,44 @@ use App\Models\Scheduler;
     </div>
 </div>
 <!-- CheckDate Model End-->
+
+<!-- Change Status Model -->
+<div class="modal fade" id="statusChange" tabindex="-1" role="dialog" aria-labelledby="statusChangeModelLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="statusChangeModelLabel">Change Status</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="javascript:void(0)" id="changeStatusForm">
+                @csrf
+                <div class="modal-body">
+                    <input type="hidden" name="user_id2" id="user_id2">
+                    <input type="hidden" name="job_id2" id="job_id2">
+                    <input type="hidden" name="applied_job_id2" id="applied_job_id2">
+
+                    <div class="form-group">
+                        <label class="col-form-label">Change Status :</label>
+                        <select name="changeStatusvalue" id="changeStatusDb" class="form-control changeStatasselect">
+                            <option value="">Select</option>
+                            <option value="processing">Processing</option>
+                            <option value="interview_schedule">Interview Schedule</option>
+                            <option value="selected">Selected</option>
+                            <option value="rejected">Rejected</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" id="updateStatus">Update Status</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Change Status Model End-->
 
 
 
@@ -426,24 +499,98 @@ use App\Models\Scheduler;
     // });
 
 
-    $(document).ready(function() {
-
-        $(function() {
-            $(".screening_schedule").click(function() {
-                let user_id = $(this).data('id');
-                let job_id = $(this).data('jobid');
-                let model = $("#screeningModel");
-                model.modal("show");
-                model.find('#user_id').val(user_id)
-                model.find('#job_id').val(job_id)
-
-            });
+    $(document).on('click', '.changeStatus', function() {
+        let user_id = $(this).data('id');
+        let job_id = $(this).data('jobid');
+        let appliedJobId = $(this).data('appliedjobid');
+        // console.log(appliedJobId)
+        let model = $("#statusChange");
+        model.modal("show");
+        model.find('#user_id2').val(user_id);
+        model.find('#applied_job_id2').val(appliedJobId);
+        model.find('#job_id2').val(job_id);
+        let data;
+        $(document).on('change', '#changeStatusDb', function() {
+            let selectBox = $(this);
+            data = $(this).val();
+            if (data === 'interview_schedule') {
+                interviewShedule(user_id, job_id, appliedJobId)
+                model.modal("hide");
+                $('#changeStatusForm')[0].reset();
+                selectBox.val("").change();
+            }
+            // interviewModelClose
+            // rejected
+            // selected
+            // interview_schedule
+            // processing
         });
+
+        $(document).on('click', '#updateStatus', function() {
+            $.ajax({
+                type: "POST",
+                url: "{{route('admin.adminChangeStatus')}}",
+                data: {
+                    'status': data,
+                    'applied_job_id': appliedJobId,
+                    'user_id': user_id,
+                    'job_id': job_id
+                },
+                success: function(result) {
+                    // console.log(result)
+                    if (result.status === 'success') {
+                        model.modal("hide");
+                        Swal.fire({
+                            // position: 'top-end',
+                            icon: 'success',
+                            title: 'Status Updated.',
+                            showConfirmButton: true,
+                            // timer: 3000
+                        })
+                        // alert('Status Updated.')
+                        setTimeout(function() {
+                            location.reload();
+                        }, 1500)
+                    }
+                }
+            });
+        })
+
+        // $(document).on('click', '.interviewModelClose', function() {
+        //     model.modal("show");
+        // });
     });
+
+    function interviewShedule(userid, jobId, appliedJobid) {
+        let user_id = userid;
+        let job_id = jobId;
+        let appliedjobIdUser = appliedJobid;
+        let model = $("#screeningModel");
+        model.modal("show");
+        model.find('#user_id').val(user_id)
+        model.find('#applied_job_id').val(appliedjobIdUser)
+        model.find('#job_id').val(job_id)
+
+    }
+
+    // function interviewShedule() {
+    //     $(".screening_schedule").click(function() {
+    //         let user_id = $(this).data('id');
+    //         let job_id = $(this).data('jobid');
+    //         let model = $("#screeningModel");
+    //         model.modal("show");
+    //         model.find('#user_id').val(user_id)
+    //         model.find('#job_id').val(job_id)
+
+    //     });
+    // }
+
 
     $(document).on('click', '.date', function() {
         $('.date').removeClass('selected')
         $(this).addClass('selected');
+        $('.date').removeClass('dateSelect')
+        $(this).addClass('dateSelect');
     })
 
     $(document).ready(function() {
@@ -467,7 +614,7 @@ use App\Models\Scheduler;
                         html += `<li>
                                 <div class="form-group">
                                     <label for="date-time" class="col-form-label">Select Date :</label>
-                                    <a href="javascript:void(0)" class="date form-control" data-date="${datas[i]}">${start_date}</a>
+                                    <a href="javascript:void(0)" class="date form-control" data-date="${datas[i]}">${datas[i]}</a>
                                 </div>
                             </li>`
                     })
@@ -499,13 +646,14 @@ use App\Models\Scheduler;
                     "date": interviewDate
                 },
                 beforeSend: function() {
-                    btn.css('background-color','red')
-                    btn.attr('disabled',true)
-                   btn.html('Sending...')
+                    btn.css('background-color', 'red')
+                    btn.attr('disabled', true)
+                    btn.html('Sending...')
                 },
                 success: function(response) {
                     if (response.status == 'success') {
-                        alert("Screening Scheduled.");
+                        // alert("Screening Scheduled.");
+                        alert("Interview Scheduled.");
                         setTimeout(function() {
                             location.reload();
                         }, 500)

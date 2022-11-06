@@ -21,6 +21,15 @@ class ProfileController extends Controller
 
     public function updateProfiles(Request $request)
     {
+        $validatedData = $request->validate(
+            [
+                'image' => 'image|mimes:jpg,jpeg,png,gif|max:2048',
+            ],
+            [
+                'image' => 'Please Choose Only jpg,jpeg,png,gif file.',
+            ]
+        );
+
         $updateProfiles = SuperAdmin::find($request->id);
         $updateProfiles->name = $request->name;
         $updateProfiles->email = $request->email;
@@ -35,29 +44,37 @@ class ProfileController extends Controller
 
         if ($request->file('image')) {
             // Old Image Delete Code Start
-            // if ($updateProfiles->image != NULL) {
-            //     unlink('image/' . $updateProfiles->image);
-            // }
+            if ($updateProfiles->image != NULL) {
+                if (file_exists('image/' . $updateProfiles->image)) {
+                    unlink('image/' . $updateProfiles->image);
+                }
+            }
             // Old Image Delete Code End
             $image = $request->file('image');
-            $destinationPath = 'image';
+            $destinationPath = 'img';
             $uploadImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
-            $image->move($destinationPath, $uploadImage);
+            // $image->move($destinationPath, $uploadImage);
+            $image->move(public_path($destinationPath), $uploadImage);
             $updateProfiles->image =  $uploadImage;
         }
         $updateProfiles->update();
 
-        return redirect()->back()->with('success', 'Profile Update Successfully Changed......!');
+        return redirect()->back()->with('success', 'Profile Updated Successfully......!');
     }
 
     // =============  Admin Change Passwords Function ==================
     public function adminChangePassword(Request $request)
     {
-        $request->validate([
-            'current_password' => ['required', new AdminOldPassword],
-            'new_password' => ['required'],
-            'new_confirm_password' => ['same:new_password'],
-        ]);
+        $request->validate(
+            [
+                'current_password' => ['required', new AdminOldPassword],
+                'new_password' => ['required'],
+                'new_confirm_password' => ['same:new_password'],
+            ],
+            [
+                'new_confirm_password' => 'Password does not match',
+            ]
+        );
 
         SuperAdmin::where('email', session()->get('user_name'))->update(['password' => Hash::make($request->new_password)]);
 
@@ -78,7 +95,20 @@ class ProfileController extends Controller
 
     public function logoUpdate(Request $request)
     {
-        $logoUpdate = Setting::find($request->id);
+        $validatedData = $request->validate(
+            [
+                'logo' => 'image|mimes:jpg,jpeg,png,gif|max:2048',
+            ],
+            [
+                'logo' => 'Please Choose Only jpg,jpeg,png,gif file.',
+            ]
+        );
+
+        if ($request->id) {
+            $logoUpdate = Setting::find($request->id);
+        } else {
+            $logoUpdate = new Setting();
+        }
 
         if ($request->file('logo')) {
             $logo = $request->file('logo');
@@ -88,14 +118,27 @@ class ProfileController extends Controller
             $logoUpdate->logo =  $uploadlogo;
         }
 
-        $logoUpdate->update();
+        $logoUpdate->save();
 
         return redirect()->back()->with('success', 'Logo Update Successfully Changed......!');
     }
 
     public function faviconUpdate(Request $request)
     {
-        $faviconUpdate = Setting::find($request->id);
+        $validatedData = $request->validate(
+            [
+                'favicon' => 'image|mimes:jpg,jpeg,png,gif|max:2048',
+            ],
+            [
+                'favicon' => 'Please Choose Only jpg,jpeg,png,gif file.',
+            ]
+        );
+
+        if ($request->id) {
+            $faviconUpdate = Setting::find($request->id);
+        } else {
+            $faviconUpdate = new Setting();
+        }
 
         if ($request->file('favicon')) {
             $favicon = $request->file('favicon');
@@ -104,7 +147,7 @@ class ProfileController extends Controller
             $favicon->move($destinationPath, $uploadfavicon);
             $faviconUpdate->favicon =  $uploadfavicon;
         }
-        $faviconUpdate->update();
+        $faviconUpdate->save();
         return redirect()->back()->with('success', 'Favicon Update Successfully Changed......!');
     }
 }

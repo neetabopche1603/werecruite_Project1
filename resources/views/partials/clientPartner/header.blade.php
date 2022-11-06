@@ -1,10 +1,14 @@
 <?php
 
 use App\Models\Notification;
+$date = \Carbon\Carbon::today()->subDays(7);
+// $notification = Notification::where('is_seen', 0)->where('type', 'Client')->where('user_id', auth()->user()->id)->orderBy('id', 'desc')->get();
 
-$notification = Notification::where('is_seen', 0)->where('type', 'Client')->where('user_id', auth()->user()->id)->orderBy('id', 'desc')->get();
+$notification = Notification::where('type', 'Client')->where('user_id', auth()->user()->id)->where('created_at','>=',$date)->orderBy('id', 'desc')->get();
+$notificationNotSeen = Notification::where('is_seen',0)->where('type', 'Client')->where('user_id', auth()->user()->id)->where('created_at','>=',$date)->orderBy('id', 'desc')->get();
 
 ?>
+
 <!--**********************************
             Nav header start
         ***********************************-->
@@ -31,7 +35,9 @@ $notification = Notification::where('is_seen', 0)->where('type', 'Client')->wher
 			<div class="collapse navbar-collapse justify-content-between">
 				<div class="header-left">
 					<div class="dashboard_bar">
-						Dashboard
+					<div class="dashboard_bar">
+						@yield('clientBreadcrumbTitle')
+					</div>
 					</div>
 				</div>
 
@@ -54,7 +60,7 @@ $notification = Notification::where('is_seen', 0)->where('type', 'Client')->wher
 					<li class="nav-item dropdown notification_dropdown">
 						<a class="nav-link  ai-icon" href="#" role="button" data-toggle="dropdown">
 							<i class="flaticon-381-ring"></i>
-							@if($notification->count() != 0)
+							 @if($notificationNotSeen->count() != 0)
 								<div class="pulse-css"></div>
  							@endif
 						</a>
@@ -76,10 +82,12 @@ $notification = Notification::where('is_seen', 0)->where('type', 'Client')->wher
 													</a>
 												<?php
 												} else {
-													echo "<h6 class='mb-1 text-success'> $row->title </h6>";
+													echo "<h6 class='mb-1 text-primary'> $row->title </h6>";
 												}
 												?>
-												<small class="d-block">{{ $row->created_at->diffForHumans() }}</small>
+												<!-- <small class="d-block">{{ $row->created_at->diffForHumans() }}</small> -->
+												<small class="d-block">{{ \Carbon\Carbon::parse($row->created_at)->format('D d M, h:i A')}} <span class="text-primary">({{ $row->created_at->diffForHumans() }})</span></small>
+
 											</div>
 										</div>
 									</li>

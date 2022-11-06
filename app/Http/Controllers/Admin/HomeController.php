@@ -65,6 +65,9 @@ class HomeController extends Controller
     // Job Role Update Form Function
     public function jobRoleUpdate(Request $request)
     {
+        $validatedData = $request->validate([
+            'job_role' => 'required',
+        ]);
 
         $jobRole = JobRole::find($request->id);
         $jobRole->job_role = $request->job_role;
@@ -74,7 +77,9 @@ class HomeController extends Controller
     // Job Role Delete Form Function
     public function jobRoleDelete($id)
     {
-        $jobRoleDelete = JobRole::find($id)->delete();
+        JobRole::find($id)->delete();
+        Job::where('job_role', $id)->delete();
+
         return redirect()->route('admin.jobRole')->with('delete', 'Job Role Deleted Successfully.!');
     }
     // ======================Admin Job Role End=============================
@@ -89,7 +94,8 @@ class HomeController extends Controller
 
     public function skillAddForm()
     {
-        return view('admin.skill.add');
+        $super_admin = SuperAdmin::get();
+        return view('admin.skill.add', compact('super_admin'));
     }
 
     public function skillStore(Request $request)
@@ -107,11 +113,16 @@ class HomeController extends Controller
     public function skillEditForm($id)
     {
         $skillEditForm = Skill::find($id);
-        return view('admin.skill.edit', compact('skillEditForm'));
+        $super_admin = SuperAdmin::get();
+        return view('admin.skill.edit', compact('skillEditForm', 'super_admin'));
     }
 
     public function skillUpdate(Request $request)
     {
+        $validatedData = $request->validate([
+            'skill' => 'required',
+        ]);
+
         $skillStore =  Skill::find($request->id);
         $skillStore->skill = $request->skill;
         $skillStore->save();
@@ -120,7 +131,20 @@ class HomeController extends Controller
 
     public function skillDelete($id)
     {
-        $skillDelete = Skill::find($id)->delete();
+        Skill::find($id)->delete();
+        $jobs = Job::get();
+        $jobIds = [];
+        foreach ($jobs as $job) {
+            $skills = json_decode($job->skill);
+            foreach ($skills as $skill) {
+                if ($skill == $id) {
+                    $jobid = $job->id;
+                    array_push($jobIds, $jobid);
+                }
+            }
+        }
+
+        Job::whereIn('id', $jobIds)->delete();
         return redirect()->route('admin.skill')->with('delete', 'Skill Deleted Successfully.!');
     }
 
@@ -136,9 +160,11 @@ class HomeController extends Controller
         foreach ($jobs as $val) {
             $arr = array();
             $final = array();
-            foreach (json_decode($val->skill) as $row) {
-                $data = Skill::where('id', $row)->select('skill')->first();
-                array_push($arr, $data);
+            if (is_array(json_decode($val->skill))) {
+                foreach (json_decode($val->skill) as $row) {
+                    $data = Skill::where('id', $row)->select('skill')->first();
+                    array_push($arr, $data);
+                }
             }
             foreach ($arr as $res) {
                 if (!is_null($res)) {
@@ -204,6 +230,13 @@ class HomeController extends Controller
 
     public function jobPostUpdate(Request $request)
     {
+        $validatedData = $request->validate([
+            'company_id' => 'required',
+            'job_title' => 'required',
+            'skill' => 'required',
+            'job_role' => 'required',
+            'description' => 'required',
+        ]);
 
         $jobUpdate = Job::find($request->id);
         $jobUpdate->user_id = $request->company_id;
@@ -214,13 +247,14 @@ class HomeController extends Controller
 
         $jobUpdate->update();
 
-        return redirect()->route('admin.jobPosts')->with('success', 'Job Post Updated Successfully.....!');
+        return redirect()->route('admin.jobPosts')->with('success', 'Post Job Updated Successfully.....!');
     }
 
     public function jobPostDelete($id)
     {
         $jobPostDelete = Job::find($id)->delete();
-        return redirect()->route('admin.jobPosts')->with('delete', 'Job Post Updated Successfully.....!');
+        AppliedJob::where('job_id',$id)->delete();
+        return redirect()->route('admin.jobPosts')->with('delete', 'Post Job Delete Successfully.....!');
     }
     // ======================Admin Post Job End=============================
 
@@ -235,7 +269,7 @@ class HomeController extends Controller
     // ======================Admin Screening User Show Function=============================
     public function screeningJobUsers($jobid)
     {
-        $appliedJobs = AppliedJob::join('users', 'users.id', '=', 'applied_jobs.user_id')->join('jobs', 'jobs.id', '=', 'applied_jobs.job_id')->where('applied_jobs.job_id', $jobid)->where('applied_jobs.status', 1)->select('applied_jobs.id as applied_job_id', 'applied_jobs.screening_schedule', 'applied_jobs.interview_schedule', 'applied_jobs.selected', 'users.id as user_id', 'users.name', 'users.email', 'users.mobile_no', 'jobs.job_title', 'jobs.id as jobId')->get();
+        $appliedJobs = AppliedJob::join('users', 'users.id', '=', 'applied_jobs.user_id')->join('jobs', 'jobs.id', '=', 'applied_jobs.job_id')->where('applied_jobs.job_id', $jobid)->where('applied_jobs.status', 1)->select('applied_jobs.id as applied_job_id', 'applied_jobs.screening_schedule', 'applied_jobs.interview_schedule', 'applied_jobs.selected', 'applied_jobs.adminChangeStatus', 'users.id as user_id', 'users.name', 'users.email', 'users.mobile_no', 'jobs.job_title', 'jobs.id as jobId')->get();
         $super_admin = SuperAdmin::get();
         return view('admin.jobPost.applied_jobs_user', compact('appliedJobs', 'super_admin'));
     }
@@ -330,6 +364,49 @@ class HomeController extends Controller
         }
     }
 
+    public function adminChangeStatus(Request $request)
+    {
+        if ($request->status != null || $request->status != '') {
+            // echo "<pre>";
+            // print_r($request->all());
+            // die();
+            $appliedJob = AppliedJob::find($request->applied_job_id);
+            $appliedJob->adminChangeStatus = $request->status;
+            $appliedJob->update();
+
+            $job = Job::find($request->job_id);
+            $user = User::find($request->user_id);
+            $status = ucfirst($appliedJob->adminChangeStatus);
+            $datas = [
+                [
+                    'title' => $job->job_title . ' ' . $status,
+                    'user_id' => $appliedJob->user_id,
+                    'job_id' => $appliedJob->job_id,
+                    'type' => "User",
+                    'created_at' => date('Y-m-d H:i:s'),
+                    'updated_at' => date('Y-m-d H:i:s'),
+                ],
+                [
+                    'title' => $job->job_title . ' <b>' . $user->name . "</b> " . $status,
+                    'user_id' => $job->user_id,
+                    'job_id' => $appliedJob->job_id,
+                    'type' => "Client",
+                    'created_at' => date('Y-m-d H:i:s'),
+                    'updated_at' => date('Y-m-d H:i:s'),
+                ]
+
+            ];
+
+            foreach ($datas as $data) {
+                DB::table('notifications')->insert($data);
+            }
+            return response()->json(['status' => 'success']);
+        } else {
+            return response()->json(['status' => 'scheduleModel']);
+        }
+    }
+
+
     public function jobStatusSelected(Request $request)
     {
         //  echo "<pre>";
@@ -386,6 +463,18 @@ class HomeController extends Controller
     // GOOGLE 
     public function scheduleInterview(Request $request)
     {
+        // echo "<pre>";
+        // print_r($request->all());
+        // die();
+        //         Array
+        // (
+        //     [_token] => npMh4gahHqHgmpDPvuv1GQfhGXFzpPgUqNXQqG9U
+        //     [user_id] => 3
+        //     [job_id] => 5
+        //     [applied_job_id] => 1
+        //     [title] => dfs
+        //     [date] => 22 October 2022 12:22 AM
+        // )
         $schedule = new Scheduler();
         $schedule->title = $request->title;
         $schedule->user_id = $request->user_id;
@@ -406,8 +495,8 @@ class HomeController extends Controller
         $data = [
             'name' => $user->name,
             'email' => $user->email,
-            'title'=>$request->title,
-            'date' => Carbon::parse($request->date)->format('d/m/Y'), 
+            'title' => $request->title,
+            'date' => Carbon::parse($request->date)->format('d/m/Y'),
             'time' => Carbon::parse($request->date)->format('g:i A'),
             'user_id' => $request->user_id,
             'schedule_id' => $schedule->id
@@ -418,9 +507,12 @@ class HomeController extends Controller
         // die();
         // $data = User::where('id', $request->user_id)->get()->toArray();
         Mail::send('mail', $data, function ($message) use ($user, $request) {
-            $message->to($user->email, $request->title)->subject($user->name.' Your Interview Schedule by Werecuite');
+            $message->to($user->email, $request->title)->subject($user->name . ' Your Interview Schedule by Werecuite');
             $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
         });
+        $appliedJob = AppliedJob::find($request->applied_job_id);
+        $appliedJob->adminChangeStatus = 'interview scheduled';
+        $appliedJob->update();
 
         // return redirect()->route('admin.screeningJobUsers', $request->id)->with('success', 'Interview Scheduled Successfully.....!');
         return redirect()->back()->with('success', 'Interview Scheduled Successfully And Send Mail User.....!');
@@ -515,16 +607,15 @@ class HomeController extends Controller
             'date' => Carbon::parse($date)->format('d/m/Y'),
             'time' => Carbon::parse($time)->format('g:i A'),
             'user_id' => $user_email->id,
-            'title'=>$schedule->title,
+            'title' => $schedule->title,
             'schedule_id' => $schedule->id
         ];
         Mail::send('confim-interview-mail', $data, function ($message) use ($user_email) {
-            $message->to($user_email->email)->subject($user_email->name.' Your Interview Confirmed by Werecuite');
+            $message->to($user_email->email)->subject($user_email->name . ' Your Interview Confirmed by Werecuite');
             $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
         });
 
         return redirect()->route('login')->with('success', 'Interview Scheduled Successfully...! Please Login Your Account.');
-
     }
 
     // Check User Availability Date
@@ -582,26 +673,33 @@ class HomeController extends Controller
             'date' => Carbon::parse($request->date)->format('d/m/Y'),
             'time' => Carbon::parse($request->date)->format('g:i A'),
             'user_id' => $user_email->id,
-            'title'=>$schedule->title,
+            'title' => $schedule->title,
             'schedule_id' => $schedule->id
         ];
         Mail::send('confim-interview-mail', $data, function ($message) use ($user_email) {
-            $message->to($user_email->email)->subject($user_email->name.' Your Interview Confirmed by Werecuite');
+            $message->to($user_email->email)->subject($user_email->name . ' Your Interview Confirmed by Werecuite');
             $message->from(env('MAIL_FROM_ADDRESS'), env('MAIL_FROM_NAME'));
         });
         return response()->json(['status' => 'success']);
     }
 
     //==================Applied Job User Function===========
-    public function appliedJobs(){
-        $appliedJobs = Job::where('user_id',0)->get();
-        return view('admin.jobAppliedUser.applied_jobs',compact('appliedJobs'));
+    public function appliedJobs()
+    {
+        $appliedJobs = Job::where('user_id', 0)->get();
+        // Admin All Job Screening Query
+        // $appliedJobs = Job::get();
+
+        $super_admin = SuperAdmin::get();
+
+        return view('admin.jobAppliedUser.applied_jobs', compact('appliedJobs', 'super_admin'));
     }
 
     public function appliedJobUsers($jobid)
     {
         $appliedJobs = AppliedJob::join('users', 'users.id', '=', 'applied_jobs.user_id')->join('jobs', 'jobs.id', '=', 'applied_jobs.job_id')->where('applied_jobs.job_id', $jobid)->select('applied_jobs.id as applied_job_id', 'applied_jobs.status', 'users.id as user_id', 'users.name', 'users.email', 'users.mobile_no', 'jobs.job_title')->get();
-        return view('admin.jobAppliedUser.applied_jobs_user', compact('appliedJobs'));
+        $super_admin = SuperAdmin::get();
+        return view('admin.jobAppliedUser.applied_jobs_user', compact('appliedJobs', 'super_admin'));
     }
 
     public function jobStatus(Request $request)
@@ -613,6 +711,7 @@ class HomeController extends Controller
         $appliedJob = AppliedJob::find($request->applied_job_id);
         if ($request->checked == 1) {
             $appliedJob->status = 1;
+            $appliedJob->adminChangeStatus = "screening by admin";
             $appliedJob->update();
 
             $job = Job::find($appliedJob->job_id);
@@ -646,5 +745,44 @@ class HomeController extends Controller
             $appliedJob->update();
             return response()->json('applied');
         }
+    }
+
+    public function userListShow()
+    {
+        $userList = User::where('role', 0)->get();
+        $super_admin = SuperAdmin::get();
+        return view('admin.userlist', compact('userList', 'super_admin'));
+    }
+
+    public function userListDelete($id)
+    {
+        $userDeleted = User::find($id)->delete();
+        return redirect()->route('admin.userListShow')->with('delete', 'User Deleted Successfully.!');
+    }
+
+    public function appliedJobDelete($appliedJobId)
+    {
+        AppliedJob::find($appliedJobId)->delete();
+        return redirect()->back()->with('delete', 'Applied Job Deleted Successfully.!');
+    }
+
+    public function screeningUserDelete($appliedJobId)
+    {
+        AppliedJob::find($appliedJobId)->delete();
+        return redirect()->back()->with('delete', 'Screening Job Deleted Successfully.!');
+    }
+
+    public function companyListShow()
+    {
+        $companyList = User::where('role', 1)->get();
+        $super_admin = SuperAdmin::get();
+        return view('admin.companylist', compact('companyList', 'super_admin'));
+    }
+
+    public function companyListDelete($id)
+    {
+        $userDeleted = User::find($id)->delete();
+        Job::where('user_id', $id)->delete();
+        return redirect()->route('admin.companylist')->with('delete', 'Company Deleted Successfully.!');
     }
 }

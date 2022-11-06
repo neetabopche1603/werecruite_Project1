@@ -1,8 +1,25 @@
 @extends('partials.talentPartner.app')
-@section('talentPartnerTitle','Jobs Description')
+@section('talentPartnerTitle','View Jobs |Job Description')
+@section('userBreadcrumbTitle')
+<span class="titlePage">View Jobs|Job Description</span>
+@endsection
 @section('talentPartner-content')
 
 <div class="content-body">
+	<!-- Notification Start -->
+	@if(Session::get('success'))
+	<div class="alert alert-success solid alert-rounded alert-dismissible fade show" role="alert">
+		<svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="mr-2">
+			<polyline points="9 11 12 14 22 4"></polyline>
+			<path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path>
+		</svg>
+		<strong>{{session::get('success')}}</strong>
+		<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+	@endif
+	<!-- Notification End -->
 	<!-- row -->
 	<div class="container-fluid">
 
@@ -70,14 +87,14 @@
 											</div> -->
 									<div class="media-body">
 										<h3 class="mb-2">{{$jobs->job_title}}</h3>
-										<p>Company Name : <span class="text-success">
+										<!-- <p>Company Name : <span class="text-success">
 												@if ($jobs->user_id!=0)
 												{{$jobs->company_name}}
 												@else
 												Werecuite
 												@endif
 												
-												{{-- {{($jobs->user_id!=0)?$jobs->company_name:"Werecuite" }} --}}</span></p>
+												{{-- {{($jobs->user_id!=0)?$jobs->company_name:"Werecuite" }} --}}</span></p> -->
 										@php
 										$skills = implode(",",$jobs->skills);
 										@endphp

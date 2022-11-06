@@ -4,7 +4,13 @@
 
 	$ids = [0, auth()->user()->id];
 	//   $notification = Notification::where('type','User')->whereIn('user_id',$ids)->orderBy('id','desc')->get();
-	$notification = Notification::where('is_seen', 0)->where('type', 'User')->whereIn('user_id', $ids)->orderBy('id', 'desc')->get();
+	// $notification = Notification::where('is_seen', 0)->where('type', 'User')->whereIn('user_id', $ids)->orderBy('id', 'desc')->get();
+
+
+	$date = \Carbon\Carbon::today()->subDays(7);
+	//   $notification = Notification::where('type','User')->whereIn('user_id',$ids)->orderBy('id','desc')->get();
+	$notification = Notification::where('type', 'User')->whereIn('user_id', $ids)->where('created_at', '>=', $date)->orderBy('id', 'desc')->get();
+	$notificationNotSeen = Notification::where('is_seen', 0)->where('type', 'User')->whereIn('user_id', $ids)->where('created_at', '>=', $date)->orderBy('id', 'desc')->get();
 
 	?>
  <!--**********************************
@@ -13,7 +19,7 @@
  <div class="nav-header">
  	<a href="{{route('talentPartner.home')}}" class="brand-logo">
  		<img class="logo-abbr" style="max-width: 120px;" src="{{ asset('settings/'.$setting[0]['logo'] )}}" alt="">
-<!-- 
+ 		<!-- 
  		<img class="logo-compact" src="{{asset('admin/images/logo-text.png')}}" alt="">
  		<img class="brand-title" src="{{asset('admin/images/logo-text.png')}}" alt=""> -->
  	</a>
@@ -33,9 +39,9 @@
  		<nav class="navbar navbar-expand">
  			<div class="collapse navbar-collapse justify-content-between">
  				<div class="header-left">
- 					<div class="dashboard_bar">
- 						Dashboard
- 					</div>
+				 <div class="dashboard_bar">
+						@yield('userBreadcrumbTitle')
+					</div>
  				</div>
 
  				<ul class="navbar-nav header-right">
@@ -58,10 +64,10 @@
 
  						<a class="nav-link  ai-icon" href="#" role="button" data-toggle="dropdown">
  							<i class="flaticon-381-ring"></i>
-							@if($notification->count() != 0)
+ 							@if($notificationNotSeen->count() != 0)
 								<div class="pulse-css"></div>
  							@endif
-							
+
  						</a>
  						<div class="dropdown-menu dropdown-menu-right">
  							<div id="DZ_W_Notification1" class="widget-media dz-scroll p-3" style="height:380px;">
@@ -77,11 +83,13 @@
 													if ($row->is_seen == 0) {
 													?>
  													<a href="javascript:void(0)" data-url="{{route('talent.job_desc',['id'=>$row->job_id])}}" class="jobStatus" data-id="{{$row->id}}">
- 														<h6 class="mb-1 text-warning"> {{$row->title}} </h6>
+ 														<b class="mb-1 text-warning"> {!! $row->title !!} </b>
  													</a>
  												<?php
 													} else {
-														echo "<h6 class='mb-1 text-success'> $row->title </h6>";
+														?>
+														<a href="{{route('talent.job_desc',['id'=>$row->job_id])}}" class="mb-1 text-secondary"> {!!$row->title!!} </a>
+														<?php
 													}
 													?>
 
@@ -89,10 +97,10 @@
  											</div>
  										</div>
  									</li>
-									 @empty
-									<li>
-										<h5 class="text-center mt-5 text-primary">No Notifications</h5>
-									</li>
+ 									@empty
+ 									<li>
+ 										<h5 class="text-center mt-5 text-primary">No Notifications</h5>
+ 									</li>
  									@endforelse
 
 
@@ -151,18 +159,20 @@
  	});
  	$(document).on('click', '.jobStatus', function() {
  		let notification_id = $(this).data('id');
-		let getJoburl = $(this).data('url');
-		
-		$.ajax({
-			type: "post",
-			url: "{{route('talent.notificationSeen')}}",
-			data: {"id":notification_id},
-			success: function (result) {
-				if(result.status == 'success'){
-					location.href = getJoburl
-				}
-			}
-		});
+ 		let getJoburl = $(this).data('url');
+
+ 		$.ajax({
+ 			type: "post",
+ 			url: "{{route('talent.notificationSeen')}}",
+ 			data: {
+ 				"id": notification_id
+ 			},
+ 			success: function(result) {
+ 				if (result.status == 'success') {
+ 					location.href = getJoburl
+ 				}
+ 			}
+ 		});
  	})
  </script>
  @endpush

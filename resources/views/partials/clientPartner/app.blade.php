@@ -26,7 +26,11 @@ $setting = Setting::get();
     <!-- Datatable -->
     <link href="{{asset('admin/vendor/datatables/css/jquery.dataTables.min.css')}}" rel="stylesheet">
 
-
+<style>
+    .titlePage{
+            font-size: 25px;
+        }
+</style>
 
 </head>
 

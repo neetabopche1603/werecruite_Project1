@@ -17,21 +17,26 @@
 						</ul> -->
 
               </li>
-          
-              <li><a href="{{route('talent.jobsView')}}" class="ai-icon" aria-expanded="false">
+
+              <li class="{{ (request()->is('user/jobsView'))||(request()->is('user/job_desc*')) ? 'mm-active active-no-child' : '' }}">
+                  <a href="{{route('talent.jobsView')}}" class="ai-icon {{ (request()->is('user/jobsView'))||(request()->is('user/job_desc*')) ? 'mm-active' : '' }}" aria-expanded="false">
                       <i class="flaticon-381-settings-2"></i>
                       <span class="nav-text">View jobs</span>
                   </a>
               </li>
-              <li>
-                <a href="{{route('talent.viewAppliedJob')}}" class="ai-icon" aria-expanded="false">
-                <i class="flaticon-381-layer-1"></i>
-                      <span class="nav-text text-center">View Applied Job's</span>
+
+              <li class="{{ (request()->is('user/view-applied-job')) ? 'mm-active active-no-child' : '' }}">
+                  <a href="{{route('talent.viewAppliedJob')}}" class="ai-icon {{ (request()->is('user/view-applied-job')) ? 'mm-active' : '' }}" aria-expanded="false">
+                      <i class="flaticon-381-layer-1"></i>
+                      <span class="nav-text text-center">View Applied Jobs</span>
                   </a>
               </li>
 
-              <li><a href="{{route('talent.scheduleCalendar')}}" class="ai-icon" aria-expanded="false">
-              <i class="flaticon-381-television"></i>
+              <li class="{{ (request()->is('user/full-calender')) ? 'mm-active active-no-child' : '' }}">
+              <!-- <a href="{{route('talent.scheduleCalendar')}}" class="ai-icon" aria-expanded="false"> -->
+
+              <a href="{{route('talent.scheduleCalendar')}}" class="ai-icon {{ (request()->is('user/full-calender')) ? 'mm-active' : '' }}" aria-expanded="false">
+                      <i class="flaticon-381-television"></i>
                       <span class="nav-text text-center">Scheduled Interview</span>
                   </a>
               </li>

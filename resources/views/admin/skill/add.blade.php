@@ -1,12 +1,15 @@
 @extends('partials.admin.app')
-@section('adminTitle','Add Skill')
+@section('adminTitle','Skill |Add Skill')
+@section('titlePage')
+   <span class="titlePage">Skill |Add Skill</span>
+@endsection
 @section('admin-content')
 <div class="content-body">
     <div class="container-fluid">
         <div class="row page-titles mx-0">
             <div class="col-sm-6 p-md-0">
                 <div class="welcome-text">
-                    <h4>Hi, Welcome Administrator!</h4>
+                <h4>Hi, Welcome {{$super_admin[0]['name']}}</h4>
                     <!-- <p class="mb-0">Your business dashboard template</p> -->
                 </div>
             </div>
@@ -22,7 +25,7 @@
             <div class="col-xl-12 col-xxl-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Add Skill Form</h4>
+                        <h4 class="card-title">Add Skill</h4>
                         <a href="javascript:void(0)" onclick="history.back()" class="btn btn-primary btn-outline-light float-lg-right" style="background-color: #450b5a; color: #fff;"><i class="fa fa-backward"></i> Back</a>
                     </div>
                     <div class="card-body">
@@ -35,7 +38,7 @@
                                         <div class="col-lg-7 mb-2">
                                             <div class="form-group">
                                                 <label class="text-label"><strong style="color: red;">*</strong><b>Skill :</b></label>
-                                                <input type="text" name="skill" class="form-control" placeholder="Your Skill">
+                                                <input type="text" name="skill" value="{{old('skill')}}" class="form-control" placeholder="Your Skill">
                                                 <span class="text-danger">
                                                     @error('skill')
                                                     {{$message}}

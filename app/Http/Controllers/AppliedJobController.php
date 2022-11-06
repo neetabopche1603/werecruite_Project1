@@ -37,7 +37,7 @@ class AppliedJobController extends Controller
             'created_at' => date('Y-m-d H:i:s'),
             'updated_at' => date('Y-m-d H:i:s'),
         ];
-        // DB::table('notifications')->insert($data);
+        DB::table('notifications')->insert($data);
         return redirect()->back();
     }
 }
